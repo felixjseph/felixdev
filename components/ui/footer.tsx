@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 const SOCIAL_LINKS = [
@@ -47,6 +48,16 @@ export function Footer() {
           <p className="mt-1 font-mono text-[11px] uppercase tracking-wide text-muted">
             Cebu, Philippines
           </p>
+          <Link
+            href="/certifications"
+            className="group relative mt-3 inline-flex w-fit font-mono text-[11px] uppercase tracking-wide text-muted"
+          >
+            Certifications
+            <span
+              aria-hidden
+              className="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-muted transition-transform duration-300 ease-out group-hover:scale-x-100"
+            />
+          </Link>
         </div>
 
         <div className="flex flex-col gap-3 md:items-end">
