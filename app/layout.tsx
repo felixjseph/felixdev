@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { fraunces, inter, jetbrainsMono } from "@/lib/fonts";
 import { Header } from "@/components/ui/header";
+import { Footer } from "@/components/ui/footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,9 +19,10 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="font-body bg-dot-grid min-h-screen">
+      <body className="font-body bg-dot-grid min-h-screen flex flex-col">
         <Header />
-        {children}
+        <div className="flex-1">{children}</div>
+        <Footer />
       </body>
     </html>
   );
