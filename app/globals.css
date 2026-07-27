@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* Palette "Plain" — no accent color */
+@theme {
+  --color-bg: #FAFAF8;
+  --color-ink: #141414;
+  --color-muted: #666666;
+  --color-border: #00000018;
+
+  --leading-display: 1.1;
+}
+
+/* Wired to next/font variables set on <html> in app/layout.tsx */
+@theme inline {
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-body: var(--font-inter), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+  }
+}
+
+/* Page-wrapper-level texture only — never per-component */
+@utility bg-dot-grid {
+  background-image: radial-gradient(#00000008 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Belt-and-suspenders: guarantees the reduced-motion end-state even during
+   the brief pre-hydration window, since CSS applies before JS hydrates. */
+@media (prefers-reduced-motion: reduce) {
+  [data-fade-up],
+  [data-draw-rule] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
