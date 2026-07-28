@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { ProjectCard } from "@/components/ui/project-card";
 import type { Project } from "@/lib/projects";
@@ -36,7 +37,7 @@ export function AnimatedProjectStack({ projects }: { projects: Project[] }) {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="relative h-[440px] w-full max-w-md">
+      <div className="relative h-[560px] w-full max-w-md">
         {projects.map((project, index) => {
           const offset = (index - activeIndex + total) % total;
           const style = getFanStyle(offset, total);
@@ -46,7 +47,7 @@ export function AnimatedProjectStack({ projects }: { projects: Project[] }) {
           return (
             <motion.div
               key={project.slug}
-              className="absolute inset-0 origin-bottom"
+              className="group absolute inset-0 origin-bottom"
               style={{
                 zIndex: style.zIndex,
                 pointerEvents: isActive || isPeek ? "auto" : "none",
@@ -89,6 +90,44 @@ export function AnimatedProjectStack({ projects }: { projects: Project[] }) {
                 </div>
               ) : (
                 <ProjectCard project={project} />
+              )}
+
+              {isActive && (
+                // Full-description popover on hover, styled as a browser-window preview.
+                // min-h-full guarantees it always covers at least the whole card (so the
+                // base card's tags/link never peek out beneath it); the subtle ring
+                // (instead of a hard border) doubles as the hover outline, and always
+                // matches the popover's own bounds instead of a separately-sized element.
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 top-0 min-h-full -translate-y-2 overflow-hidden bg-bg opacity-0 shadow-[0_0_0_1px_rgba(20,20,20,0.12),0_20px_45px_-15px_rgba(20,20,20,0.2)] transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none"
+                >
+                  <div className="flex items-center gap-1.5 border-b border-border px-4 py-2.5">
+                    <span className="h-2 w-2 rounded-full bg-border" />
+                    <span className="h-2 w-2 rounded-full bg-border" />
+                    <span className="h-2 w-2 rounded-full bg-border" />
+                  </div>
+
+                  <div className="relative aspect-video border-b border-border">
+                    {project.image ? (
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        sizes="448px"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-bg">
+                        <span className="font-display text-lg text-muted">
+                          {project.title}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  <p className="p-6 font-body text-ink">{project.description}</p>
+                </div>
               )}
             </motion.div>
           );
