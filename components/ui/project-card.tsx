@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Project } from "@/lib/projects";
 
 function initials(title: string) {
@@ -28,7 +29,25 @@ export function ProjectCard({ project }: { project: Project }) {
           </h2>
         </div>
 
-        <p className="mt-4 line-clamp-3 font-body text-ink">
+        <div className="relative mt-4 aspect-video overflow-hidden border border-border">
+          {project.image ? (
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              sizes="(min-width: 768px) 448px, 90vw"
+              className="object-cover"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-bg">
+              <span className="font-display text-lg text-muted">
+                {project.title}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <p className="mt-4 line-clamp-2 font-body text-ink">
           {project.description}
         </p>
       </div>

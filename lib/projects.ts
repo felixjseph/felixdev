@@ -5,6 +5,8 @@ export type Project = {
   description: string;
   stack: string[];
   href?: string;
+  /** Path under /public, e.g. "/projects/startupsphere.png". Omit until a real screenshot exists. */
+  image?: string;
 };
 
 export const projects: Project[] = [
