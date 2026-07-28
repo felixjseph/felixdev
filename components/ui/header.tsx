@@ -4,14 +4,14 @@ import { FadeUp } from "@/components/ui/fade-up";
 import { NavLink } from "@/components/ui/nav-link";
 
 const NAV_LINKS = [
-  { href: "/work", label: "Work" },
+  { href: "/#work", label: "Work" },
   { href: "/blog", label: "Blog" },
   { href: "/gear", label: "Gear" },
 ] as const;
 
 export function Header() {
   return (
-    <header className="mx-auto max-w-5xl px-6">
+    <header className="mx-auto w-[80%]">
       <FadeUp delay={0}>
         <div className="flex items-center justify-between py-6">
           <Link href="/" className="font-display text-lg font-medium text-ink">

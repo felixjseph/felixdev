@@ -24,6 +24,14 @@
   }
 }
 
+/* Anchor-nav scrolling (header "Work" link, footer "Certifications" link) —
+   opt out for reduced-motion instead of relying on browser defaults. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 /* Page-wrapper-level texture only — never per-component */
 @utility bg-dot-grid {
   background-image: radial-gradient(#00000008 1px, transparent 1px);

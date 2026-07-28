@@ -2,7 +2,7 @@ import { FadeUp } from "@/components/ui/fade-up";
 
 export function Hero() {
   return (
-    <section className="mx-auto max-w-5xl px-6 py-20 md:py-28">
+    <section className="mx-auto w-[80%] py-20 md:py-28">
       <FadeUp delay={250}>
         <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wide text-muted">
           <span
