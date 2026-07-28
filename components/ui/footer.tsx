@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
+import { ArrowLink } from "@/components/ui/arrow-link";
 
 const SOCIAL_LINKS = [
   { href: "https://github.com/felixjseph", label: "GitHub" },
@@ -22,12 +22,18 @@ function FooterLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative font-mono text-[11px] uppercase tracking-wide text-muted"
+      className="group relative inline-flex w-fit items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-muted"
     >
       {children}
       <span
         aria-hidden
-        className="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-muted transition-transform duration-300 ease-out group-hover:scale-x-100"
+        className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none"
+      >
+        ↗
+      </span>
+      <span
+        aria-hidden
+        className="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-muted transition-transform duration-300 ease-out group-hover:scale-x-100 motion-reduce:transition-none"
       />
     </a>
   );
@@ -35,9 +41,9 @@ function FooterLink({
 
 export function Footer() {
   return (
-    <footer className="mx-auto max-w-5xl px-6">
+    <footer className="mx-auto w-[80%]">
       <div className="h-px w-full bg-border" />
-      <div className="flex flex-col gap-8 py-10 md:flex-row md:items-start md:justify-between">
+      <div className="flex flex-col gap-10 py-10 md:flex-row md:items-start md:justify-between">
         <div className="max-w-sm">
           <p className="font-display text-xl font-medium text-ink">
             Let&apos;s build something.
@@ -48,21 +54,16 @@ export function Footer() {
           <p className="mt-1 font-mono text-[11px] uppercase tracking-wide text-muted">
             Cebu, Philippines
           </p>
-          <Link
-            href="/certifications"
-            className="group relative mt-3 inline-flex w-fit font-mono text-[11px] uppercase tracking-wide text-muted"
-          >
-            Certifications
-            <span
-              aria-hidden
-              className="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-muted transition-transform duration-300 ease-out group-hover:scale-x-100"
-            />
-          </Link>
+          <div className="mt-4">
+            <ArrowLink href="#certifications" tone="muted">
+              Certifications
+            </ArrowLink>
+          </div>
         </div>
 
-        <div className="flex flex-col gap-3 md:items-end">
+        <div className="flex flex-col gap-4 md:items-end">
           <FooterLink href={`mailto:${EMAIL}`}>{EMAIL}</FooterLink>
-          <div className="flex flex-wrap gap-4 md:justify-end">
+          <div className="flex flex-wrap gap-x-6 gap-y-3 md:justify-end">
             {SOCIAL_LINKS.map((link) => (
               <FooterLink key={link.href} href={link.href}>
                 {link.label}

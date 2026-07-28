@@ -11,7 +11,8 @@
 - Tailwind CSS v4 — CSS-first config via `@theme` in `app/globals.css`
   (there is NO tailwind.config.js; do not create one. Use `@import "tailwindcss";`)
 - Motion (`motion/react`) for animation
-- MDX for blog posts (content lives in `content/blog/`)
+- MDX for blog posts (content lives in `content/blog/`) — not wired up yet;
+  posts are currently placeholder entries in `lib/blog.ts` (`status: "draft"`)
 
 ## Architecture rules
 - Default to Server Components. Only add `"use client"` when a component
@@ -22,6 +23,27 @@
 - ProjectCard is a single reusable component for all 4 featured projects
   (StartUpSphere, CineCity, Pach Drugmart, Sayu Café) — same template,
   different content. Do not create a separate one-off card for Sayu Café.
+  Layout: black category pill badge (`project.category` — a factual label
+  like "Web Platform" or "Capstone Project", not a superlative claim), a
+  bordered icon-monogram square (initials, no real project images yet),
+  title, description, rounded-pill stack tags, "View project" arrow-link.
+  It's rendered inside `AnimatedProjectStack`
+  (components/ui/animated-project-stack.tsx) as a rotated fan/deck — active
+  card centered and upright, one neighbor peeking rotated left, one peeking
+  rotated right (`origin-bottom` so the bottoms stay aligned and only the
+  tops swing out), everything else hidden behind at opacity 0. Peek cards
+  are themselves clickable (jump to front), plus explicit prev/next chevron
+  buttons and clickable dot indicators below for keyboard/a11y. Reuse this
+  fan pattern for any future card-based section instead of inventing a new
+  interaction.
+- A standalone page is only kept for a content type when its landing-page
+  section shows a subset of that content (e.g. `/blog` — landing shows 3 of 5
+  posts, `/blog` lists all of them). Remove the standalone page once the
+  landing section already shows everything (this is why `/work` and
+  `/certifications` don't exist — their content moved into landing sections
+  in full).
+- Landing sections share one container width: `mx-auto w-[80%]` (header, hero,
+  and every section use it so edges align down the page).
 
 ## Design tokens — LOCKED (define these in @theme, use everywhere)
 
@@ -49,11 +71,25 @@
 - MANDATORY: wrap all animation in a `prefers-reduced-motion` check —
   reduced-motion users get instant end-states, no exceptions
 
-### Layout reference — home hero ("Concept C" / split masthead)
-- Top bar: logo/name left, nav right (Work / Blog / Gear), hairline rule beneath
+### Layout reference — landing page
+- Top bar: logo/name left, nav right (Work / Blog / Gear), hairline rule
+  beneath ("Concept C" / split masthead)
 - Hero: two-column grid below the rule — headline (wider column) left,
-  stat number + label right
-- Small numbered eyebrow label above headline (e.g. "N deg 01 -- Available for work")
+  stat number + label right; small numbered eyebrow label above headline
+  (e.g. "N deg 01 -- Available for work")
+- Everything below the hero is one continuous scroll, in this order:
+  1. Blog (`id="blog"`) — `N deg 01 — Blog`, 3-post preview grid, "View all
+     posts" links to `/blog` for the rest
+  2. Projects (`id="work"` — matches the header nav link) — `N deg 02 —
+     Projects`, `AnimatedProjectStack` cycles through all 4 projects
+  3. Experience (`id="experience"`) — `N deg 03 — Experience`, role/company/
+     year rows, with an unnumbered "Tech stack" sub-block directly beneath
+  4. Certifications (`id="certifications"` — matches the footer link) —
+     `N deg 04 — Certifications`, all entries shown
+  5. Footer (global, in `app/layout.tsx`)
+- Each section eyebrow follows `N deg 0N — Label`, mono, uppercase, matching
+  the hero's eyebrow. Section wrapper `id`s exist specifically so header/
+  footer links can anchor-scroll into the page instead of navigating away.
 
 ## Copy voice
 - Confident, direct, no corporate buzzwords. First person.
