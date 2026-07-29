@@ -1,14 +1,17 @@
 import type { ReactNode } from "react";
-import { ArrowLink } from "@/components/ui/arrow-link";
+import { EMAIL, socialLinks } from "@/lib/contact";
 
-const SOCIAL_LINKS = [
-  { href: "https://github.com/felixjseph", label: "GitHub" },
-  { href: "https://www.linkedin.com/in/felixjseph/", label: "LinkedIn" },
-  { href: "https://www.instagram.com/felixjseph/", label: "Instagram" },
-  { href: "https://www.facebook.com/felixjseph/", label: "Facebook" },
-] as const;
-
-const EMAIL = "felixjosephcastaneda@gmail.com";
+// Figlet-style banner, every row padded to exactly 43 chars so it stays
+// aligned in the mono face. Deliberately ASCII-only: box-drawing characters
+// like U+2588 aren't in the `latin` font subset we load, so they'd fall back
+// to another face with different metrics and shear the whole wordmark.
+const WORDMARK = [
+  "  __        _  _            _              ",
+  " / _|  ___ | |(_)__  __  __| |  ___ __   __",
+  "| |_  / _ \\| || |\\ \\/ / / _` | / _ \\\\ \\ / /",
+  "|  _||  __/| || | >  < | (_| ||  __/ \\ V / ",
+  "|_|   \\___||_||_|/_/\\_\\ \\__,_| \\___|  \\_/  ",
+].join("\n");
 
 function FooterLink({
   href,
@@ -43,9 +46,25 @@ export function Footer() {
   return (
     <footer className="mx-auto w-[80%]">
       <div className="h-px w-full bg-border" />
-      <div className="flex flex-col gap-10 py-10 md:flex-row md:items-start md:justify-between">
+
+      {/* Oversized wordmark — decorative, so the accessible name comes from
+          the aria-label rather than the block characters. */}
+      <div
+        role="img"
+        aria-label="felixdev"
+        className="overflow-x-auto pt-12"
+      >
+        <pre
+          aria-hidden
+          className="w-fit font-mono text-[8px] leading-[1.05] text-muted/60 sm:text-[11px] md:text-[15px] lg:text-[18px]"
+        >
+          {WORDMARK}
+        </pre>
+      </div>
+
+      <div className="flex flex-col gap-10 py-12 md:flex-row md:items-start md:justify-between">
         <div className="max-w-sm">
-          <p className="font-display text-xl font-medium text-ink">
+          <p className="font-display text-lg font-bold tracking-tight text-ink">
             Let&apos;s build something.
           </p>
           <p className="mt-2 font-mono text-[11px] uppercase tracking-wide text-muted">
@@ -54,17 +73,32 @@ export function Footer() {
           <p className="mt-1 font-mono text-[11px] uppercase tracking-wide text-muted">
             Cebu, Philippines
           </p>
-          <div className="mt-4">
-            <ArrowLink href="#certifications" tone="muted">
-              Certifications
-            </ArrowLink>
+        </div>
+
+        <div>
+          <p className="font-mono text-[11px] uppercase tracking-wide text-muted">
+            Education
+          </p>
+          <p className="mt-3 font-display text-base font-bold tracking-tight text-ink">
+            BS in Information Technology
+          </p>
+          <p className="mt-1.5 font-body text-sm text-ink">
+            Cebu Institute of Technology — University
+          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center rounded-full bg-ink px-3 py-1 font-mono text-[10px] font-medium uppercase tracking-wide text-bg">
+              Cum Laude
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-wide text-muted">
+              Class of 2026
+            </span>
           </div>
         </div>
 
         <div className="flex flex-col gap-4 md:items-end">
           <FooterLink href={`mailto:${EMAIL}`}>{EMAIL}</FooterLink>
           <div className="flex flex-wrap gap-x-6 gap-y-3 md:justify-end">
-            {SOCIAL_LINKS.map((link) => (
+            {socialLinks.map((link) => (
               <FooterLink key={link.href} href={link.href}>
                 {link.label}
               </FooterLink>
@@ -72,9 +106,10 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <div className="pb-8">
+
+      <div className="border-t border-border py-8">
         <p className="font-mono text-[11px] uppercase tracking-wide text-muted">
-          © {new Date().getFullYear()} Felix Castañeda
+          © {new Date().getFullYear()} Felix Joseph Castañeda
         </p>
       </div>
     </footer>

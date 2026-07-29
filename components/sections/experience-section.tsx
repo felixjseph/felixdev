@@ -6,9 +6,9 @@ export function ExperienceSection() {
   return (
     <section id="experience" className="mx-auto w-[80%] py-20">
       <p className="font-mono text-[11px] uppercase tracking-wide text-muted">
-        N° 03 — Experience
+        <span className="text-add">{"// "}</span>03 — Experience
       </p>
-      <h2 className="mt-4 font-display text-3xl font-medium leading-display text-ink sm:text-4xl">
+      <h2 className="mt-4 font-display text-2xl font-bold leading-tight tracking-tight text-ink sm:text-3xl">
         Where I&apos;ve worked
       </h2>
 
