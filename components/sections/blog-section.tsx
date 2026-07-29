@@ -10,10 +10,10 @@ export function BlogSection() {
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
           <p className="font-mono text-[11px] uppercase tracking-wide text-muted">
-            N° 01 — Blog
+            <span className="text-add">{"// "}</span>01 — Blog
           </p>
-          <h2 className="mt-4 font-display text-3xl font-medium leading-display text-ink sm:text-4xl">
-            Notes & drafts
+          <h2 className="mt-4 font-display text-2xl font-bold leading-tight tracking-tight text-ink sm:text-3xl">
+            Notes &amp; drafts
           </h2>
         </div>
         <ArrowLink href="/blog">View all posts</ArrowLink>

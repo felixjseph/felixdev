@@ -5,9 +5,9 @@ export function ProjectsSection() {
   return (
     <section id="work" className="mx-auto w-[80%] py-20">
       <p className="font-mono text-[11px] uppercase tracking-wide text-muted">
-        N° 02 — Projects
+        <span className="text-add">{"// "}</span>02 — Projects
       </p>
-      <h2 className="mt-4 font-display text-3xl font-medium leading-display text-ink sm:text-4xl">
+      <h2 className="mt-4 font-display text-2xl font-bold leading-tight tracking-tight text-ink sm:text-3xl">
         Selected work
       </h2>
 

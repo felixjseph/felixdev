@@ -1,26 +1,84 @@
 @import "tailwindcss";
 
-/* Palette "Plain" — no accent color */
+/* Drive `dark:` off the .dark class instead of Tailwind's default
+   prefers-color-scheme media query — the theme is an explicit user choice
+   stored in localStorage, and the token overrides below are class-based, so
+   the variant has to match or the two disagree. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Palette "Plain" — no accent color. --color-add/--color-remove are the one
+   documented exception: terminal/diff semantics only (hero diff stats, cursor
+   caret, boot screen, status dot). Never use them as decorative accents. */
 @theme {
   --color-bg: #FAFAF8;
   --color-ink: #141414;
   --color-muted: #666666;
   --color-border: #00000018;
 
+  --color-add: #3e6b4f;
+  --color-remove: #8b4a3e;
+
+  /* Backing for the hero portrait well. The artwork is black ink drawn on
+     white, so it keeps a paper ground in both themes rather than being
+     inverted (inverting tonal crosshatch yields a photo negative, not
+     chalk-on-black). Dimmed in dark mode so it doesn't glare. */
+  --color-paper: #FAFAF8;
+
   --leading-display: 1.1;
 }
 
-/* Wired to next/font variables set on <html> in app/layout.tsx */
+/* Wired to next/font variables set on <html> in app/layout.tsx.
+   One superfamily: IBM Plex Mono (display + labels) / IBM Plex Sans (body). */
 @theme inline {
-  --font-display: var(--font-fraunces), Georgia, serif;
-  --font-body: var(--font-inter), sans-serif;
-  --font-mono: var(--font-jetbrains-mono), monospace;
+  --font-display: var(--font-plex-mono), ui-monospace, monospace;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-body: var(--font-plex-sans), system-ui, sans-serif;
+}
+
+/* Dark mode. Every component styles through the semantic tokens above, so
+   redefining the token values here flips the entire site — no component-level
+   `dark:` variants needed. `:root.dark` (specificity 0,2,0) deliberately
+   outranks the `:root` block Tailwind emits for @theme.
+   Light is the default: the init script in app/layout.tsx only ever ADDS
+   `.dark`, and only when it's been explicitly chosen. */
+:root {
+  --dot-color: #00000008;
+}
+
+:root.dark {
+  --color-bg: #0F100F;
+  --color-ink: #ECEBE6;
+  --color-muted: #8B8D88;
+  --color-border: #FFFFFF20;
+
+  /* Both accents lightened so they still read against the dark ground. */
+  --color-add: #7BA88B;
+  --color-remove: #C4897A;
+
+  --color-paper: #DEDCD5;
+
+  --dot-color: #FFFFFF0D;
 }
 
 @layer base {
   body {
     background-color: var(--color-bg);
     color: var(--color-ink);
+  }
+
+  /* Theme swap should feel like a dimmer, not a strobe. */
+  body,
+  body * {
+    transition-property: background-color, border-color;
+    transition-duration: 260ms;
+    transition-timing-function: ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body,
+    body * {
+      transition-property: none;
+    }
   }
 }
 
@@ -32,10 +90,69 @@
   }
 }
 
-/* Page-wrapper-level texture only — never per-component */
+/* Page-wrapper-level texture only — never per-component.
+   Reads --dot-color so the grid stays visible in both themes. */
 @utility bg-dot-grid {
-  background-image: radial-gradient(#00000008 1px, transparent 1px);
+  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
   background-size: 16px 16px;
+}
+
+/* Terminal cursor caret (hero headline, boot screen) */
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@utility animate-blink {
+  animation: blink 1.1s steps(1) infinite;
+}
+
+/* Boot screen — the fade-out is CSS-driven (not JS) so the overlay can never
+   trap a visitor if hydration is slow or JS fails; React only unmounts it
+   afterwards. Reduced-motion hides it outright (rule further down). */
+@keyframes boot-out {
+  0%,
+  72% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@keyframes boot-rule {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes boot-line-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+[data-boot-screen] {
+  animation: boot-out 1.55s ease-out forwards;
+}
+[data-boot-rule] {
+  transform-origin: left;
+  animation: boot-rule 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+[data-boot-line] {
+  opacity: 0;
+  animation: boot-line-in 0.01s linear forwards;
+}
+[data-boot-line="1"] {
+  animation-delay: 0.28s;
+}
+[data-boot-line="2"] {
+  animation-delay: 0.62s;
 }
 
 /* Belt-and-suspenders: guarantees the reduced-motion end-state even during
@@ -45,5 +162,10 @@
   [data-draw-rule] {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  /* No boot sequence at all — go straight to the page. */
+  [data-boot-screen] {
+    display: none !important;
   }
 }

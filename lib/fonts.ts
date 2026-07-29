@@ -1,22 +1,18 @@
-import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 
-// Fraunces & Inter are variable fonts — omit `weight` to load the full
-// axis range. Locked weight 500 is applied per-component via `font-medium`.
-export const fraunces = Fraunces({
+// One superfamily across the whole site. Mono is the display face (headings,
+// wordmark, hero) — the "build log" treatment is the site's identity, not a
+// hero-only exception. Sans carries body copy.
+export const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  weight: ["400", "500", "700"],
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
-export const inter = Inter({
+export const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-export const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jetbrains-mono",
+  weight: ["400", "500", "600"],
+  variable: "--font-plex-sans",
   display: "swap",
 });

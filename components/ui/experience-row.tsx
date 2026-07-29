@@ -9,11 +9,15 @@ export function ExperienceRow({ entry }: { entry: ExperienceEntry }) {
         <span className="w-12 shrink-0 font-mono text-[11px] uppercase tracking-wide text-muted">
           {year}
         </span>
-        <p className="font-display text-lg font-medium text-ink">{role}</p>
+        <p className="font-display text-base font-medium text-ink">{role}</p>
       </div>
-      <p className="shrink-0 font-mono text-[11px] uppercase tracking-wide text-muted">
-        {company}
-      </p>
+      {/* Company is optional — an entry with none simply omits the column
+          rather than rendering an empty cell or a fabricated employer. */}
+      {company ? (
+        <p className="shrink-0 font-mono text-[11px] uppercase tracking-wide text-muted">
+          {company}
+        </p>
+      ) : null}
     </div>
   );
 }
