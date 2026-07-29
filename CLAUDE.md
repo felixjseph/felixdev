@@ -90,6 +90,24 @@ not just a label face.
 - Mono sets much wider than a serif at the same px. Headings top out around
   `text-2xl sm:text-3xl` (page h1s `md:text-4xl`) with `tracking-tight`.
 
+### Favicon
+- `app/icon.svg` + `app/favicon.ico` (16/32/48) + `app/apple-icon.png` (180).
+  These use Next's file conventions, so the `<link>` tags are generated
+  automatically — do **not** add `metadata.icons`.
+- The mark is the hero's terminal window: ink tile, titlebar band with three
+  dots (the first in --color-add, echoing the "available for work" status),
+  and a green prompt bar + paper cursor block in the body.
+- It is a **filled** silhouette on purpose. An outlined window with hairline
+  strokes was tried first and turned to grey mush at 16px; solid shapes with a
+  filled titlebar survive the downscale.
+- Do not put an `f` (or any lone letter) on a dark rounded tile — white-f-on-
+  dark-square reads unmistakably as the Facebook logo. This was tested and
+  rejected.
+- Regenerate with `scripts/render-icons.py` (pure Python, no image libs — the
+  mark is geometry, so it's rasterised directly rather than round-tripping
+  through a browser canvas). Edit the geometry in **both** that script and
+  `app/icon.svg`; they're intentionally separate sources.
+
 ### Background texture
 - Dot-grid pattern on page wrapper only, not inside cards:
   background-image: radial-gradient(#00000008 1px, transparent 1px);
