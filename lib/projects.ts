@@ -17,6 +17,7 @@ export const projects: Project[] = [
     description:
       "A comprehensive platform for mapping and visualizing startup ecosystems. Features interactive network graphs, stakeholder analysis, and real-time collaboration tools for tracking startup communities and their connections.",
     stack: ["React", "Spring Boot", "Tailwind CSS", "Mapbox", "MySQL"],
+    image: "/projects/startupsphere.png",
   },
   {
     slug: "cinecity",
@@ -25,6 +26,7 @@ export const projects: Project[] = [
     description:
       "A comprehensive movie booking platform with seat selection, payment integration, and user management. Built as a capstone project demonstrating full-stack development capabilities.",
     stack: ["React", "Spring Boot", "Tailwind CSS", "MySQL", "Android Studio"],
+    image: "/projects/cinecity.png",
   },
   {
     slug: "pach-drugmart",
@@ -33,6 +35,7 @@ export const projects: Project[] = [
     description:
       "A comprehensive pharmacy management system for inventory control, prescription processing, and sales tracking. Features include medicine stock management, customer records, and automated billing system.",
     stack: ["React", "Spring Boot", "Tailwind CSS", "MySQL"],
+    image: "/projects/pach-drugmart.png",
   },
   {
     slug: "sayu-cafe",
