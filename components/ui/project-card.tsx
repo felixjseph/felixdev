@@ -21,9 +21,24 @@ export function ProjectCard({ project }: { project: Project }) {
         </span>
 
         <div className="mt-5 flex items-center gap-3">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-border font-display text-base text-ink">
-            {initials(project.title)}
-          </div>
+          {/* Brand logos ship with their background baked in (no alpha), so
+              they fill the tile edge-to-edge rather than floating on it.
+              Projects without a logo keep the initials monogram. */}
+          {project.logo ? (
+            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-border">
+              <Image
+                src={project.logo}
+                alt=""
+                fill
+                sizes="48px"
+                className="object-cover"
+              />
+            </div>
+          ) : (
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-border font-display text-base text-ink">
+              {initials(project.title)}
+            </div>
+          )}
           <h2 className="font-display text-xl font-medium text-ink">
             {project.title}
           </h2>

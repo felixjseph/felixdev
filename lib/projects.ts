@@ -7,6 +7,12 @@ export type Project = {
   href?: string;
   /** Path under /public, e.g. "/projects/startupsphere.png". Omit until a real screenshot exists. */
   image?: string;
+  /**
+   * Square brand logo under /public. Omit and the card falls back to an
+   * initials monogram — that's the intended state for projects without one,
+   * not a bug.
+   */
+  logo?: string;
 };
 
 export const projects: Project[] = [
@@ -17,6 +23,8 @@ export const projects: Project[] = [
     description:
       "A comprehensive platform for mapping and visualizing startup ecosystems. Features interactive network graphs, stakeholder analysis, and real-time collaboration tools for tracking startup communities and their connections.",
     stack: ["React", "Spring Boot", "Tailwind CSS", "Mapbox", "MySQL"],
+    image: "/projects/startupsphere.png",
+    logo: "/projects/startupsphere-logo.png",
   },
   {
     slug: "cinecity",
@@ -25,6 +33,8 @@ export const projects: Project[] = [
     description:
       "A comprehensive movie booking platform with seat selection, payment integration, and user management. Built as a capstone project demonstrating full-stack development capabilities.",
     stack: ["React", "Spring Boot", "Tailwind CSS", "MySQL", "Android Studio"],
+    image: "/projects/cinecity.png",
+    logo: "/projects/cinecity-logo.png",
   },
   {
     slug: "pach-drugmart",
@@ -33,6 +43,7 @@ export const projects: Project[] = [
     description:
       "A comprehensive pharmacy management system for inventory control, prescription processing, and sales tracking. Features include medicine stock management, customer records, and automated billing system.",
     stack: ["React", "Spring Boot", "Tailwind CSS", "MySQL"],
+    image: "/projects/pach-drugmart.png",
   },
   {
     slug: "sayu-cafe",
@@ -41,5 +52,7 @@ export const projects: Project[] = [
     description:
       'A specialty coffee brand built from the ground up — name, identity, and a shippable presence. "Sayu" means "early" in Cebuano. Brand tagline: "Made Fresh, Made Sayu." Warm, authentic, and cozy — a premium but welcoming identity focused on slow moments, meaningful conversations, and quality coffee.',
     stack: ["Figma", "Illustrator", "Next.js"],
+    image: "/projects/sayu-cafe.png",
+    logo: "/projects/sayu-cafe-logo.png",
   },
 ];
