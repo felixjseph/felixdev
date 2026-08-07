@@ -36,6 +36,19 @@
   buttons and clickable dot indicators below for keyboard/a11y. Reuse this
   fan pattern for any future card-based section instead of inventing a new
   interaction.
+- Advancing the stack **shuffles**: the outgoing front card lifts off the deck,
+  arcs out past its destination slot, and falls back into the fan, while the
+  rest step forward a beat later. The overshoot is what makes it read as a
+  dealt card rather than a slide — don't flatten it into a straight tween.
+  Two things it depends on:
+  - **Motion will not interpolate `z-index`** — it snaps straight to the target
+    value, so keyframing it silently does nothing and the card flies out from
+    *behind* the deck. The lift is instead a two-phase flip: `z` is raised via
+    the `style` prop for the first `DROP_AT` of the arc, then dropped by a
+    timer. If you retime the arc, that timer has to move with it.
+  - The dealt card is tracked by **slug, not index**, because a dot click can
+    move the active index more than one slot while the card is still in flight.
+  Reduced motion gets instant end states: no arc, no lift, no timer.
 - A standalone page is only kept for a content type when its landing-page
   section shows a subset of that content (e.g. `/blog` — landing shows 3 of 5
   posts, `/blog` lists all of them). Remove the standalone page once the
