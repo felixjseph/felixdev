@@ -44,5 +44,6 @@ export const projects: Project[] = [
     description:
       'A specialty coffee brand built from the ground up — name, identity, and a shippable presence. "Sayu" means "early" in Cebuano. Brand tagline: "Made Fresh, Made Sayu." Warm, authentic, and cozy — a premium but welcoming identity focused on slow moments, meaningful conversations, and quality coffee.',
     stack: ["Figma", "Illustrator", "Next.js"],
+    image: "/projects/sayu-cafe.png",
   },
 ];
