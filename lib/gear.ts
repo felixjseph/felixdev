@@ -2,7 +2,7 @@ export type Gear = {
   slug: string;
   name: string;
   category: string;
-  /** Placeholder copy — replace with real notes on why each piece earns its place. */
+  /** One sentence on why this piece earns its place. Keep it to one. */
   description: string;
   specs: string[];
   /**
@@ -17,7 +17,8 @@ export const gear: Gear[] = [
     slug: "lenovo-loq-15",
     name: "Lenovo LOQ 15",
     category: "Laptop",
-    description: "Placeholder — what this machine handles day to day.",
+    description:
+      "My main machine — the whole stack, and far too many browser tabs.",
     specs: ["Windows", "Primary"],
     image: "/gear/lenovo-loq-15.png",
   },
@@ -25,7 +26,8 @@ export const gear: Gear[] = [
     slug: "macbook-air-m2",
     name: "MacBook Air M2",
     category: "Laptop",
-    description: "Placeholder — what this machine handles day to day.",
+    description:
+      "The one that travels — fanless, so it stays silent anywhere.",
     specs: ["macOS", "Portable"],
     image: "/gear/macbook-air-m2.png",
   },
@@ -33,7 +35,8 @@ export const gear: Gear[] = [
     slug: "iphone-13",
     name: "iPhone 13",
     category: "Phone",
-    description: "Placeholder — how this fits the day-to-day setup.",
+    description:
+      "A test device — a simulator won't catch what real hardware does.",
     specs: ["iOS", "Testing"],
     image: "/gear/iphone-13.png",
   },
@@ -41,7 +44,8 @@ export const gear: Gear[] = [
     slug: "iphone-17",
     name: "iPhone 17",
     category: "Phone",
-    description: "Placeholder — how this fits the day-to-day setup.",
+    description:
+      "My daily phone, and the first place a layout gets checked on mobile.",
     specs: ["iOS", "Daily"],
     image: "/gear/iphone-17.png",
   },
@@ -49,7 +53,8 @@ export const gear: Gear[] = [
     slug: "logitech-g304",
     name: "Logitech G304",
     category: "Peripheral",
-    description: "Placeholder — notes on feel, battery, and why it stuck.",
+    description:
+      "Wireless without the latency, and months of use out of a single AA.",
     specs: ["Wireless", "Mouse"],
     image: "/gear/logitech-g304.png",
   },
@@ -57,7 +62,8 @@ export const gear: Gear[] = [
     slug: "garuda-gg82g",
     name: "Garuda GG82G Keyboard",
     category: "Peripheral",
-    description: "Placeholder — notes on switches, layout, and typing feel.",
+    description:
+      "No function row, no numpad — the mouse just stays closer.",
     specs: ["Mechanical", "Keyboard"],
     image: "/gear/garuda-gg82g.png",
   },
