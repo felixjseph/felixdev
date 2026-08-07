@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Gear } from "@/lib/gear";
 
 function initials(name: string) {
@@ -33,8 +34,23 @@ export function GearCard({ item }: { item: Gear }) {
         </h3>
       </div>
 
-      <div className="relative mt-4 flex aspect-video items-center justify-center overflow-hidden border border-border bg-paper">
-        <span className="font-display text-sm text-muted">{item.name}</span>
+      {/* 4:3, not ProjectCard's 16:9 — the product shots are exported 4:3, so
+          matching the well to them means they fill it edge to edge with no
+          letterbox and no crop. object-contain (not cover) because each shot is
+          centered with deliberate padding; cropping to a wider box would clip
+          the square mouse shot badly. */}
+      <div className="relative mt-4 flex aspect-[4/3] items-center justify-center overflow-hidden border border-border bg-paper">
+        {item.image ? (
+          <Image
+            src={item.image}
+            alt={item.name}
+            fill
+            sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
+            className="object-contain"
+          />
+        ) : (
+          <span className="font-display text-sm text-muted">{item.name}</span>
+        )}
       </div>
 
       <p className="mt-4 line-clamp-2 font-body text-sm text-ink">
