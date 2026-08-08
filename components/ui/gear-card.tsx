@@ -46,7 +46,7 @@ export function GearCard({ item }: { item: Gear }) {
             alt={item.name}
             fill
             sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
-            className="object-contain"
+            className="object-contain [filter:var(--gear-shot-filter)]"
           />
         ) : (
           <span className="font-display text-sm text-muted">{item.name}</span>
