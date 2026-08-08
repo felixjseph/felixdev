@@ -173,12 +173,28 @@ nav-link.tsx / draw-rule.tsx were deleted — don't reinstate them).
   with a file-inspector row (`1080×1440` / `PNG`) — keep that factual; it
   describes the actual asset.
 - Hero headline cycles three taglines via `RotatingTagline`
-  (components/ui/rotating-tagline.tsx). All taglines render into the same
-  CSS-grid cell — the hidden copies size the box to the tallest line so a
-  swap never shifts the page below. Exit is deliberately faster than enter
-  (`mode="wait"` holds the incoming line until the outgoing one is gone, so
-  a slow exit reads as a blank gap). Keep taglines short; 4 would start to
-  feel like a slideshow.
+  (components/ui/rotating-tagline.tsx), which **scrambles** between them: the
+  old line breaks apart into digits and code punctuation, then the noise
+  resolves left-to-right into the new line. Keep taglines short; 4 would start
+  to feel like a slideshow. What holds it together:
+  - All taglines render into the same CSS-grid cell — the hidden copies size
+    the box to the tallest line, so neither a swap nor a mid-scramble frame
+    shifts the page below.
+  - The effect is width-safe **because the headline is set in mono** and every
+    frame preserves the target's character count. Don't move this headline to
+    the sans face without rethinking the effect — in a proportional font the
+    glyph substitution would reflow the line on every tick.
+  - Spaces are never scrambled. Preserving the gaps keeps the silhouette of the
+    sentence, so it reads as decoding rather than as a block of noise — and it
+    keeps word wrapping identical to the final text.
+  - The visible text is `aria-hidden` and the real line is exposed through a
+    parallel `sr-only` span. Mid-scramble text is gibberish and changes ~25×/s;
+    no `aria-live`, since decorative rotation isn't worth interrupting anyone
+    for.
+  - The first tagline ships in the SSR HTML, so it renders as itself and the
+    scramble only starts from the *second* line onward. Scrambling on mount
+    would flash real text before the noise and disagree with the server markup.
+  - Reduced motion holds the first line: no rotation, no scramble.
 - Portrait: `PORTRAIT_SRC` in hero.tsx → `/public/felix-portrait.png`
   (crosshatched ink illustration, 1080x1440, transparent background). Frame
   is `aspect-[3/4]` + `object-contain` to match the art's native ratio, and
