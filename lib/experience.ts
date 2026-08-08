@@ -11,9 +11,8 @@ export const experience: ExperienceEntry[] = [
     year: "2026",
   },
   {
-    // Company not supplied yet — see CLAUDE.md note.
     role: "Marketing & Operations Manager, Full Stack Dev",
-    company: "",
+    company: "Sayu Café",
     year: "2026",
   },
   {
