@@ -43,6 +43,14 @@
    `.dark`, and only when it's been explicitly chosen. */
 :root {
   --dot-color: #00000008;
+
+  /* Gear product shots ship with a warm studio grey baked in (sampled 230-239
+     across the backdrop). In light mode the white point is lifted so that
+     ground reads as white against the near-white page, instead of sitting
+     there as a grey plate. A multiply is the right operation here: it fixes
+     black at 0, so the products keep their blacks and their contact shadow
+     while only the backdrop clips to white. */
+  --gear-shot-filter: brightness(1.11);
 }
 
 :root.dark {
@@ -58,6 +66,10 @@
   --color-paper: #DEDCD5;
 
   --dot-color: #FFFFFF0D;
+
+  /* Left alone in dark mode — the shots already read as lit product plates
+     against the dark card, and forcing them to white would glare. */
+  --gear-shot-filter: none;
 }
 
 @layer base {
