@@ -48,11 +48,19 @@ export function Footer() {
       <div className="h-px w-full bg-border" />
 
       {/* Oversized wordmark — decorative, so the accessible name comes from
-          the aria-label rather than the block characters. */}
+          the aria-label rather than the block characters.
+
+          `overflow-hidden`, never `overflow-x-auto`: the responsive type sizes
+          below already fit the mark inside the 80% wrapper at every width down
+          to 320px, so the horizontal safety net never fired — but setting one
+          axis makes the *other* compute from `visible` to `auto`, and the tight
+          leading below leaves ~3px of slack, which was enough to raise a full
+          vertical scrollbar across the footer. The pb-1 absorbs that slack so
+          hiding the overflow clips nothing. */}
       <div
         role="img"
         aria-label="felixdev"
-        className="overflow-x-auto pt-12"
+        className="overflow-hidden pb-1 pt-12"
       >
         <pre
           aria-hidden
