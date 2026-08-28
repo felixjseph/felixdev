@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { AboutSection } from "./about-section";
@@ -41,8 +43,12 @@ describe("homepage proof-first sections", () => {
     const { container } = render(<FeaturedWork />);
 
     const card = within(container).getByRole("link", { name: /Sayu Café/i }).closest("article");
+    const styles = readFileSync(path.resolve(process.cwd(), "src/app/globals.css"), "utf8");
+    const tiltRule = styles.indexOf(".project-card:hover {\n    transform: rotateX(2deg)");
+    const reducedMotionOverride = styles.indexOf(".project-card:hover {\n    transform: none !important;");
 
-    expect(card).toHaveClass("[@media(hover:hover)_and_(pointer:fine)]:hover:[transform:rotateX(2deg)_rotateY(-2deg)_translateY(-4px)]");
-    expect(card).toHaveClass("motion-reduce:hover:transform-none");
+    expect(card).toHaveClass("project-card");
+    expect(tiltRule).toBeGreaterThanOrEqual(0);
+    expect(reducedMotionOverride).toBeGreaterThan(tiltRule);
   });
 });

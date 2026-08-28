@@ -67,3 +67,22 @@ select {
     transition-duration: 0.01ms !important;
   }
 }
+
+@media (hover: hover) and (pointer: fine) {
+  .project-card {
+    perspective: 1000px;
+    transition: transform 180ms ease;
+  }
+
+  .project-card:hover {
+    transform: rotateX(2deg) rotateY(-2deg) translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-card:hover {
+    transform: none !important;
+    transition: none !important;
+  }
+}
