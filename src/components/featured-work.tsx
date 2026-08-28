@@ -20,7 +20,7 @@ export function FeaturedWork() {
       <div className="mt-10 grid gap-5 lg:grid-cols-3">
         {projectPreviews.map((project, index) => (
           <article
-            className="border-2 border-[var(--color-text)] bg-[var(--color-surface)] p-6 shadow-[6px_6px_0_var(--color-text)] transition-transform motion-reduce:transition-none [@media(hover:hover)_and_(pointer:fine)]:[perspective:1000px] [@media(hover:hover)_and_(pointer:fine)]:hover:[transform:rotateX(2deg)_rotateY(-2deg)_translateY(-4px)]"
+            className="border-2 border-[var(--color-text)] bg-[var(--color-surface)] p-6 shadow-[6px_6px_0_var(--color-text)] transition-transform motion-reduce:transition-none motion-reduce:hover:transform-none [@media(hover:hover)_and_(pointer:fine)]:[perspective:1000px] [@media(hover:hover)_and_(pointer:fine)]:hover:[transform:rotateX(2deg)_rotateY(-2deg)_translateY(-4px)]"
             key={project.slug}
           >
             <p className="system-label text-xs tracking-[0.12em] text-[var(--color-accent)]">0{index + 1}</p>
