@@ -136,7 +136,7 @@ select {
   position: absolute;
   inset: auto 0 0;
   padding: 0.45rem 0.6rem;
-  border-top: 2px solid var(--color-text);
+  border-top: 2px solid var(--color-support-foreground);
   background: var(--color-support);
   color: var(--color-support-foreground);
   font-family: var(--font-plex-mono), monospace;
