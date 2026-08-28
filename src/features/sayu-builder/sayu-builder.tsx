@@ -24,7 +24,9 @@ function inputId(field: DrinkField, optionId: string) {
 }
 
 export function SayuBuilder({ catalog }: { catalog: DrinkCatalog }) {
-  const [selection, setSelection] = useState(() => initialSelection(catalog));
+  const [selection, setSelection] = useState(() =>
+    normalizeSelection(initialSelection(catalog), catalog),
+  );
   const disabledOptions = getDisabledOptions(selection, catalog);
   const dataLabel =
     catalog.verification === "approved"

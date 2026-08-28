@@ -72,6 +72,28 @@ describe("SayuBuilder", () => {
     expect(screen.getByRole("status")).toHaveTextContent("clean texture");
   });
 
+  it("normalizes a constrained default selection before the first render", () => {
+    const catalogWithConstrainedDefaults: DrinkCatalog = {
+      ...fixtureCatalog,
+      options: {
+        ...fixtureCatalog.options,
+        base: [{ id: "seasonal", label: "Seasonal" }],
+        temperature: [{ id: "hot", label: "Hot" }],
+        texture: [
+          { id: "foamy", label: "Foamy" },
+          { id: "clean", label: "Clean" },
+        ],
+      },
+    };
+
+    render(<SayuBuilder catalog={catalogWithConstrainedDefaults} />);
+
+    expect(screen.getByRole("radio", { name: "Clean" })).toBeChecked();
+    expect(screen.getByRole("radio", { name: "Foamy" })).toBeDisabled();
+    expect(screen.getByRole("radio", { name: "Foamy" })).not.toBeChecked();
+    expect(screen.getByRole("status")).toHaveTextContent("Hot seasonal · balanced sweetness · oat milk · clean texture");
+  });
+
   it("renders exact proof labels for development and approved catalogs", () => {
     const { rerender } = render(<SayuBuilder catalog={fixtureCatalog} />);
     expect(screen.getByText("Shipped · Approved menu rules")).toBeInTheDocument();
