@@ -28,6 +28,23 @@ body {
   margin: 0;
   background: var(--color-bg);
   color: var(--color-text);
+  font-family: var(--font-manrope), sans-serif;
+  line-height: 1.5;
+}
+
+code,
+kbd,
+samp,
+.font-mono,
+.system-label {
+  font-family: var(--font-plex-mono), monospace;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 ::selection {
