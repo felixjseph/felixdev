@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Pach Drugmart development media fallback</title>
+  <desc id="desc">P2 Signal Cobalt fallback artwork for the Pach Drugmart case study.</desc>
+  <rect width="1440" height="900" fill="#F7F7F2"/>
+  <rect x="72" y="72" width="1296" height="756" fill="#FFFFFF" stroke="#2457FF" stroke-width="8"/>
+  <rect x="220" y="296" width="1000" height="330" fill="#121826" stroke="#6B8CFF" stroke-width="12"/>
+  <rect x="266" y="348" width="226" height="182" fill="#BCE7D0"/>
+  <rect x="536" y="408" width="126" height="122" fill="#F2F4F8"/>
+  <rect x="704" y="360" width="126" height="170" fill="#9FE0C0"/>
+  <rect x="872" y="322" width="126" height="208" fill="#6B8CFF"/>
+  <rect x="1040" y="382" width="126" height="148" fill="#2457FF"/>
+  <text x="720" y="214" text-anchor="middle" fill="#111316" font-family="Arial, sans-serif" font-size="62" font-weight="700">Pach Drugmart</text>
+  <text x="720" y="714" text-anchor="middle" fill="#2457FF" font-family="monospace" font-size="30" font-weight="700">DEVELOPMENT MEDIA FALLBACK</text>
+  <text x="720" y="758" text-anchor="middle" fill="#111316" font-family="Arial, sans-serif" font-size="22">P2 Signal Cobalt</text>
+</svg>
