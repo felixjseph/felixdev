@@ -34,6 +34,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const SayuBuilder = project.slug === "sayu-cafe"
     ? (await import("@/features/sayu-builder/sayu-builder")).SayuBuilder
     : null;
+  const SolaraQuotationFlow = project.slug === "solara"
+    ? (await import("@/components/case-study/solara-quotation-flow")).SolaraQuotationFlow
+    : null;
 
   return (
     <main>
@@ -42,6 +45,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       {project.sections.map((section) => <CaseStudySection key={section.id} section={section} />)}
       <ProjectGallery media={project.media} projectTitle={project.title} />
       {SayuBuilder ? <SayuBuilder catalog={sayuCatalog} /> : null}
+      {SolaraQuotationFlow ? <SolaraQuotationFlow /> : null}
     </main>
   );
 }
