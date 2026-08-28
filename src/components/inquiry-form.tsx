@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { submitInquiry } from "@/app/actions/submit-inquiry";
 import { projectTypes } from "@/features/inquiry/schema";
@@ -52,13 +52,8 @@ function FieldError({ field, errors }: { field: keyof typeof fieldErrorIds; erro
 export function InquiryForm() {
   const [state, formAction] = useActionState(submitInquiry, initialState);
   const [values, setValues] = useState(initialValues);
-  const startedAtInput = useRef<HTMLInputElement>(null);
+  const [startedAt] = useState(() => String(Date.now()));
   const fieldErrors = state.status === "invalid" ? state.fieldErrors : {};
-
-  useEffect(() => {
-    if (!startedAtInput.current) return;
-    startedAtInput.current.value = String(Date.now());
-  }, []);
 
   useEffect(() => {
     if (state.status !== "success") return;
@@ -74,7 +69,7 @@ export function InquiryForm() {
   return (
     <form action={formAction} className="mt-8 max-w-2xl space-y-5">
       <input aria-hidden="true" className="sr-only" name="website" tabIndex={-1} type="text" />
-      <input name="startedAt" ref={startedAtInput} type="hidden" />
+      <input name="startedAt" readOnly type="hidden" value={startedAt} />
 
       <div>
         <label className="block font-semibold" htmlFor="inquiry-name">

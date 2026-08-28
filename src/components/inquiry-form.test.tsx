@@ -53,6 +53,19 @@ describe("InquiryForm", () => {
     await waitFor(() => {
       expect(screen.getByRole("button", { name: "Send project inquiry" })).toBeEnabled();
     });
+
+    const firstSubmission = submitInquiry.mock.calls[0]?.[1] as FormData;
+    message.closest("form")?.reset();
+    expect(message).toHaveValue("Make customer handoffs easier across our internal tools.");
+    await user.click(screen.getByRole("button", { name: "Send project inquiry" }));
+
+    await waitFor(() => expect(submitInquiry).toHaveBeenCalledTimes(2));
+    const retrySubmission = submitInquiry.mock.calls[1]?.[1] as FormData;
+    expect(retrySubmission.get("startedAt")).toBe(firstSubmission.get("startedAt"));
+    expect(retrySubmission.get("startedAt")).not.toBe("");
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Your inquiry could not be sent. Try again or email Felix directly.",
+    );
   });
 
   it("resets the form only after a successful submission", async () => {
