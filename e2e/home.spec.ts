@@ -1,8 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.fixme("opens the flagship project from the homepage", {
-  annotation: { type: "fixme", description: "Plan 2 creates project routes" },
-}, async ({ page }) => {
+test("opens the flagship project from the homepage", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Skip intro" }).click().catch(() => {});
   await page.getByRole("link", { name: /Sayu Café/i }).click();

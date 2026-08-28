@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { CaseStudyHero } from "@/components/case-study/case-study-hero";
 import { CaseStudyNavigation } from "@/components/case-study/case-study-navigation";
 import { CaseStudySection } from "@/components/case-study/case-study-section";
+import { PachDashboardPreview } from "@/components/case-study/pach-dashboard-preview";
 import { ProjectGallery } from "@/components/case-study/project-gallery";
 import { sayuCatalog } from "@/content/sayu-builder-data";
 import { getNextProject, getProjectBySlug, getProjectSlugs } from "@/lib/projects";
@@ -46,6 +47,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <ProjectGallery media={project.media} projectTitle={project.title} />
       {SayuBuilder ? <SayuBuilder catalog={sayuCatalog} /> : null}
       {SolaraQuotationFlow ? <SolaraQuotationFlow /> : null}
+      {project.slug === "pach-drugmart" ? <PachDashboardPreview /> : null}
     </main>
   );
 }
