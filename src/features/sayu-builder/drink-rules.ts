@@ -3,6 +3,8 @@ import type {
   DrinkCatalog,
   DrinkField,
   DrinkSelection,
+  SelectionNormalizationIssue,
+  SelectionNormalizationResult,
 } from "./types";
 
 const summaryFields: DrinkField[] = [
@@ -54,26 +56,110 @@ export function getDisabledOptions(
   return [...disabled.values()];
 }
 
+function getUnknownOptionIssues(
+  selection: DrinkSelection,
+  catalog: DrinkCatalog,
+): SelectionNormalizationIssue[] {
+  return summaryFields.flatMap((field) =>
+    catalog.options[field].some((option) => option.id === selection[field])
+      ? []
+      : [{ code: "unknown-option" as const, field, optionId: selection[field] }],
+  );
+}
+
+function getInvalidSelectedFields(
+  selection: DrinkSelection,
+  disabled: DisabledOption[],
+) {
+  return summaryFields.filter((field) =>
+    disabled.some(
+      (option) => option.field === field && option.optionId === selection[field],
+    ),
+  );
+}
+
+export function normalizeSelectionResult(
+  selection: DrinkSelection,
+  catalog: DrinkCatalog,
+): SelectionNormalizationResult {
+  const normalized = { ...selection };
+  const visited = new Set<string>();
+
+  while (true) {
+    const stateKey = JSON.stringify(
+      summaryFields.map((field) => normalized[field]),
+    );
+    if (visited.has(stateKey)) {
+      const disabled = getDisabledOptions(normalized, catalog);
+      return {
+        status: "invalid",
+        selection: normalized,
+        issues: [
+          {
+            code: "normalization-cycle",
+            fields: getInvalidSelectedFields(normalized, disabled),
+          },
+        ],
+      };
+    }
+    visited.add(stateKey);
+
+    const disabled = getDisabledOptions(normalized, catalog);
+    const invalidFields = getInvalidSelectedFields(normalized, disabled);
+
+    if (invalidFields.length === 0) {
+      const issues = getUnknownOptionIssues(normalized, catalog);
+      return issues.length === 0
+        ? { status: "valid", selection: normalized, issues: [] }
+        : { status: "invalid", selection: normalized, issues };
+    }
+
+    let replaced = false;
+
+    for (const field of invalidFields) {
+      const replacement = catalog.options[field].find(
+        (option) =>
+          !disabled.some(
+            (disabledOption) =>
+              disabledOption.field === field && disabledOption.optionId === option.id,
+          ),
+      );
+
+      if (!replacement) continue;
+
+      normalized[field] = replacement.id;
+      replaced = true;
+      break;
+    }
+
+    if (!replaced) {
+      return {
+        status: "invalid",
+        selection: normalized,
+        issues: invalidFields.map((field) => ({
+          code: "unsatisfiable-field",
+          field,
+          selectedOptionId: normalized[field],
+          disabledOptionIds: catalog.options[field]
+            .filter((option) =>
+              disabled.some(
+                (disabledOption) =>
+                  disabledOption.field === field &&
+                  disabledOption.optionId === option.id,
+              ),
+            )
+            .map((option) => option.id),
+        })),
+      };
+    }
+  }
+}
+
 export function normalizeSelection(
   selection: DrinkSelection,
   catalog: DrinkCatalog,
 ): DrinkSelection {
-  const normalized = { ...selection };
-  const disabled = getDisabledOptions(selection, catalog);
-
-  for (const field of summaryFields) {
-    if (!disabled.some((option) => option.field === field && option.optionId === selection[field])) {
-      continue;
-    }
-
-    const replacement = catalog.options[field].find(
-      (option) => !disabled.some((disabledOption) => disabledOption.field === field && disabledOption.optionId === option.id),
-    );
-
-    if (replacement) normalized[field] = replacement.id;
-  }
-
-  return normalized;
+  return normalizeSelectionResult(selection, catalog).selection;
 }
 
 export function createDrinkSummary(

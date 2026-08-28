@@ -1,9 +1,27 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
-import ProjectPage from "@/app/work/[slug]/page";
+import { beforeAll, describe, expect, it, vi } from "vitest";
+import PachDrugmartPage from "@/app/work/pach-drugmart/page";
+import SayuCafePage from "@/app/work/sayu-cafe/page";
+import SolaraPage from "@/app/work/solara/page";
 import { SolaraQuotationFlow } from "./solara-quotation-flow";
 
 describe("SolaraQuotationFlow", () => {
+  beforeAll(() => {
+    Object.defineProperty(window, "matchMedia", {
+      configurable: true,
+      value: vi.fn().mockImplementation((query: string) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    });
+  });
+
   it("explains the document-first quotation routing without unverified metrics", () => {
     render(<SolaraQuotationFlow />);
 
@@ -17,9 +35,25 @@ describe("SolaraQuotationFlow", () => {
     render(<SolaraQuotationFlow />);
 
     const flow = screen.getByRole("list", { name: "Solara quotation routing" });
-    expect(within(flow).getAllByRole("listitem")).toHaveLength(5);
+    expect(flow.querySelectorAll(":scope > li")).toHaveLength(3);
     expect(screen.getByRole("heading", { name: "Can the approved document answer?" })).toBeInTheDocument();
     expect(screen.getByText("Shipped")).toBeInTheDocument();
+  });
+
+  it("nests sibling yes and no outcomes under the decision", () => {
+    render(<SolaraQuotationFlow />);
+
+    const decision = screen.getByRole("heading", {
+      name: "Can the approved document answer?",
+    }).closest("li");
+    const outcomes = within(decision!).getByRole("list", {
+      name: "Quotation outcomes",
+    });
+
+    expect(outcomes.parentElement).toBe(decision);
+    expect(outcomes.querySelectorAll(":scope > li")).toHaveLength(2);
+    expect(within(outcomes).getByText("Yes — the document can answer")).toBeInTheDocument();
+    expect(within(outcomes).getByText("No — more help is needed")).toBeInTheDocument();
   });
 
   it("labels the document-answer outcome as the yes branch", () => {
@@ -36,19 +70,16 @@ describe("SolaraQuotationFlow", () => {
     expect(geminiAssistance).toHaveTextContent("Use lightweight Gemini quotation assistance");
   });
 
-  it("renders the flow only on Solara's route", async () => {
-    const solara = await ProjectPage({ params: Promise.resolve({ slug: "solara" }) });
-    const { unmount } = render(solara);
+  it("renders the flow only on Solara's route", () => {
+    const { unmount } = render(<SolaraPage />);
     expect(screen.getByText("Answer from the document without calling Gemini")).toBeInTheDocument();
     unmount();
 
-    const sayu = await ProjectPage({ params: Promise.resolve({ slug: "sayu-cafe" }) });
-    render(sayu);
+    render(<SayuCafePage />);
     expect(screen.queryByText("Answer from the document without calling Gemini")).not.toBeInTheDocument();
     cleanup();
 
-    const pach = await ProjectPage({ params: Promise.resolve({ slug: "pach-drugmart" }) });
-    render(pach);
+    render(<PachDrugmartPage />);
     expect(screen.queryByText("Answer from the document without calling Gemini")).not.toBeInTheDocument();
   });
 });

@@ -15,7 +15,8 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:e2e": "playwright test",
-    "verify": "npm run lint && npm run typecheck && npm run test:run && npm run build"
+    "verify:route-bundles": "node scripts/verify-route-bundles.mjs",
+    "verify": "npm run lint && npm run typecheck && npm run test:run && npm run build && npm run verify:route-bundles"
   },
   "keywords": [],
   "author": "",

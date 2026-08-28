@@ -4,6 +4,7 @@ import {
   createDrinkSummary,
   getDisabledOptions,
   normalizeSelection,
+  normalizeSelectionResult,
 } from "./drink-rules";
 
 const fixtureCatalog: DrinkCatalog = {
@@ -102,11 +103,42 @@ describe("drink rules", () => {
     ).toMatchObject({ texture: "clean" });
   });
 
+  it("recomputes disabled choices after each cascading replacement", () => {
+    const cascadingCatalog: DrinkCatalog = {
+      ...fixtureCatalog,
+      constraints: [
+        {
+          when: { temperature: "hot" },
+          disallow: { field: "texture", optionIds: ["foamy"] },
+          reason: "Hot test drinks cannot use foam.",
+        },
+        {
+          when: { texture: "clean" },
+          disallow: { field: "milk", optionIds: ["whole"] },
+          reason: "Clean test drinks cannot use whole milk.",
+        },
+      ],
+    };
+
+    const normalized = normalizeSelection(
+      { ...hotSeasonal, milk: "whole", texture: "foamy" },
+      cascadingCatalog,
+    );
+    const disabled = getDisabledOptions(normalized, cascadingCatalog);
+
+    expect(normalized).toMatchObject({ milk: "oat", texture: "clean" });
+    expect(
+      disabled.some(
+        ({ field, optionId }) => normalized[field] === optionId,
+      ),
+    ).toBe(false);
+  });
+
   it("leaves valid selections unchanged", () => {
     expect(normalizeSelection(hotSeasonal, fixtureCatalog)).toEqual(hotSeasonal);
   });
 
-  it("preserves a disabled value when every catalog option for its field is disabled", () => {
+  it("reports an unsatisfiable field when every catalog option is disabled", () => {
     const catalog: DrinkCatalog = {
       ...fixtureCatalog,
       constraints: [
@@ -120,15 +152,71 @@ describe("drink rules", () => {
     const selection = { ...hotSeasonal, texture: "foamy" };
 
     expect(normalizeSelection(selection, catalog)).toEqual(selection);
-    expect(selection.texture).toBe("foamy");
+    expect(normalizeSelectionResult(selection, catalog)).toEqual({
+      status: "invalid",
+      selection,
+      issues: [
+        {
+          code: "unsatisfiable-field",
+          field: "texture",
+          selectedOptionId: "foamy",
+          disabledOptionIds: ["clean", "creamy", "foamy"],
+        },
+      ],
+    });
   });
 
-  it("preserves an unknown selected option that is not disabled", () => {
+  it("preserves and reports an unknown selected option without throwing", () => {
     const selection = { ...hotSeasonal, texture: "unknown-texture" };
 
     expect(() => normalizeSelection(selection, fixtureCatalog)).not.toThrow();
     expect(normalizeSelection(selection, fixtureCatalog)).toEqual(selection);
-    expect(selection.texture).toBe("unknown-texture");
+    expect(normalizeSelectionResult(selection, fixtureCatalog)).toEqual({
+      status: "invalid",
+      selection,
+      issues: [
+        {
+          code: "unknown-option",
+          field: "texture",
+          optionId: "unknown-texture",
+        },
+      ],
+    });
+  });
+
+  it("stops and reports a normalization cycle", () => {
+    const cyclingCatalog: DrinkCatalog = {
+      ...fixtureCatalog,
+      constraints: [
+        {
+          when: { milk: "whole" },
+          disallow: { field: "texture", optionIds: ["foamy"] },
+          reason: "Whole milk rejects foam in the cycle fixture.",
+        },
+        {
+          when: { texture: "clean" },
+          disallow: { field: "milk", optionIds: ["whole"] },
+          reason: "Clean texture rejects whole milk in the cycle fixture.",
+        },
+        {
+          when: { milk: "oat" },
+          disallow: { field: "texture", optionIds: ["clean", "creamy"] },
+          reason: "Oat milk rejects non-foamy texture in the cycle fixture.",
+        },
+        {
+          when: { texture: "foamy" },
+          disallow: { field: "milk", optionIds: ["oat"] },
+          reason: "Foam rejects oat milk in the cycle fixture.",
+        },
+      ],
+    };
+    const selection = { ...hotSeasonal, milk: "whole", texture: "foamy" };
+
+    expect(() => normalizeSelection(selection, cyclingCatalog)).not.toThrow();
+    expect(normalizeSelectionResult(selection, cyclingCatalog)).toMatchObject({
+      status: "invalid",
+      issues: [{ code: "normalization-cycle" }],
+    });
   });
 
   it("resolves labels into the prescribed summary order", () => {

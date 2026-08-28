@@ -1,9 +1,27 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
-import ProjectPage from "@/app/work/[slug]/page";
+import { beforeAll, describe, expect, it, vi } from "vitest";
+import PachDrugmartPage from "@/app/work/pach-drugmart/page";
+import SayuCafePage from "@/app/work/sayu-cafe/page";
+import SolaraPage from "@/app/work/solara/page";
 import { PachDashboardPreview } from "./pach-dashboard-preview";
 
 describe("PachDashboardPreview", () => {
+  beforeAll(() => {
+    Object.defineProperty(window, "matchMedia", {
+      configurable: true,
+      value: vi.fn().mockImplementation((query: string) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    });
+  });
+
   it("renders qualitative operational dashboard views without unsupported claims", () => {
     render(<PachDashboardPreview />);
 
@@ -31,23 +49,20 @@ describe("PachDashboardPreview", () => {
     expect(within(preview).queryByText(/PD Pach/i)).not.toBeInTheDocument();
   });
 
-  it("renders only on the Pach Drugmart route", async () => {
-    const pach = await ProjectPage({ params: Promise.resolve({ slug: "pach-drugmart" }) });
-    const { unmount } = render(pach);
+  it("renders only on the Pach Drugmart route", () => {
+    const { unmount } = render(<PachDrugmartPage />);
     expect(
       screen.getByRole("figure", { name: "Pach Drugmart operational dashboard preview" }),
     ).toBeInTheDocument();
     unmount();
 
-    const sayu = await ProjectPage({ params: Promise.resolve({ slug: "sayu-cafe" }) });
-    render(sayu);
+    render(<SayuCafePage />);
     expect(
       screen.queryByRole("figure", { name: "Pach Drugmart operational dashboard preview" }),
     ).not.toBeInTheDocument();
     cleanup();
 
-    const solara = await ProjectPage({ params: Promise.resolve({ slug: "solara" }) });
-    render(solara);
+    render(<SolaraPage />);
     expect(
       screen.queryByRole("figure", { name: "Pach Drugmart operational dashboard preview" }),
     ).not.toBeInTheDocument();

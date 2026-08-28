@@ -26,17 +26,19 @@ export function SolaraQuotationFlow() {
             <p className="font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--color-accent)]">Step 3 · Decision</p>
             <h3 className="mt-2 text-xl font-semibold">Can the approved document answer?</h3>
             <p className="mt-2 text-[color-mix(in_srgb,var(--color-text)_80%,transparent)]">The route stays grounded in the approved document whenever it provides the needed answer.</p>
-          </li>
-          <li className="border-2 border-[var(--color-text)] bg-[var(--color-support)] p-5 text-[var(--color-support-foreground)]">
-            <p className="font-mono text-xs font-bold uppercase tracking-[0.1em]">Step 4</p>
-            <h3 className="mt-2 text-xl font-semibold">Yes — the document can answer</h3>
-            <p className="mt-2 font-semibold">Answer from the document without calling Gemini</p>
-          </li>
-          <li className="border-2 border-[var(--color-text)] p-5">
-            <p className="font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--color-accent)]">Step 5</p>
-            <h3 className="mt-2 text-xl font-semibold">No — more help is needed</h3>
-            <p className="mt-2 text-xl font-semibold">Use lightweight Gemini quotation assistance</p>
-            <p className="mt-2 font-semibold">Gemini assistance stays within pricing guardrails</p>
+            <ul aria-label="Quotation outcomes" className="mt-5 grid gap-4 md:grid-cols-2">
+              <li className="border-2 border-[var(--color-text)] bg-[var(--color-support)] p-5 text-[var(--color-support-foreground)]">
+                <p className="font-mono text-xs font-bold uppercase tracking-[0.1em]">Yes outcome</p>
+                <h4 className="mt-2 text-xl font-semibold">Yes — the document can answer</h4>
+                <p className="mt-2 font-semibold">Answer from the document without calling Gemini</p>
+              </li>
+              <li className="border-2 border-[var(--color-text)] p-5">
+                <p className="font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--color-accent)]">No outcome</p>
+                <h4 className="mt-2 text-xl font-semibold">No — more help is needed</h4>
+                <p className="mt-2 text-xl font-semibold">Use lightweight Gemini quotation assistance</p>
+                <p className="mt-2 font-semibold">Gemini assistance stays within pricing guardrails</p>
+              </li>
+            </ul>
           </li>
         </ol>
       </div>

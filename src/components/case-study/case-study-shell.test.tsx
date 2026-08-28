@@ -30,6 +30,13 @@ function SayuFixture() {
 }
 
 describe("case study shell", () => {
+  it("does not infer a project-wide shipped state for Sayu's mixed proof", () => {
+    render(<CaseStudyHero project={projects[0]} />);
+
+    expect(screen.queryByText("Shipped")).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Sayu Café" })).toBeInTheDocument();
+  });
+
   it("renders an accessible Sayu case study with truthful proof states", () => {
     const { container } = render(<SayuFixture />);
 
@@ -52,6 +59,6 @@ describe("case study shell", () => {
     expect(image).toHaveAttribute("width", "1440");
     expect(image).toHaveAttribute("height", "900");
     expect(within(gallery).getByText(/Development media fallback/i)).toBeVisible();
-    expect(screen.getAllByText(/Shipped|Prototype|Planned/)).toHaveLength(7);
+    expect(screen.getAllByText(/Shipped|Prototype|Planned/)).toHaveLength(6);
   });
 });

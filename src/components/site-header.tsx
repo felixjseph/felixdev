@@ -5,14 +5,18 @@ import { ResumeAction } from "./resume-action";
 import { ThemeToggle } from "./theme-toggle";
 
 const navigationLinks = [
-  { href: "#hero", label: "Home" },
-  { href: "#work", label: "Work" },
-  { href: "#capabilities", label: "Capabilities" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  { anchor: "hero", label: "Home" },
+  { anchor: "work", label: "Work" },
+  { anchor: "capabilities", label: "Capabilities" },
+  { anchor: "about", label: "About" },
+  { anchor: "contact", label: "Contact" },
 ] as const;
 
-export function SiteHeader() {
+type SiteHeaderProps = {
+  linkToHomepage?: boolean;
+};
+
+export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuId = useId();
 
@@ -28,6 +32,7 @@ export function SiteHeader() {
   }, []);
 
   const closeMenu = () => setIsMenuOpen(false);
+  const anchorHref = (anchor: string) => `${linkToHomepage ? "/" : ""}#${anchor}`;
 
   return (
     <header className="sticky top-0 z-50 border-b-2 border-[var(--color-text)] bg-[var(--color-bg)]">
@@ -35,12 +40,12 @@ export function SiteHeader() {
         aria-label="Primary"
         className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3"
       >
-        <a className="font-semibold" href="#hero" onClick={closeMenu}>
+        <a className="font-semibold" href={anchorHref("hero")} onClick={closeMenu}>
           Felix Castañeda
         </a>
         <div className="hidden items-center gap-5 md:flex">
           {navigationLinks.map((link) => (
-            <a href={link.href} key={link.href} onClick={closeMenu}>
+            <a href={anchorHref(link.anchor)} key={link.anchor} onClick={closeMenu}>
               {link.label}
             </a>
           ))}
@@ -50,7 +55,7 @@ export function SiteHeader() {
           <a
             className="hidden border-2 border-[var(--color-text)] bg-[var(--color-accent)] px-3 py-2 font-semibold text-[var(--color-accent-foreground)] shadow-[3px_3px_0_var(--color-text)] md:inline"
             data-accent-surface="primary"
-            href="#contact"
+            href={anchorHref("contact")}
             onClick={closeMenu}
           >
             Start a project
@@ -75,7 +80,7 @@ export function SiteHeader() {
           id={menuId}
         >
           {navigationLinks.map((link) => (
-            <a href={link.href} key={link.href} onClick={closeMenu}>
+            <a href={anchorHref(link.anchor)} key={link.anchor} onClick={closeMenu}>
               {link.label}
             </a>
           ))}
@@ -83,7 +88,7 @@ export function SiteHeader() {
           <a
             className="border-2 border-[var(--color-text)] bg-[var(--color-accent)] px-3 py-2 font-semibold text-[var(--color-accent-foreground)]"
             data-accent-surface="primary"
-            href="#contact"
+            href={anchorHref("contact")}
             onClick={closeMenu}
           >
             Start a project
