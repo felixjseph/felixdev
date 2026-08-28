@@ -2,6 +2,10 @@ import { render, screen, within } from "@testing-library/react";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import HomePage from "./page";
 
+vi.mock("@/app/actions/submit-inquiry", () => ({
+  submitInquiry: vi.fn(async () => ({ status: "idle", message: "" })),
+}));
+
 describe("HomePage", () => {
   beforeAll(() => {
     Object.defineProperty(window, "matchMedia", {
@@ -57,7 +61,7 @@ describe("HomePage", () => {
 
     expect(container.innerHTML).not.toContain(privateRepositoryEmail);
     expect(container.querySelector("a[href^='mailto:']")).not.toBeInTheDocument();
-    expect(screen.getByText(/project inquiry form is coming/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Send project inquiry" })).toBeInTheDocument();
   });
 
   it("marks every primary cobalt surface for semantic contrast", () => {

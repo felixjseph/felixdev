@@ -4,6 +4,7 @@ import { CredibilityBand } from "@/components/credibility-band";
 import { FaqSection } from "@/components/faq-section";
 import { FeaturedWork } from "@/components/featured-work";
 import { HumanOrbit } from "@/components/human-orbit";
+import { InquiryForm } from "@/components/inquiry-form";
 import { OrbitAssembly } from "@/components/orbit-assembly";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -31,7 +32,7 @@ export default function HomePage() {
           data-accent-surface="primary"
           id="contact"
         >
-          <div className="mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-8">
+          <div className="mx-auto max-w-7xl">
             <div>
               <p className="system-label text-xs uppercase tracking-[0.16em]">Inquiry</p>
               <h2 className="mt-2 max-w-2xl text-4xl font-semibold tracking-[-0.05em]" id="contact-heading">
@@ -41,8 +42,9 @@ export default function HomePage() {
                 Share the workflow, product, or manual process you want to make clearer.
               </p>
             </div>
+            <InquiryForm />
             {siteConfig.publicContact.email || siteConfig.publicContact.linkedIn ? (
-              <nav aria-label="Public contact options" className="flex flex-wrap gap-3">
+              <nav aria-label="Public contact options" className="mt-6 flex flex-wrap gap-3">
                 {siteConfig.publicContact.email ? (
                   <a
                     className="border-2 border-[var(--color-accent-foreground)] px-5 py-3 font-semibold"
@@ -60,12 +62,7 @@ export default function HomePage() {
                   </a>
                 ) : null}
               </nav>
-            ) : (
-              <div className="max-w-sm border-2 border-[var(--color-accent-foreground)] p-5">
-                <p className="font-semibold">Start a project</p>
-                <p className="mt-2 text-sm">The project inquiry form is coming in the launch build.</p>
-              </div>
-            )}
+            ) : null}
           </div>
         </section>
       </main>
