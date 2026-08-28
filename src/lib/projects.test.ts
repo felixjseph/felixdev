@@ -1,6 +1,45 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { projects, requiredChapterTitles } from "@/content/projects";
 import { getNextProject, getProjectBySlug, getProjectSlugs } from "./projects";
+
+const approvedChapterTitles = {
+  "sayu-cafe": [
+    "Business context and operational friction",
+    "Responsive product discovery",
+    "Daily audit reporting",
+    "Inventory monitoring and low-stock alerts",
+    "Rule-based drink builder",
+    "Future smart suggestions",
+  ],
+  solara: [
+    "Service context and quotation needs",
+    "Application architecture",
+    "Document-first answerability check",
+    "Lightweight Gemini quotation assistance",
+    "Deployment, domain, DNS, and analytics",
+  ],
+  "pach-drugmart": [
+    "Operational context and inventory problems",
+    "Information structure and core workflows",
+    "Inventory analytics and operational dashboard",
+    "Transaction handling and operational visibility",
+  ],
+} as const;
+
+const approvedP2HexTokens = new Set([
+  "#F7F7F2",
+  "#FFFFFF",
+  "#111316",
+  "#2457FF",
+  "#BCE7D0",
+  "#0A0D14",
+  "#121826",
+  "#F2F4F8",
+  "#6B8CFF",
+  "#9FE0C0",
+]);
 
 describe("project content", () => {
   it("exposes the three approved slugs in order", () => {
@@ -32,11 +71,31 @@ describe("project content", () => {
   });
 
   it("keeps every project chapter list exact and ordered", () => {
+    expect(requiredChapterTitles).toEqual(approvedChapterTitles);
+
     for (const project of projects) {
       expect(project.sections.map((section) => section.title)).toEqual(
-        requiredChapterTitles[project.slug],
+        approvedChapterTitles[project.slug],
       );
     }
+  });
+
+  it("preserves the approved proof states for Sayu and Solara flows", () => {
+    const sayu = getProjectBySlug("sayu-cafe");
+    const solara = getProjectBySlug("solara");
+
+    expect(sayu?.sections.find((section) => section.title === "Rule-based drink builder")?.proofState).toBe("prototype");
+    expect(sayu?.sections.find((section) => section.title === "Future smart suggestions")?.proofState).toBe("planned");
+    expect(
+      solara?.sections.find(
+        (section) => section.title === "Document-first answerability check",
+      )?.proofState,
+    ).toBe("shipped");
+    expect(
+      solara?.sections.find(
+        (section) => section.title === "Lightweight Gemini quotation assistance",
+      )?.proofState,
+    ).toBe("shipped");
   });
 
   it("uses informative development fallback media with reserved dimensions", () => {
@@ -51,8 +110,30 @@ describe("project content", () => {
     }
   });
 
-  it("cycles to the next project and resolves Solara", () => {
+  it("keeps fallback SVGs visibly labelled and limited to the P2 palette", () => {
+    const fallbackAssets = [
+      ["sayu-fallback.svg", "Sayu Café"],
+      ["solara-fallback.svg", "Solara"],
+      ["pach-fallback.svg", "Pach Drugmart"],
+    ] as const;
+
+    for (const [filename, projectName] of fallbackAssets) {
+      const asset = readFileSync(
+        resolve(process.cwd(), "public", "images", "projects", filename),
+        "utf8",
+      );
+      const hexTokens = asset.match(/#[0-9A-Fa-f]{6}/g) ?? [];
+
+      expect(asset).toContain(projectName);
+      expect(asset).toContain("DEVELOPMENT MEDIA FALLBACK");
+      expect(hexTokens.length).toBeGreaterThan(0);
+      expect(hexTokens.every((token) => approvedP2HexTokens.has(token.toUpperCase()))).toBe(true);
+    }
+  });
+
+  it("cycles to the next project, resolves Solara, and deliberately falls back for an unknown slug", () => {
     expect(getNextProject("pach-drugmart")?.slug).toBe("sayu-cafe");
     expect(getProjectBySlug("solara")?.title).toBe("Solara");
+    expect(getNextProject("unknown-project")?.slug).toBe("sayu-cafe");
   });
 });
