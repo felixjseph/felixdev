@@ -53,3 +53,24 @@ export const faqItems: FaqItem[] = [
       "I use automation and AI where they make a process more dependable, with guardrails and trusted information guiding the result.",
   },
 ];
+
+export const projectPreviews = [
+  {
+    slug: "sayu-cafe",
+    title: "Sayu Café",
+    summary: "Product discovery and practical café automation.",
+    proof: "Rule-based builder, daily audit reporting, and low-stock alerts.",
+  },
+  {
+    slug: "solara",
+    title: "Solara",
+    summary: "A solar-services platform with grounded quotation assistance.",
+    proof: "Document-first pricing answers and lightweight Gemini assistance.",
+  },
+  {
+    slug: "pach-drugmart",
+    title: "Pach Drugmart",
+    summary: "Inventory operations, analytics, and transaction visibility.",
+    proof: "Operational dashboard and inventory insight.",
+  },
+] as const;
