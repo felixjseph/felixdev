@@ -1,4 +1,5 @@
 import { projectPreviews } from "@/content/homepage";
+import { AnalyticsLink } from "./analytics-link";
 
 export function FeaturedWork() {
   return (
@@ -33,9 +34,9 @@ export function FeaturedWork() {
                   0{index + 1} {project.tier === "flagship" ? "· Flagship" : ""}
                 </p>
                 <h3 className="mt-7 text-2xl font-semibold tracking-[-0.04em]">
-                  <a className="underline decoration-2 underline-offset-4" href={`/work/${project.slug}`}>
+                  <AnalyticsLink className="underline decoration-2 underline-offset-4" eventName="project_opened" href={`/work/${project.slug}`}>
                     {project.title}
-                  </a>
+                  </AnalyticsLink>
                 </h3>
                 <p className="mt-4 text-[color-mix(in_srgb,var(--color-text)_78%,transparent)]">
                   {project.summary}

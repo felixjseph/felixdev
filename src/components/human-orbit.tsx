@@ -10,6 +10,7 @@ import {
 } from "motion/react";
 import { useEffect, useState, type PointerEvent } from "react";
 import { homepageContent } from "@/content/homepage";
+import { AnalyticsLink } from "./analytics-link";
 import { ResumeAction } from "./resume-action";
 
 const MAX_TRANSLATION = 12;
@@ -85,13 +86,14 @@ export function HumanOrbit() {
           I build clear, durable digital systems that make practical work easier to run.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <a
+          <AnalyticsLink
             className="border-2 border-[var(--color-text)] bg-[var(--color-accent)] px-5 py-3 font-semibold text-[var(--color-accent-foreground)] shadow-[4px_4px_0_var(--color-text)]"
             data-accent-surface="primary"
+            eventName="explore_work"
             href="#work"
           >
             {homepageContent.primaryCta}
-          </a>
+          </AnalyticsLink>
           <ResumeAction
             className="border-2 border-[var(--color-text)] px-5 py-3 font-semibold"
             label={homepageContent.secondaryCta}

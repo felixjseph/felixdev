@@ -8,6 +8,8 @@ const project = getProjectBySlug("pach-drugmart")!;
 export const metadata: Metadata = {
   title: `${project.title} — Felix Castañeda`,
   description: project.summary,
+  alternates: { canonical: "/work/pach-drugmart" },
+  openGraph: { url: "/work/pach-drugmart", title: `${project.title} — Felix Castañeda`, description: project.summary },
 };
 
 export default function PachDrugmartPage() {

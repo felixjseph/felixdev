@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { trackPortfolioEvent } from "@/lib/analytics";
 import { createDrinkSummary, getDisabledOptions, normalizeSelection } from "./drink-rules";
 import type { DrinkCatalog, DrinkField, DrinkSelection } from "./types";
 
@@ -28,6 +29,7 @@ export function SayuBuilder({ catalog }: { catalog: DrinkCatalog }) {
     normalizeSelection(initialSelection(catalog), catalog),
   );
   const disabledOptions = getDisabledOptions(selection, catalog);
+  const hasTrackedCompletion = useRef(false);
   const dataLabel =
     catalog.verification === "approved"
       ? "Shipped · Approved menu rules"
@@ -35,6 +37,10 @@ export function SayuBuilder({ catalog }: { catalog: DrinkCatalog }) {
 
   function choose(field: DrinkField, optionId: string) {
     setSelection((current) => normalizeSelection({ ...current, [field]: optionId }, catalog));
+    if (!hasTrackedCompletion.current) {
+      hasTrackedCompletion.current = true;
+      trackPortfolioEvent("sayu_builder_completed");
+    }
   }
 
   return (

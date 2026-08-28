@@ -1,4 +1,5 @@
 import { siteConfig } from "@/content/site";
+import { AnalyticsLink } from "./analytics-link";
 
 type ResumeActionProps = {
   className?: string;
@@ -28,14 +29,15 @@ export function ResumeAction({
   }
 
   return (
-    <a
+    <AnalyticsLink
       className={className}
       data-resume-state="available"
       download
+      eventName="resume_downloaded"
       href={destination}
       onClick={onClick}
     >
       {label}
-    </a>
+    </AnalyticsLink>
   );
 }

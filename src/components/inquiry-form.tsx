@@ -1,11 +1,12 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { submitInquiry } from "@/app/actions/submit-inquiry";
 import { projectTypes } from "@/features/inquiry/schema";
 import type { InquiryResult } from "@/features/inquiry/types";
 import { siteConfig } from "@/content/site";
+import { trackPortfolioEvent } from "@/lib/analytics";
 
 const initialState: InquiryResult = { status: "idle", message: "" };
 const initialValues = { name: "", email: "", projectType: "", company: "", message: "" };
@@ -53,6 +54,7 @@ export function InquiryForm() {
   const [state, formAction] = useActionState(submitInquiry, initialState);
   const [values, setValues] = useState(initialValues);
   const [startedAt] = useState(() => String(Date.now()));
+  const hasTrackedStart = useRef(false);
   const fieldErrors = state.status === "invalid" ? state.fieldErrors : {};
 
   useEffect(() => {
@@ -61,13 +63,25 @@ export function InquiryForm() {
     return () => window.clearTimeout(resetValues);
   }, [state]);
 
+  useEffect(() => {
+    if (state.status === "success") trackPortfolioEvent("inquiry_submitted");
+  }, [state.status]);
+
   const resultMessage =
     state.status === "error"
       ? "Your inquiry could not be sent. Try again or email Felix directly."
       : state.message;
 
   return (
-    <form action={formAction} className="mt-8 max-w-2xl space-y-5">
+    <form
+      action={formAction}
+      className="mt-8 max-w-2xl space-y-5"
+      onFocus={() => {
+        if (hasTrackedStart.current) return;
+        hasTrackedStart.current = true;
+        trackPortfolioEvent("inquiry_started");
+      }}
+    >
       <input aria-hidden="true" className="sr-only" name="website" tabIndex={-1} type="text" />
       <input name="startedAt" readOnly type="hidden" value={startedAt} />
 

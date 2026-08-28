@@ -9,6 +9,8 @@ const project = getProjectBySlug("sayu-cafe")!;
 export const metadata: Metadata = {
   title: `${project.title} — Felix Castañeda`,
   description: project.summary,
+  alternates: { canonical: "/work/sayu-cafe" },
+  openGraph: { url: "/work/sayu-cafe", title: `${project.title} — Felix Castañeda`, description: project.summary },
 };
 
 export default function SayuCafePage() {
