@@ -65,7 +65,7 @@ export function InquiryForm() {
 
   useEffect(() => {
     if (state.status === "success") trackPortfolioEvent("inquiry_submitted");
-  }, [state.status]);
+  }, [state]);
 
   const resultMessage =
     state.status === "error"

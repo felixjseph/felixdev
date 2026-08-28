@@ -4,8 +4,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { InquiryForm } from "./inquiry-form";
 
 const submitInquiry = vi.hoisted(() => vi.fn());
+const trackPortfolioEvent = vi.hoisted(() => vi.fn());
 
 vi.mock("@/app/actions/submit-inquiry", () => ({ submitInquiry }));
+vi.mock("@/lib/analytics", () => ({ trackPortfolioEvent }));
 
 async function completeRequiredFields(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText("Name"), "Avery Stone");
@@ -16,6 +18,7 @@ async function completeRequiredFields(user: ReturnType<typeof userEvent.setup>) 
 describe("InquiryForm", () => {
   beforeEach(() => {
     submitInquiry.mockResolvedValue({ status: "idle", message: "" });
+    trackPortfolioEvent.mockClear();
   });
 
   it("renders the approved inquiry fields", () => {
@@ -83,6 +86,43 @@ describe("InquiryForm", () => {
 
     expect(await screen.findByRole("status")).toHaveTextContent("Thanks—your inquiry was sent.");
     await waitFor(() => expect(message).toHaveValue(""));
+  });
+
+  it("tracks each distinct successful submission once without event properties", async () => {
+    const user = userEvent.setup();
+    submitInquiry
+      .mockResolvedValueOnce({
+        status: "success",
+        message: "Thanks—your inquiry was sent. Felix will reply as soon as possible.",
+      })
+      .mockResolvedValueOnce({
+        status: "success",
+        message: "Thanks—your inquiry was sent. Felix will reply as soon as possible.",
+      });
+    render(<InquiryForm />);
+
+    await completeRequiredFields(user);
+    await user.type(
+      screen.getByLabelText("What are you trying to improve?"),
+      "Make customer handoffs easier across our internal tools.",
+    );
+    await user.click(screen.getByRole("button", { name: "Send project inquiry" }));
+    await waitFor(() => expect(trackPortfolioEvent).toHaveBeenCalledWith("inquiry_submitted"));
+    await waitFor(() => expect(screen.getByLabelText("Name")).toHaveValue(""));
+
+    await completeRequiredFields(user);
+    await user.type(
+      screen.getByLabelText("What are you trying to improve?"),
+      "Make customer handoffs easier across our internal tools.",
+    );
+    await user.click(screen.getByRole("button", { name: "Send project inquiry" }));
+
+    await waitFor(() => {
+      const submissions = trackPortfolioEvent.mock.calls.filter(
+        ([eventName]) => eventName === "inquiry_submitted",
+      );
+      expect(submissions).toEqual([["inquiry_submitted"], ["inquiry_submitted"]]);
+    });
   });
 
   it("associates authoritative invalid field errors with their fields", async () => {
