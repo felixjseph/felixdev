@@ -13,14 +13,17 @@ describe("SolaraQuotationFlow", () => {
     expect(screen.queryByText(/40%/)).not.toBeInTheDocument();
   });
 
-  it("uses an ordered flow with a visible decision and both branch outcomes", () => {
+  it("uses an ordered flow with explicitly labelled alternative outcomes", () => {
     render(<SolaraQuotationFlow />);
 
     const flow = screen.getByRole("list", { name: "Solara quotation routing" });
     expect(within(flow).getAllByRole("listitem")).toHaveLength(5);
     expect(screen.getByRole("heading", { name: "Can the approved document answer?" })).toBeInTheDocument();
-    expect(screen.getByText("Document answer")).toBeInTheDocument();
-    expect(screen.getByText("Use lightweight Gemini quotation assistance")).toBeInTheDocument();
+    const documentAnswer = screen.getByText("Yes — the document can answer").closest("li");
+    expect(documentAnswer).toHaveTextContent("Answer from the document without calling Gemini");
+
+    const geminiAssistance = screen.getByText("No — more help is needed").closest("li");
+    expect(geminiAssistance).toHaveTextContent("Use lightweight Gemini quotation assistance");
     expect(screen.getByText("Shipped")).toBeInTheDocument();
   });
 

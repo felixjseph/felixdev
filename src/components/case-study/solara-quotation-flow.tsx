@@ -29,12 +29,13 @@ export function SolaraQuotationFlow() {
           </li>
           <li className="border-2 border-[var(--color-text)] bg-[var(--color-support)] p-5 text-[var(--color-support-foreground)]">
             <p className="font-mono text-xs font-bold uppercase tracking-[0.1em]">Step 4</p>
-            <h3 className="mt-2 text-xl font-semibold">Document answer</h3>
+            <h3 className="mt-2 text-xl font-semibold">Yes — the document can answer</h3>
             <p className="mt-2 font-semibold">Answer from the document without calling Gemini</p>
           </li>
           <li className="border-2 border-[var(--color-text)] p-5">
             <p className="font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--color-accent)]">Step 5</p>
-            <h3 className="mt-2 text-xl font-semibold">Use lightweight Gemini quotation assistance</h3>
+            <h3 className="mt-2 text-xl font-semibold">No — more help is needed</h3>
+            <p className="mt-2 text-xl font-semibold">Use lightweight Gemini quotation assistance</p>
             <p className="mt-2 font-semibold">Gemini assistance stays within pricing guardrails</p>
           </li>
         </ol>
