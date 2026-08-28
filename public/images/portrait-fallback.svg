@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 900" role="img" aria-labelledby="title desc">
+  <title id="title">Felix Castañeda development portrait placeholder</title>
+  <desc id="desc">A development-only portrait fallback featuring the initials FC.</desc>
+  <rect width="720" height="900" fill="#bce7d0"/>
+  <circle cx="360" cy="360" r="198" fill="#2457ff"/>
+  <text x="360" y="415" fill="#f7f7f2" font-family="Arial, sans-serif" font-size="168" font-weight="700" text-anchor="middle">FC</text>
+  <text x="360" y="680" fill="#111316" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="6" text-anchor="middle">DEVELOPMENT PLACEHOLDER</text>
+  <text x="360" y="730" fill="#111316" font-family="Arial, sans-serif" font-size="22" letter-spacing="3" text-anchor="middle">FELIX CASTAÑEDA</text>
+</svg>
