@@ -6,6 +6,8 @@
   --color-text: #111316;
   --color-accent: #2457ff;
   --color-support: #bce7d0;
+  --color-accent-foreground: #f7f7f2;
+  --color-support-foreground: #111316;
 }
 
 :root[data-theme="dark"] {
@@ -14,6 +16,8 @@
   --color-text: #f2f4f8;
   --color-accent: #6b8cff;
   --color-support: #9fe0c0;
+  --color-accent-foreground: #0a0d14;
+  --color-support-foreground: #0a0d14;
 }
 
 * {
@@ -59,12 +63,324 @@ select {
 
 ::selection {
   background: var(--color-accent);
-  color: var(--color-surface);
+  color: var(--color-accent-foreground);
 }
 
 :focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
+}
+
+[data-accent-surface="primary"]:focus-visible,
+[data-accent-surface="primary"] :focus-visible {
+  outline-color: var(--color-accent-foreground);
+}
+
+.human-orbit-visual {
+  position: relative;
+  min-height: clamp(27rem, 52vw, 38rem);
+  perspective: 1000px;
+  isolation: isolate;
+}
+
+.human-orbit-ring {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: min(88%, 34rem);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border: 2px solid var(--color-accent);
+  border-radius: 50%;
+  box-shadow: 7px 7px 0 var(--color-text);
+}
+
+.human-orbit-ring::before,
+.human-orbit-ring::after {
+  position: absolute;
+  content: "";
+  background: var(--color-accent);
+}
+
+.human-orbit-ring::before {
+  inset: 50% -5% auto;
+  height: 2px;
+}
+
+.human-orbit-ring::after {
+  inset: -5% auto -5% 50%;
+  width: 2px;
+}
+
+.human-orbit-core {
+  position: absolute;
+  z-index: 2;
+  inset: 50% auto auto 50%;
+  width: min(56%, 18rem);
+  translate: -50% -50%;
+  overflow: hidden;
+  border: 2px solid var(--color-text);
+  border-radius: 46% 46% 42% 42%;
+  background: var(--color-surface);
+  box-shadow: 8px 8px 0 var(--color-text);
+  transform-style: preserve-3d;
+}
+
+.human-orbit-portrait {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.human-orbit-fallback-label {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 0.45rem 0.6rem;
+  border-top: 2px solid var(--color-text);
+  background: var(--color-support);
+  color: var(--color-support-foreground);
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.human-orbit-nodes {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.human-orbit-node {
+  position: absolute;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.7rem 0.85rem;
+  border: 2px solid var(--color-text);
+  background: var(--color-support);
+  color: var(--color-support-foreground);
+  box-shadow: 4px 4px 0 var(--color-text);
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.human-orbit-node:nth-child(1) {
+  top: 12%;
+  left: 1%;
+}
+
+.human-orbit-node:nth-child(2) {
+  top: 19%;
+  right: 0;
+}
+
+.human-orbit-node:nth-child(3) {
+  right: 7%;
+  bottom: 9%;
+}
+
+.orbit-assembly-stage {
+  position: relative;
+  width: min(32rem, 88vw);
+  aspect-ratio: 1;
+}
+
+.orbit-assembly-signal {
+  position: absolute;
+  z-index: 4;
+  top: calc(50% - 2px);
+  left: 10%;
+  width: 40%;
+  height: 4px;
+  background: var(--color-accent);
+  box-shadow: -10px 0 0 var(--color-accent);
+}
+
+.orbit-assembly-ring {
+  position: absolute;
+  z-index: 1;
+  inset: 11%;
+  border: 2px solid var(--color-accent);
+  border-radius: 50%;
+}
+
+.orbit-assembly-ring::before,
+.orbit-assembly-ring::after {
+  position: absolute;
+  content: "";
+  background: var(--color-accent);
+}
+
+.orbit-assembly-ring::before {
+  inset: 50% -5% auto;
+  height: 2px;
+}
+
+.orbit-assembly-ring::after {
+  inset: -5% auto -5% 50%;
+  width: 2px;
+}
+
+.orbit-assembly-core {
+  position: absolute;
+  z-index: 3;
+  inset: 50% auto auto 50%;
+  width: 38%;
+  translate: -50% -50%;
+  overflow: hidden;
+  border: 2px solid var(--color-support-foreground);
+  border-radius: 46% 46% 42% 42%;
+  background: var(--color-support);
+  color: var(--color-support-foreground);
+  box-shadow: 6px 6px 0 var(--color-support-foreground);
+}
+
+.orbit-assembly-portrait {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.orbit-assembly-nodes {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.orbit-assembly-node {
+  position: absolute;
+  padding: 0.55rem 0.7rem;
+  border: 2px solid var(--color-support-foreground);
+  background: var(--color-support);
+  color: var(--color-support-foreground);
+  box-shadow: 3px 3px 0 var(--color-support-foreground);
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.orbit-assembly-node:nth-child(1) {
+  top: 11%;
+  left: 12%;
+}
+
+.orbit-assembly-node:nth-child(2) {
+  top: 20%;
+  right: 2%;
+}
+
+.orbit-assembly-node:nth-child(3) {
+  right: 9%;
+  bottom: 11%;
+}
+
+.orbit-assembly-label {
+  position: absolute;
+  z-index: 5;
+  bottom: 3%;
+  left: 50%;
+  translate: -50% 0;
+  color: var(--color-text);
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sayu-workflow-preview {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 19rem;
+  padding: 2rem;
+  border: 2px solid var(--color-accent);
+  background: var(--color-bg);
+}
+
+.sayu-workflow-preview::before,
+.sayu-workflow-preview::after {
+  position: absolute;
+  z-index: 0;
+  content: "";
+  background: var(--color-accent);
+}
+
+.sayu-workflow-preview::before {
+  top: 50%;
+  left: 28%;
+  width: 44%;
+  height: 2px;
+}
+
+.sayu-workflow-preview::after {
+  top: 24%;
+  bottom: 24%;
+  left: 50%;
+  width: 2px;
+}
+
+.sayu-workflow-origin,
+.sayu-workflow-preview li {
+  position: relative;
+  z-index: 1;
+  padding: 0.65rem 0.8rem;
+  border: 2px solid var(--color-text);
+  background: var(--color-support);
+  color: var(--color-support-foreground);
+  box-shadow: 3px 3px 0 var(--color-text);
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.sayu-workflow-origin {
+  margin: 0;
+}
+
+.sayu-workflow-preview ol {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sayu-workflow-preview li {
+  position: absolute;
+}
+
+.sayu-workflow-preview li:nth-child(1) {
+  top: 8%;
+  right: 6%;
+}
+
+.sayu-workflow-preview li:nth-child(2) {
+  right: 4%;
+  bottom: 9%;
+}
+
+.sayu-workflow-preview li:nth-child(3) {
+  bottom: 9%;
+  left: 4%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -89,10 +405,43 @@ select {
   }
 }
 
+@media (max-width: 639px) {
+  .human-orbit-visual {
+    min-height: 25rem;
+  }
+
+  .human-orbit-ring {
+    width: 82%;
+    box-shadow: 5px 5px 0 var(--color-text);
+  }
+
+  .human-orbit-core {
+    width: 51%;
+  }
+
+  .human-orbit-node {
+    padding: 0.55rem 0.6rem;
+    font-size: 0.62rem;
+  }
+
+  .human-orbit-node:nth-child(1) {
+    top: 9%;
+  }
+
+  .human-orbit-node:nth-child(2) {
+    top: 17%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .project-card,
   .project-card:hover {
     transform: none !important;
     transition: none !important;
+  }
+
+  .human-orbit-core,
+  .human-orbit-nodes {
+    transform: none !important;
   }
 }

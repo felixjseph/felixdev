@@ -29,7 +29,15 @@ describe("OrbitAssembly", () => {
     stubMatchMedia(false);
     const user = userEvent.setup();
 
-    render(<OrbitAssembly />);
+    const { container } = render(<OrbitAssembly />);
+
+    const intro = screen.getByRole("status", { name: "Orbit Assembly introduction" });
+    expect(container.querySelector("[data-intro-signal]")).toBeInTheDocument();
+    expect(intro.querySelectorAll("[data-intro-node]")).toHaveLength(3);
+    expect(screen.getByText("Build")).toHaveAttribute("data-intro-node");
+    expect(screen.getByText("Automate")).toHaveAttribute("data-intro-node");
+    expect(screen.getByText("Improve")).toHaveAttribute("data-intro-node");
+    expect(intro.querySelector("img")).toHaveAttribute("alt", "");
 
     await user.click(screen.getByRole("button", { name: "Skip intro" }));
 

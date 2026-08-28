@@ -1,9 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "motion/react";
 import { useEffect, useState, type PointerEvent } from "react";
 import { homepageContent } from "@/content/homepage";
+import { ResumeAction } from "./resume-action";
 
 const MAX_TRANSLATION = 12;
 
@@ -23,6 +30,8 @@ export function HumanOrbit() {
   const portraitY = useSpring(y, springConfig);
   const portraitRotateX = useSpring(rotateX, springConfig);
   const portraitRotateY = useSpring(rotateY, springConfig);
+  const nodesX = useTransform(portraitX, (value) => value * -0.5);
+  const nodesY = useTransform(portraitY, (value) => value * -0.5);
 
   useEffect(() => {
     if (typeof window.matchMedia !== "function") {
@@ -77,47 +86,59 @@ export function HumanOrbit() {
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <a
-            className="border-2 border-[var(--color-text)] bg-[var(--color-accent)] px-5 py-3 font-semibold text-white shadow-[4px_4px_0_var(--color-text)]"
+            className="border-2 border-[var(--color-text)] bg-[var(--color-accent)] px-5 py-3 font-semibold text-[var(--color-accent-foreground)] shadow-[4px_4px_0_var(--color-text)]"
+            data-accent-surface="primary"
             href="#work"
           >
             {homepageContent.primaryCta}
           </a>
-          <a className="border-2 border-[var(--color-text)] px-5 py-3 font-semibold" href="#resume">
-            {homepageContent.secondaryCta}
-          </a>
+          <ResumeAction
+            className="border-2 border-[var(--color-text)] px-5 py-3 font-semibold"
+            label={homepageContent.secondaryCta}
+          />
         </div>
       </div>
 
-      <div className="grid gap-4" onPointerLeave={resetPortrait} onPointerMove={followPointer}>
-        <div className="[perspective:1000px]">
-          <motion.div
-            className="relative overflow-hidden border-2 border-[var(--color-text)] bg-[var(--color-surface)] shadow-[8px_8px_0_var(--color-text)]"
-            style={{
-              rotateX: portraitRotateX,
-              rotateY: portraitRotateY,
-              transformPerspective: 1000,
-              x: portraitX,
-              y: portraitY,
-            }}
-          >
-            <Image
-              alt="Felix Castañeda portrait placeholder"
-              className="aspect-[4/5] w-full object-cover"
-              height={900}
-              priority
-              src="/images/portrait-fallback.svg"
-              width={720}
-            />
-          </motion.div>
-        </div>
-        <ol aria-label="How Felix works" className="grid grid-cols-3 gap-2 font-mono text-xs uppercase tracking-[0.08em]">
-          {['Build', 'Automate', 'Improve'].map((step, index) => (
-            <li className="border-2 border-[var(--color-text)] bg-[var(--color-surface)] px-3 py-3" key={step}>
-              <span className="mr-2 text-[var(--color-accent)]">0{index + 1}</span>
-              {step}
+      <div
+        className="human-orbit-visual"
+        data-orbit-system
+        data-pointer-cap={MAX_TRANSLATION}
+        onPointerLeave={resetPortrait}
+        onPointerMove={followPointer}
+      >
+        <div aria-hidden="true" className="human-orbit-ring" />
+        <motion.div
+          className="human-orbit-core"
+          style={{
+            rotateX: portraitRotateX,
+            rotateY: portraitRotateY,
+            transformPerspective: 1000,
+            x: portraitX,
+            y: portraitY,
+          }}
+        >
+          <Image
+            alt="Felix Castañeda portrait placeholder"
+            className="human-orbit-portrait"
+            height={900}
+            priority
+            src="/images/portrait-fallback.svg"
+            width={720}
+          />
+          <span className="human-orbit-fallback-label">Development portrait</span>
+        </motion.div>
+        <motion.ol
+          aria-label="How Felix works"
+          className="human-orbit-nodes"
+          style={{ x: nodesX, y: nodesY }}
+        >
+          {["Build", "Automate", "Improve"].map((step, index) => (
+            <li className="human-orbit-node" key={step}>
+              <span aria-hidden="true">0{index + 1}</span>
+              <span data-orbit-node>{step}</span>
             </li>
           ))}
-        </ol>
+        </motion.ol>
       </div>
     </section>
   );

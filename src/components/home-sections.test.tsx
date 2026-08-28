@@ -39,6 +39,24 @@ describe("homepage proof-first sections", () => {
     expect(screen.queryByText(/40%/i)).not.toBeInTheDocument();
   });
 
+  it("designates Sayu Café as the flagship and gives it a workflow preview", () => {
+    const { container } = render(<FeaturedWork />);
+
+    const sayuCard = screen.getByRole("link", { name: /Sayu Café/i }).closest("article");
+    expect(sayuCard).toHaveAttribute("data-project-tier", "flagship");
+    expect(sayuCard).toHaveAttribute("data-project-slug", "sayu-cafe");
+    const preview = container.querySelector("[aria-label='Sayu Café workflow preview']");
+    expect(preview).toBeInTheDocument();
+    expect(within(preview as HTMLElement).getByText("Rule-based builder")).toBeInTheDocument();
+    expect(within(preview as HTMLElement).getByText("Daily audit reports")).toBeInTheDocument();
+    expect(within(preview as HTMLElement).getByText("Low-stock alerts")).toBeInTheDocument();
+
+    expect(screen.getByRole("link", { name: /Solara/i }).closest("article"))
+      .toHaveAttribute("data-project-tier", "supporting");
+    expect(screen.getByRole("link", { name: /Pach Drugmart/i }).closest("article"))
+      .toHaveAttribute("data-project-tier", "supporting");
+  });
+
   it("keeps fine-pointer card tilt disabled when reduced motion is requested", () => {
     const { container } = render(<FeaturedWork />);
 

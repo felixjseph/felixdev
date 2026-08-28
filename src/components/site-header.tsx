@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
+import { ResumeAction } from "./resume-action";
 import { ThemeToggle } from "./theme-toggle";
 
 const navigationLinks = [
@@ -45,11 +46,10 @@ export function SiteHeader() {
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <a className="hidden md:inline" href="#resume" onClick={closeMenu}>
-            Download résumé
-          </a>
+          <ResumeAction className="hidden md:inline" label="Résumé" onClick={closeMenu} />
           <a
-            className="hidden border-2 border-[var(--color-text)] bg-[var(--color-accent)] px-3 py-2 font-semibold text-white shadow-[3px_3px_0_var(--color-text)] md:inline"
+            className="hidden border-2 border-[var(--color-text)] bg-[var(--color-accent)] px-3 py-2 font-semibold text-[var(--color-accent-foreground)] shadow-[3px_3px_0_var(--color-text)] md:inline"
+            data-accent-surface="primary"
             href="#contact"
             onClick={closeMenu}
           >
@@ -69,7 +69,8 @@ export function SiteHeader() {
         </div>
       </nav>
       {isMenuOpen ? (
-        <div
+        <nav
+          aria-label="Mobile"
           className="grid gap-3 border-b-2 border-[var(--color-text)] bg-[var(--color-bg)] px-4 py-4 md:hidden"
           id={menuId}
         >
@@ -78,7 +79,16 @@ export function SiteHeader() {
               {link.label}
             </a>
           ))}
-        </div>
+          <ResumeAction label="Résumé" onClick={closeMenu} />
+          <a
+            className="border-2 border-[var(--color-text)] bg-[var(--color-accent)] px-3 py-2 font-semibold text-[var(--color-accent-foreground)]"
+            data-accent-surface="primary"
+            href="#contact"
+            onClick={closeMenu}
+          >
+            Start a project
+          </a>
+        </nav>
       ) : null}
     </header>
   );

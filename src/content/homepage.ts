@@ -58,18 +58,21 @@ export const projectPreviews = [
   {
     slug: "sayu-cafe",
     title: "Sayu Café",
+    tier: "flagship",
     summary: "Product discovery and practical café automation.",
     proof: "Rule-based builder, daily audit reporting, and low-stock alerts.",
   },
   {
     slug: "solara",
     title: "Solara",
+    tier: "supporting",
     summary: "A solar-services platform with grounded quotation assistance.",
     proof: "Document-first pricing answers and lightweight Gemini assistance.",
   },
   {
     slug: "pach-drugmart",
     title: "Pach Drugmart",
+    tier: "supporting",
     summary: "Inventory operations, analytics, and transaction visibility.",
     proof: "Operational dashboard and inventory insight.",
   },

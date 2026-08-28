@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import {
@@ -77,11 +78,57 @@ export function OrbitAssembly() {
         Skip intro
       </button>
       <motion.div
-        animate={{ opacity: [0, 1, 1, 0], scale: [0.88, 1, 1, 1.06] }}
-        className="grid h-44 w-44 place-items-center rounded-full border-2 border-[var(--color-text)] bg-[var(--color-support)] text-center font-semibold"
-        transition={{ duration: INTRO_DURATION_MS / 1000, ease: "easeInOut" }}
+        animate={{ opacity: [0, 1, 1, 0], scale: [0.94, 1, 1, 1.02] }}
+        aria-hidden="true"
+        className="orbit-assembly-stage"
+        transition={{
+          duration: INTRO_DURATION_MS / 1000,
+          ease: "easeInOut",
+          times: [0, 0.14, 0.82, 1],
+        }}
       >
-        <span className="font-mono text-xs uppercase tracking-[0.2em]">Orbit Assembly</span>
+        <motion.span
+          animate={{ opacity: [0, 1, 1, 0], x: [-150, 0, 0, 0] }}
+          className="orbit-assembly-signal"
+          data-intro-signal
+          transition={{ duration: 0.44, ease: "easeOut" }}
+        />
+        <motion.div
+          animate={{ opacity: [0, 0, 1], rotate: [-18, 0, 0], scale: [0.7, 0.7, 1] }}
+          className="orbit-assembly-ring"
+          transition={{ duration: 0.66, ease: "easeOut", times: [0, 0.38, 1] }}
+        />
+        <motion.div
+          animate={{ opacity: [0, 0, 1], scale: [0.72, 0.72, 1] }}
+          className="orbit-assembly-core"
+          transition={{ duration: 0.56, ease: "easeOut", times: [0, 0.3, 1] }}
+        >
+          <Image
+            alt=""
+            className="orbit-assembly-portrait"
+            height={900}
+            src="/images/portrait-fallback.svg"
+            width={720}
+          />
+        </motion.div>
+        <ol className="orbit-assembly-nodes">
+          {["Build", "Automate", "Improve"].map((step, index) => (
+            <motion.li
+              animate={{ opacity: [0, 0, 1], scale: [0.8, 0.8, 1] }}
+              className="orbit-assembly-node"
+              data-intro-node
+              key={step}
+              transition={{
+                delay: 0.34 + index * 0.07,
+                duration: 0.25,
+                ease: "easeOut",
+              }}
+            >
+              {step}
+            </motion.li>
+          ))}
+        </ol>
+        <span className="orbit-assembly-label">Orbit Assembly</span>
       </motion.div>
     </div>
   );

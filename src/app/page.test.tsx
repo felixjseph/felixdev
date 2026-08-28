@@ -50,4 +50,20 @@ describe("HomePage", () => {
       "contact",
     ]);
   });
+
+  it("keeps private repository identity out of public contact output", () => {
+    const { container } = render(<HomePage />);
+    const privateRepositoryEmail = ["felixjosephcastaneda", "gmail.com"].join("@");
+
+    expect(container.innerHTML).not.toContain(privateRepositoryEmail);
+    expect(container.querySelector("a[href^='mailto:']")).not.toBeInTheDocument();
+    expect(screen.getByText(/project inquiry form is coming/i)).toBeInTheDocument();
+  });
+
+  it("marks every primary cobalt surface for semantic contrast", () => {
+    const { container } = render(<HomePage />);
+
+    const surfaces = container.querySelectorAll("[data-accent-surface='primary']");
+    expect(surfaces.length).toBeGreaterThanOrEqual(3);
+  });
 });
