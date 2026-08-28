@@ -17,6 +17,11 @@ describe("PachDashboardPreview", () => {
     expect(within(preview).getByText("Low")).toBeVisible();
     expect(within(preview).getByText("Stable")).toBeVisible();
     expect(within(preview).getByText("Review")).toBeVisible();
+    const caption = preview.querySelector("figcaption");
+    expect(caption).toBeVisible();
+    expect(caption).toHaveTextContent(
+      "This visualization represents the operational views described in the case study.",
+    );
     expect(
       within(preview).getByText(
         "This visualization represents the operational views described in the case study.",
