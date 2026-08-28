@@ -6,7 +6,7 @@ export function TestimonialsSection() {
   }
 
   return (
-    <section aria-labelledby="testimonials-heading" className="mx-auto max-w-7xl px-4 py-20 lg:px-8" id="testimonials">
+    <div className="mx-auto max-w-7xl px-4 py-20 lg:px-8">
       <p className="system-label text-xs uppercase tracking-[0.16em] text-[var(--color-accent)]">Testimonials</p>
       <h2 className="mt-2 text-4xl font-semibold tracking-[-0.05em]" id="testimonials-heading">
         Trusted by people who use the work.
@@ -21,6 +21,6 @@ export function TestimonialsSection() {
           </figure>
         ))}
       </div>
-    </section>
+    </div>
   );
 }
