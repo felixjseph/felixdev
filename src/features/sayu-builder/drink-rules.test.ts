@@ -72,11 +72,22 @@ describe("drink rules", () => {
   });
 
   it("de-duplicates matching disabled options and keeps the first reason", () => {
-    const disabled = getDisabledOptions(hotSeasonal, fixtureCatalog).filter(
-      (option) => option.field === "texture" && option.optionId === "foamy",
-    );
+    const disabled = getDisabledOptions(hotSeasonal, fixtureCatalog);
 
     expect(disabled).toEqual([
+      {
+        field: "texture",
+        optionId: "foamy",
+        reason: "The test seasonal recipe is served without foam.",
+      },
+      {
+        field: "texture",
+        optionId: "creamy",
+        reason: "Seasonal test drinks use a clean texture.",
+      },
+    ]);
+
+    expect(disabled.filter((option) => option.optionId === "foamy")).toEqual([
       {
         field: "texture",
         optionId: "foamy",
@@ -93,6 +104,31 @@ describe("drink rules", () => {
 
   it("leaves valid selections unchanged", () => {
     expect(normalizeSelection(hotSeasonal, fixtureCatalog)).toEqual(hotSeasonal);
+  });
+
+  it("preserves a disabled value when every catalog option for its field is disabled", () => {
+    const catalog: DrinkCatalog = {
+      ...fixtureCatalog,
+      constraints: [
+        {
+          when: { base: "seasonal", temperature: "hot" },
+          disallow: { field: "texture", optionIds: ["clean", "creamy", "foamy"] },
+          reason: "No test texture is available.",
+        },
+      ],
+    };
+    const selection = { ...hotSeasonal, texture: "foamy" };
+
+    expect(normalizeSelection(selection, catalog)).toEqual(selection);
+    expect(selection.texture).toBe("foamy");
+  });
+
+  it("preserves an unknown selected option that is not disabled", () => {
+    const selection = { ...hotSeasonal, texture: "unknown-texture" };
+
+    expect(() => normalizeSelection(selection, fixtureCatalog)).not.toThrow();
+    expect(normalizeSelection(selection, fixtureCatalog)).toEqual(selection);
+    expect(selection.texture).toBe("unknown-texture");
   });
 
   it("resolves labels into the prescribed summary order", () => {
