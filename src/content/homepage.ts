@@ -29,6 +29,21 @@ export const capabilities: Capability[] = [
     description: "Practical AI features grounded in the information a business trusts.",
     proof: "Applied with defined guardrails and a clear purpose.",
   },
+  {
+    title: "Product discovery",
+    description: "Interfaces that make the right next step easier to find.",
+    proof: "Clear paths from first impression to useful action.",
+  },
+  {
+    title: "Operational visibility",
+    description: "Dashboards and signals that help teams see what needs attention.",
+    proof: "Focused around routine decisions, not decorative data.",
+  },
+  {
+    title: "Responsible AI handoffs",
+    description: "AI flows that know when to use trusted documents and when to stop.",
+    proof: "Human-readable fallbacks keep important answers grounded.",
+  },
 ];
 
 export const faqItems: FaqItem[] = [

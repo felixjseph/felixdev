@@ -35,13 +35,13 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
   const anchorHref = (anchor: string) => `${linkToHomepage ? "/" : ""}#${anchor}`;
 
   return (
-    <header className="sticky top-0 z-50 border-b-2 border-[var(--color-text)] bg-[var(--color-bg)]">
+    <header className="sticky top-0 z-50 border-b border-[color-mix(in_srgb,var(--color-text)_25%,transparent)] bg-[color-mix(in_srgb,var(--color-bg)_88%,transparent)] backdrop-blur-xl">
       <nav
         aria-label="Primary"
-        className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3"
+        className="mx-auto flex max-w-[92rem] items-center justify-between gap-4 px-4 py-4 lg:px-10"
       >
-        <a className="font-semibold" href={anchorHref("hero")} onClick={closeMenu}>
-          Felix Castañeda
+        <a className="font-semibold tracking-[-0.03em]" href={anchorHref("hero")} onClick={closeMenu}>
+          Felix Castañeda<span className="text-[var(--color-accent)]">.</span>
         </a>
         <div className="hidden items-center gap-5 md:flex">
           {navigationLinks.map((link) => (
@@ -53,7 +53,7 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
         <div className="flex items-center gap-3">
           <ResumeAction className="hidden md:inline" label="Résumé" onClick={closeMenu} />
           <a
-            className="hidden border-2 border-[var(--color-text)] bg-[var(--color-accent)] px-3 py-2 font-semibold text-[var(--color-accent-foreground)] shadow-[3px_3px_0_var(--color-text)] md:inline"
+            className="hidden border border-[var(--color-accent)] bg-[var(--color-accent)] px-3 py-2 font-semibold text-[var(--color-accent-foreground)] md:inline"
             data-accent-surface="primary"
             href={anchorHref("contact")}
             onClick={closeMenu}

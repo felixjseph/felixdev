@@ -72,20 +72,20 @@ export function HumanOrbit() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="mx-auto grid max-w-7xl gap-10 px-4 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8"
+      className="revamp-hero mx-auto grid w-full max-w-[92rem] gap-12 px-4 py-32 md:py-48 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:px-10"
       id="hero"
     >
-      <div>
+      <div className="revamp-hero-copy">
         <p className="font-mono text-sm uppercase tracking-[0.16em] text-[var(--color-accent)]">
           {homepageContent.role}
         </p>
-        <h1 className="mt-5 max-w-3xl text-5xl font-semibold tracking-[-0.05em] sm:text-6xl" id="hero-heading">
+        <h1 className="revamp-display mt-5 max-w-5xl text-5xl font-semibold tracking-[-0.07em] sm:text-7xl lg:text-[clamp(4.5rem,8vw,8.5rem)]" data-reveal id="hero-heading">
           {homepageContent.headline}
         </h1>
-        <p className="mt-6 max-w-2xl text-lg text-[color-mix(in_srgb,var(--color-text)_76%,transparent)]">
+        <p className="mt-8 max-w-xl text-lg leading-8 text-[color-mix(in_srgb,var(--color-text)_76%,transparent)]" data-reveal>
           I build clear, durable digital systems that make practical work easier to run.
         </p>
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-10 flex flex-wrap gap-4" data-reveal>
           <AnalyticsLink
             className="border-2 border-[var(--color-text)] bg-[var(--color-accent)] px-5 py-3 font-semibold text-[var(--color-accent-foreground)] shadow-[4px_4px_0_var(--color-text)]"
             data-accent-surface="primary"
@@ -99,10 +99,15 @@ export function HumanOrbit() {
             label={homepageContent.secondaryCta}
           />
         </div>
+        <div className="revamp-signal-rail mt-12 max-w-xl" data-reveal>
+          <span>Currently shaping</span>
+          <strong>web products · automation · grounded AI</strong>
+        </div>
       </div>
 
       <div
-        className="human-orbit-visual"
+        className="human-orbit-visual revamp-hero-visual"
+        data-reveal
         data-orbit-system
         data-pointer-cap={MAX_TRANSLATION}
         onPointerLeave={resetPortrait}
