@@ -27,14 +27,7 @@ describe("portfolio analytics", () => {
   });
 
   it("contains only approved event names in the required order", () => {
-    expect(portfolioEvents).toEqual([
-      "explore_work",
-      "project_opened",
-      "resume_downloaded",
-      "sayu_builder_completed",
-      "inquiry_started",
-      "inquiry_submitted",
-    ]);
+    expect(portfolioEvents).toEqual(["sayu_builder_completed"]);
   });
 
   it("exposes a one-argument, allow-listed event API", () => {
@@ -45,7 +38,7 @@ describe("portfolio analytics", () => {
   it("does not import or track while custom analytics are disabled", async () => {
     process.env.NEXT_PUBLIC_ENABLE_CUSTOM_ANALYTICS = "false";
 
-    trackPortfolioEvent("inquiry_started");
+    trackPortfolioEvent("sayu_builder_completed");
     await Promise.resolve();
 
     expect(analyticsModuleFactory).not.toHaveBeenCalled();
@@ -55,8 +48,8 @@ describe("portfolio analytics", () => {
   it("tracks an allow-listed event without properties only when opted in", async () => {
     process.env.NEXT_PUBLIC_ENABLE_CUSTOM_ANALYTICS = "true";
 
-    trackPortfolioEvent("project_opened");
-    await vi.waitFor(() => expect(track).toHaveBeenCalledWith("project_opened"));
+    trackPortfolioEvent("sayu_builder_completed");
+    await vi.waitFor(() => expect(track).toHaveBeenCalledWith("sayu_builder_completed"));
 
     expect(track).toHaveBeenCalledTimes(1);
   });

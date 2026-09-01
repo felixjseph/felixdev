@@ -1,10 +1,5 @@
 export const portfolioEvents = [
-  "explore_work",
-  "project_opened",
-  "resume_downloaded",
   "sayu_builder_completed",
-  "inquiry_started",
-  "inquiry_submitted",
 ] as const;
 
 export type PortfolioEventName = (typeof portfolioEvents)[number];
