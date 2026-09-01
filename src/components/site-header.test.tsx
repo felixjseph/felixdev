@@ -20,24 +20,19 @@ describe("SiteHeader", () => {
     });
   });
 
-  it("provides accessible primary navigation and honest unavailable resume UI", () => {
+  it("provides accessible navigation for the requested homepage sections", () => {
     render(<SiteHeader />);
 
-    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "#hero");
-    expect(screen.getByRole("link", { name: "Work" })).toHaveAttribute("href", "#work");
-    expect(screen.getByRole("link", { name: "Capabilities" })).toHaveAttribute(
-      "href",
-      "#capabilities",
-    );
+    expect(screen.getByRole("link", { name: /Felix Castañeda/i })).toHaveAttribute("href", "#hero");
     expect(screen.getByRole("link", { name: "About" })).toHaveAttribute("href", "#about");
+    expect(screen.getByRole("link", { name: "Skills" })).toHaveAttribute("href", "#skills");
+    expect(screen.getByRole("link", { name: "Projects" })).toHaveAttribute("href", "#projects");
+    expect(screen.getByRole("link", { name: "Experience" })).toHaveAttribute("href", "#experience");
     expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute(
       "href",
       "#contact",
     );
-    expect(screen.queryByRole("link", { name: /résumé/i })).not.toBeInTheDocument();
-    expect(screen.getByText("Résumé").closest("[aria-disabled='true']"))
-      .toHaveAttribute("data-resume-state", "unavailable");
-    expect(screen.getByRole("link", { name: "Start a project" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /Let's talk/i })).toHaveAttribute(
       "href",
       "#contact",
     );
@@ -58,7 +53,7 @@ describe("SiteHeader", () => {
     expect(screen.queryByRole("navigation", { name: "Mobile" })).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Open navigation menu" }));
-    await user.click(screen.getAllByRole("link", { name: "Work" }).at(-1)!);
+    await user.click(screen.getAllByRole("link", { name: "Projects" }).at(-1)!);
     expect(screen.queryByRole("navigation", { name: "Mobile" })).not.toBeInTheDocument();
   });
 });

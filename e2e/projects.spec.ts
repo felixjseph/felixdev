@@ -13,14 +13,21 @@ for (const [slug, title] of [
     await expect(page.locator("main")).toHaveCount(1);
     const primaryNavigation = page.getByRole("navigation", { name: "Primary" });
     await expect(primaryNavigation).toBeVisible();
-    await expect(primaryNavigation.getByRole("link", { name: "Work" })).toHaveAttribute(
-      "href",
-      "/#work",
-    );
-    await expect(primaryNavigation.getByRole("link", { name: "Contact" })).toHaveAttribute(
-      "href",
-      "/#contact",
-    );
+    const desktopProjectsLink = primaryNavigation.getByRole("link", { name: "Projects" });
+    if (await desktopProjectsLink.count()) {
+      await expect(desktopProjectsLink).toHaveAttribute("href", "/#projects");
+      await expect(primaryNavigation.getByRole("link", { name: "Contact" })).toHaveAttribute(
+        "href",
+        "/#contact",
+      );
+    } else {
+      await page.getByRole("button", { name: "Open navigation menu" }).click();
+      const mobileNavigation = page.getByRole("navigation", { name: "Mobile" });
+      await expect(mobileNavigation.getByRole("link", { name: "Projects" }))
+        .toHaveAttribute("href", "/#projects");
+      await expect(mobileNavigation.getByRole("link", { name: "Contact" }))
+        .toHaveAttribute("href", "/#contact");
+    }
     await expect(page.getByRole("button", { name: /Switch to (light|dark) theme/ })).toBeVisible();
     await expect(page.getByRole("navigation", { name: "Case study chapters" })).toBeVisible();
     await expect(page.getByRole("contentinfo")).toBeVisible();

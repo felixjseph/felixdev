@@ -17,68 +17,34 @@ export function RevampMotion() {
     }
 
     const context = gsap.context(() => {
-      gsap.from("[data-reveal]", {
-        y: 28,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        stagger: 0.08,
-        scrollTrigger: {
-          trigger: "main",
-          start: "top 82%",
-          once: true,
-        },
-      });
-
-      gsap.fromTo(
-        "[data-scrub-word]",
-        { color: "color-mix(in srgb, var(--color-text) 28%, transparent)" },
-        {
-          color: "var(--color-text)",
-          stagger: 0.12,
-          ease: "none",
+      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
+        gsap.from(element, {
+          y: 34,
+          opacity: 0,
+          filter: "blur(8px)",
+          duration: 0.9,
+          ease: "power3.out",
           scrollTrigger: {
-            trigger: "[data-scrub-line]",
-            start: "top 82%",
-            end: "bottom 42%",
-            scrub: true,
-          },
-        },
-      );
-
-      const workStage = document.querySelector<HTMLElement>("[data-work-stage]");
-      const workRail = document.querySelector<HTMLElement>("[data-work-rail]");
-      if (workStage && workRail) {
-        gsap.to(workRail, {
-          yPercent: -12,
-          ease: "none",
-          scrollTrigger: {
-            trigger: workStage,
-            start: "top top+=96",
-            end: "bottom bottom",
-            scrub: true,
-            pin: workRail,
-            pinSpacing: false,
+            trigger: element,
+            start: "top 88%",
+            once: true,
           },
         });
-      }
+      });
 
-      gsap.utils.toArray<HTMLElement>("[data-work-card]").forEach((card, index) => {
-        gsap.fromTo(
-          card,
-          { y: index % 2 === 0 ? 30 : -30, rotate: index % 2 === 0 ? -1.2 : 1.2 },
-          {
-            y: 0,
-            rotate: 0,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 88%",
-              end: "top 52%",
-              scrub: true,
-            },
+      gsap.utils.toArray<HTMLElement>(".project-feature__visual").forEach((visual, index) => {
+        gsap.fromTo(visual.querySelector(".project-ui"), {
+          y: index % 2 === 0 ? 28 : -18,
+        }, {
+          y: index % 2 === 0 ? -22 : 18,
+          ease: "none",
+          scrollTrigger: {
+            trigger: visual,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.8,
           },
-        );
+        });
       });
     });
 

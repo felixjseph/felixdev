@@ -1,19 +1,21 @@
 export type PublicSiteConfig = {
   publicContact: {
     email: string;
-    linkedIn: string;
+    facebook: string;
+    phone: string;
   };
   resume: {
     url: string;
   };
 };
 
-export const siteConfig = {
+export const siteConfig: PublicSiteConfig = {
   publicContact: {
     email: "",
-    linkedIn: "",
+    facebook: "",
+    phone: "",
   },
   resume: {
     url: "",
   },
-} as const satisfies PublicSiteConfig;
+};

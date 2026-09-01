@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import HomePage from "./page";
 
@@ -23,21 +23,18 @@ describe("HomePage", () => {
     });
   });
 
-  it("states the approved role and headline", () => {
+  it("states Felix's role and value proposition", () => {
     render(<HomePage />);
     expect(
       screen.getByRole("heading", {
-        name: "Software that works. Automation that keeps working.",
+        name: /I build systems that turn busywork into forward motion/i,
       }),
     ).toBeInTheDocument();
-    expect(
-      within(screen.getByRole("region", { name: "Software that works. Automation that keeps working." })).getByText(
-        "Full-Stack & AI Automation Developer",
-      ),
-    ).toBeInTheDocument();
+    expect(screen.getAllByText(/Full-Stack Web & AI Developer/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByRole("link", { name: /View my work/i })).toHaveAttribute("href", "#projects");
   });
 
-  it("keeps the approved proof-first section order", () => {
+  it("keeps the requested portfolio section order", () => {
     const { container } = render(<HomePage />);
     const ids = Array.from(container.querySelectorAll("main > section")).map(
       (section) => section.id,
@@ -45,29 +42,30 @@ describe("HomePage", () => {
 
     expect(ids).toEqual([
       "hero",
-      "credibility",
-      "work",
-      "capabilities",
       "about",
-      "testimonials",
-      "faq",
+      "skills",
+      "projects",
+      "testimonial",
+      "experience",
       "contact",
     ]);
   });
 
-  it("keeps private repository identity out of public contact output", () => {
+  it("keeps unapproved contact channels and GitHub out of public output", () => {
     const { container } = render(<HomePage />);
     const privateRepositoryEmail = ["felixjosephcastaneda", "gmail.com"].join("@");
 
     expect(container.innerHTML).not.toContain(privateRepositoryEmail);
+    expect(container.innerHTML.toLowerCase()).not.toContain("github");
+    expect(container.innerHTML.toLowerCase()).not.toContain("linkedin");
     expect(container.querySelector("a[href^='mailto:']")).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Send project inquiry" })).toBeInTheDocument();
+    expect(screen.getAllByText("Contact detail pending")).toHaveLength(3);
   });
 
-  it("marks every primary cobalt surface for semantic contrast", () => {
-    const { container } = render(<HomePage />);
-
-    const surfaces = container.querySelectorAll("[data-accent-surface='primary']");
-    expect(surfaces.length).toBeGreaterThanOrEqual(3);
+  it("renders the three placeholder project concepts", () => {
+    render(<HomePage />);
+    expect(screen.getByRole("heading", { name: "Business Operations Platform" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "AI Document Intelligence" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Agentic Workflow Command Center" })).toBeInTheDocument();
   });
 });

@@ -6,6 +6,7 @@ import {
   THEME_STORAGE_KEY,
   type Theme,
 } from "@/lib/theme";
+import { MoonIcon, SunIcon } from "./ui-icons";
 
 export function ThemeToggle() {
   const theme = useSyncExternalStore(
@@ -36,10 +37,14 @@ export function ThemeToggle() {
   return (
     <button
       aria-label={`Switch to ${nextTheme} theme`}
+      className="theme-toggle"
       onClick={toggleTheme}
       type="button"
     >
-      Theme
+      <span aria-hidden="true" className="theme-toggle__track">
+        <span className="theme-toggle__thumb">{theme === "dark" ? <MoonIcon /> : <SunIcon />}</span>
+      </span>
+      <span className="sr-only">Current theme: {theme}</span>
     </button>
   );
 }

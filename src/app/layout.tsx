@@ -1,8 +1,24 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
+import localFont from "next/font/local";
 import { siteUrl } from "@/lib/site-url";
+import "@fontsource-variable/instrument-sans";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/600.css";
 import "./globals.css";
+
+const nohemi = localFont({
+  src: [
+    { path: "./fonts/nohemi/Nohemi-Light.ttf", weight: "300", style: "normal" },
+    { path: "./fonts/nohemi/Nohemi-Regular.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/nohemi/Nohemi-Medium.ttf", weight: "500", style: "normal" },
+    { path: "./fonts/nohemi/Nohemi-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "./fonts/nohemi/Nohemi-Bold.ttf", weight: "700", style: "normal" },
+  ],
+  display: "swap",
+  variable: "--font-nohemi",
+});
 
 const themeScript = `
 const key = "felixdev-theme";
@@ -16,16 +32,16 @@ document.documentElement.style.colorScheme = theme;
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
-  title: "Felix Castañeda — Full-Stack & AI Automation Developer",
-  description: "Software that works. Automation that keeps working.",
+  title: "Felix Joseph Castañeda — Full-Stack Web & AI Developer",
+  description: "Full-stack applications, agentic AI, and automation built around real business problems.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Felix Castañeda — Full-Stack & AI Automation Developer",
-    description: "Software that works. Automation that keeps working.",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Felix Castañeda — Full-Stack & AI Automation Developer" }],
+    title: "Felix Joseph Castañeda — Full-Stack Web & AI Developer",
+    description: "Full-stack applications, agentic AI, and automation built around real business problems.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Felix Joseph Castañeda — Full-Stack Web & AI Developer" }],
   },
 };
 
@@ -35,7 +51,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body>
+      <body className={nohemi.variable}>
         {children}
         <Analytics />
       </body>

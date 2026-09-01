@@ -1,72 +1,52 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { AboutSection } from "./about-section";
-import { CapabilitiesSection } from "./capabilities-section";
-import { CredibilityBand } from "./credibility-band";
-import { FaqSection } from "./faq-section";
-import { FeaturedWork } from "./featured-work";
+import { ContactSection } from "./contact-section";
+import { ExperienceSection } from "./experience-section";
+import { ProjectsSection } from "./projects-section";
+import { SkillsSection } from "./skills-section";
 import { TestimonialsSection } from "./testimonials-section";
 
-describe("homepage proof-first sections", () => {
-  it("renders the approved project routes without unsupported claims", () => {
-    render(
+describe("endgame portfolio sections", () => {
+  it("renders the requested section narratives without inventing private facts", () => {
+    const { container } = render(
       <>
-        <CredibilityBand />
-        <FeaturedWork />
-        <CapabilitiesSection />
         <AboutSection />
+        <SkillsSection />
+        <ProjectsSection />
         <TestimonialsSection />
-        <FaqSection />
+        <ExperienceSection />
+        <ContactSection />
       </>,
     );
 
-    expect(screen.getByRole("heading", { name: "Featured work" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Sayu Café/i })).toHaveAttribute(
-      "href",
-      "/work/sayu-cafe",
-    );
-    expect(screen.getByRole("link", { name: /Solara/i })).toHaveAttribute(
-      "href",
-      "/work/solara",
-    );
-    expect(screen.getByRole("link", { name: /Pach Drugmart/i })).toHaveAttribute(
-      "href",
-      "/work/pach-drugmart",
-    );
-    expect(screen.queryByText(/virtual assistant/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/40%/i)).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Technology matters/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /A broad stack/i })).toBeInTheDocument();
+    expect(screen.getAllByText(/Placeholder target/i)).toHaveLength(3);
+    expect(screen.getByText(/publication approval pending/i)).toBeInTheDocument();
+    expect(screen.getByText(/Verified employers, role dates/i)).toBeInTheDocument();
+    expect(container.innerHTML.toLowerCase()).not.toContain("github");
+    expect(container.innerHTML.toLowerCase()).not.toContain("linkedin");
   });
 
-  it("designates Sayu Café as the flagship and gives it a workflow preview", () => {
-    const { container } = render(<FeaturedWork />);
+  it("renders official technology marks only inside continuous duplicated lanes", () => {
+    const { container } = render(<SkillsSection />);
 
-    const sayuCard = screen.getByRole("link", { name: /Sayu Café/i }).closest("article");
-    expect(sayuCard).toHaveAttribute("data-project-tier", "flagship");
-    expect(sayuCard).toHaveAttribute("data-project-slug", "sayu-cafe");
-    const preview = container.querySelector("[aria-label='Sayu Café workflow preview']");
-    expect(preview).toBeInTheDocument();
-    expect(within(preview as HTMLElement).getByText("Rule-based builder")).toBeInTheDocument();
-    expect(within(preview as HTMLElement).getByText("Daily audit reports")).toBeInTheDocument();
-    expect(within(preview as HTMLElement).getByText("Low-stock alerts")).toBeInTheDocument();
-
-    expect(screen.getByRole("link", { name: /Solara/i }).closest("article"))
-      .toHaveAttribute("data-project-tier", "supporting");
-    expect(screen.getByRole("link", { name: /Pach Drugmart/i }).closest("article"))
-      .toHaveAttribute("data-project-tier", "supporting");
+    expect(container.querySelectorAll(".skill-lane")).toHaveLength(3);
+    expect(container.querySelectorAll(".skill-set")).toHaveLength(6);
+    expect(screen.getAllByText("TypeScript").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByText("Google Gemini").length).toBeGreaterThanOrEqual(2);
+    expect(container.querySelectorAll(".skill-logo").length).toBeGreaterThan(20);
   });
 
-  it("keeps fine-pointer card tilt disabled when reduced motion is requested", () => {
-    const { container } = render(<FeaturedWork />);
-
-    const card = within(container).getByRole("link", { name: /Sayu Café/i }).closest("article");
+  it("provides a reduced-motion alternative for marquee and project effects", () => {
     const styles = readFileSync(path.resolve(process.cwd(), "src/app/globals.css"), "utf8");
-    const tiltRule = styles.indexOf(".project-card:hover {\n    transform: rotateX(2deg)");
-    const reducedMotionOverride = styles.indexOf(".project-card:hover {\n    transform: none !important;");
+    const reducedMotion = styles.indexOf("@media (prefers-reduced-motion: reduce)");
 
-    expect(card).toHaveClass("project-card");
-    expect(tiltRule).toBeGreaterThanOrEqual(0);
-    expect(reducedMotionOverride).toBeGreaterThan(tiltRule);
+    expect(reducedMotion).toBeGreaterThanOrEqual(0);
+    expect(styles.indexOf(".skill-track,.skill-lane[data-direction=\"right\"] .skill-track", reducedMotion)).toBeGreaterThan(reducedMotion);
+    expect(styles.indexOf(".project-ui,.project-feature:hover .project-ui", reducedMotion)).toBeGreaterThan(reducedMotion);
   });
 });

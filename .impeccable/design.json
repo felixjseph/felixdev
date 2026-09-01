@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-31T23:48:36.3732906+08:00",
+  "title": "Design System: Felix Joseph Castañeda Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "canvas": { "role": "neutral", "displayName": "Warm Canvas", "canonical": "#f3f3ef", "tonalRamp": ["oklch(15% 0.005 100)", "oklch(27% 0.005 100)", "oklch(39% 0.005 100)", "oklch(51% 0.005 100)", "oklch(63% 0.005 100)", "oklch(75% 0.005 100)", "oklch(87% 0.005 100)", "oklch(95% 0.005 100)"] },
+      "surface": { "role": "neutral", "displayName": "Paper Surface", "canonical": "#ffffff", "tonalRamp": ["oklch(15% 0 0)", "oklch(27% 0 0)", "oklch(39% 0 0)", "oklch(51% 0 0)", "oklch(63% 0 0)", "oklch(75% 0 0)", "oklch(87% 0 0)", "oklch(95% 0 0)"] },
+      "surface-raised": { "role": "neutral", "displayName": "Raised Warm Gray", "canonical": "#e9e9e4", "tonalRamp": ["oklch(15% 0.006 100)", "oklch(27% 0.006 100)", "oklch(39% 0.006 100)", "oklch(51% 0.006 100)", "oklch(63% 0.006 100)", "oklch(75% 0.006 100)", "oklch(87% 0.006 100)", "oklch(95% 0.006 100)"] },
+      "ink": { "role": "primary", "displayName": "Signal Ink", "canonical": "#0a0a0a", "tonalRamp": ["oklch(15% 0 0)", "oklch(27% 0 0)", "oklch(39% 0 0)", "oklch(51% 0 0)", "oklch(63% 0 0)", "oklch(75% 0 0)", "oklch(87% 0 0)", "oklch(95% 0 0)"] },
+      "muted-ink": { "role": "neutral", "displayName": "Muted Graphite", "canonical": "#60605c", "tonalRamp": ["oklch(15% 0.006 100)", "oklch(27% 0.006 100)", "oklch(39% 0.006 100)", "oklch(51% 0.006 100)", "oklch(63% 0.006 100)", "oklch(75% 0.006 100)", "oklch(87% 0.006 100)", "oklch(95% 0.006 100)"] },
+      "line": { "role": "neutral", "displayName": "Hairline Ink", "canonical": "rgba(10, 10, 10, 0.17)", "tonalRamp": ["rgba(10,10,10,0.08)", "rgba(10,10,10,0.12)", "rgba(10,10,10,0.17)", "rgba(10,10,10,0.24)", "rgba(10,10,10,0.34)", "rgba(10,10,10,0.48)", "rgba(10,10,10,0.68)", "rgba(10,10,10,0.88)"] },
+      "inverse-panel": { "role": "neutral", "displayName": "Inverse Black", "canonical": "#070707", "tonalRamp": ["oklch(15% 0 0)", "oklch(27% 0 0)", "oklch(39% 0 0)", "oklch(51% 0 0)", "oklch(63% 0 0)", "oklch(75% 0 0)", "oklch(87% 0 0)", "oklch(95% 0 0)"] },
+      "inverse-ink": { "role": "neutral", "displayName": "Inverse Paper", "canonical": "#f7f7f2", "tonalRamp": ["oklch(15% 0.005 100)", "oklch(27% 0.005 100)", "oklch(39% 0.005 100)", "oklch(51% 0.005 100)", "oklch(63% 0.005 100)", "oklch(75% 0.005 100)", "oklch(87% 0.005 100)", "oklch(95% 0.005 100)"] },
+      "spectral-cyan": { "role": "secondary", "displayName": "Refracted Cyan", "canonical": "#65e7f4", "tonalRamp": ["oklch(15% 0.08 205)", "oklch(27% 0.10 205)", "oklch(39% 0.12 205)", "oklch(51% 0.14 205)", "oklch(63% 0.14 205)", "oklch(75% 0.12 205)", "oklch(87% 0.08 205)", "oklch(95% 0.03 205)"] },
+      "spectral-lilac": { "role": "secondary", "displayName": "Refracted Lilac", "canonical": "#a9a5ff", "tonalRamp": ["oklch(15% 0.08 285)", "oklch(27% 0.11 285)", "oklch(39% 0.14 285)", "oklch(51% 0.16 285)", "oklch(63% 0.16 285)", "oklch(75% 0.13 285)", "oklch(87% 0.08 285)", "oklch(95% 0.03 285)"] },
+      "spectral-apricot": { "role": "secondary", "displayName": "Refracted Apricot", "canonical": "#ffbd87", "tonalRamp": ["oklch(15% 0.06 60)", "oklch(27% 0.09 60)", "oklch(39% 0.12 60)", "oklch(51% 0.15 60)", "oklch(63% 0.16 60)", "oklch(75% 0.14 60)", "oklch(87% 0.09 60)", "oklch(95% 0.03 60)"] },
+      "status-green": { "role": "tertiary", "displayName": "Live Green", "canonical": "#56d96b", "tonalRamp": ["oklch(15% 0.07 145)", "oklch(27% 0.10 145)", "oklch(39% 0.13 145)", "oklch(51% 0.16 145)", "oklch(63% 0.17 145)", "oklch(75% 0.14 145)", "oklch(87% 0.08 145)", "oklch(95% 0.03 145)"] },
+      "dark-canvas": { "role": "neutral", "displayName": "Dark Canvas", "canonical": "#050505", "tonalRamp": ["oklch(15% 0 0)", "oklch(27% 0 0)", "oklch(39% 0 0)", "oklch(51% 0 0)", "oklch(63% 0 0)", "oklch(75% 0 0)", "oklch(87% 0 0)", "oklch(95% 0 0)"] },
+      "dark-surface": { "role": "neutral", "displayName": "Dark Surface", "canonical": "#0e0e0e", "tonalRamp": ["oklch(15% 0 0)", "oklch(27% 0 0)", "oklch(39% 0 0)", "oklch(51% 0 0)", "oklch(63% 0 0)", "oklch(75% 0 0)", "oklch(87% 0 0)", "oklch(95% 0 0)"] },
+      "dark-surface-raised": { "role": "neutral", "displayName": "Raised Charcoal", "canonical": "#171717", "tonalRamp": ["oklch(15% 0 0)", "oklch(27% 0 0)", "oklch(39% 0 0)", "oklch(51% 0 0)", "oklch(63% 0 0)", "oklch(75% 0 0)", "oklch(87% 0 0)", "oklch(95% 0 0)"] },
+      "dark-ink": { "role": "neutral", "displayName": "Dark Theme Paper", "canonical": "#f5f5f1", "tonalRamp": ["oklch(15% 0.004 100)", "oklch(27% 0.004 100)", "oklch(39% 0.004 100)", "oklch(51% 0.004 100)", "oklch(63% 0.004 100)", "oklch(75% 0.004 100)", "oklch(87% 0.004 100)", "oklch(95% 0.004 100)"] },
+      "dark-muted-ink": { "role": "neutral", "displayName": "Dark Muted Graphite", "canonical": "#9a9a94", "tonalRamp": ["oklch(15% 0.006 100)", "oklch(27% 0.006 100)", "oklch(39% 0.006 100)", "oklch(51% 0.006 100)", "oklch(63% 0.006 100)", "oklch(75% 0.006 100)", "oklch(87% 0.006 100)", "oklch(95% 0.006 100)"] },
+      "dark-line": { "role": "neutral", "displayName": "Dark Hairline", "canonical": "rgba(255, 255, 255, 0.16)", "tonalRamp": ["rgba(255,255,255,0.06)", "rgba(255,255,255,0.10)", "rgba(255,255,255,0.16)", "rgba(255,255,255,0.24)", "rgba(255,255,255,0.34)", "rgba(255,255,255,0.48)", "rgba(255,255,255,0.68)", "rgba(255,255,255,0.88)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Editorial Display", "purpose": "Section statements and the expanding About declaration." },
+      "hero": { "displayName": "Compact Hero", "purpose": "The first-viewport value proposition only." },
+      "title": { "displayName": "System Title", "purpose": "Practice cards, diagram nodes, and compact subheads." },
+      "body": { "displayName": "Reading Body", "purpose": "Narrative copy and supporting explanations." },
+      "body-large": { "displayName": "Editorial Support", "purpose": "Section introductions beside large statements." },
+      "technical-label": { "displayName": "Technical Metadata", "purpose": "Navigation, controls, counters, state, tags, and rails." }
+    },
+    "shadows": [
+      { "name": "map-ambient", "value": "0 1.5rem 5rem color-mix(in srgb, #000 14%, transparent)", "purpose": "Broad separation beneath the hero workflow map." },
+      { "name": "node-offset", "value": "0.35rem 0.5rem 1.1rem color-mix(in srgb, var(--color-text) 12%, transparent)", "purpose": "Soft down-right depth for system nodes." },
+      { "name": "preview-depth", "value": "0 3rem 8rem rgba(0,0,0,.45)", "purpose": "Deep perspective shadow for featured-work mockups." },
+      { "name": "progress-halo", "value": "0 0 14px color-mix(in srgb, #65e7f4 45%, transparent)", "purpose": "Small cyan emission around the document-completion line." }
+    ],
+    "motion": [
+      { "name": "ease-expressive", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Navigation underlines, icon movement, toggles, and perspective settling." },
+      { "name": "control-transition", "value": "240ms ease", "purpose": "Button gap, transform, background, and color changes." },
+      { "name": "reveal", "value": "900ms power3.out", "purpose": "One-time content reveal from 34px below with 8px blur." },
+      { "name": "progress-spring", "value": "stiffness 150; damping 28; mass 0.25", "purpose": "Smooth document progress in the two-pixel header line." },
+      { "name": "about-scrub", "value": "scrub 0.85; linear frame expansion; power2.out detail reveal", "purpose": "Contained-to-expanded About sequence." },
+      { "name": "reduced-motion", "value": "direct state; 0.01ms global durations; no particles, marquees, perspective, pinning, clipping, or opacity gates", "purpose": "Equivalent readable experience without animated interpolation." }
+    ],
+    "breakpoints": [
+      { "name": "hero-collapse", "value": "1080px" },
+      { "name": "navigation-and-layout-collapse", "value": "820px" },
+      { "name": "mobile", "value": "600px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The principal pill action, used for the hero's first call to action.",
+      "html": "<button class=\"ds-button ds-button-primary\">VIEW MY WORK <svg aria-hidden=\"true\" viewBox=\"0 0 20 20\"><path d=\"m5.5 5.5 9 9M14.5 7v7.5H7\" /></svg></button>",
+      "css": ".ds-button{display:inline-flex;min-height:3.4rem;gap:2.8rem;align-items:center;justify-content:space-between;padding:.9rem 1.15rem;border:1px solid var(--color-text);border-radius:999px;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;transition:gap 240ms ease,transform 240ms ease,background 240ms ease,color 240ms ease}.ds-button svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.ds-button-primary{background:var(--color-text);color:var(--color-bg)}.ds-button:hover{gap:3.4rem;transform:translateY(-2px)}.ds-button:active{transform:translateY(0)}.ds-button:focus-visible{outline:2px solid #60e9f6;outline-offset:4px}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "The secondary pill action that inverts only on interaction.",
+      "html": "<button class=\"ds-button ds-button-ghost\">GET IN TOUCH <svg aria-hidden=\"true\" viewBox=\"0 0 20 20\"><path d=\"M4 10h12M11.5 5.5 16 10l-4.5 4.5\" /></svg></button>",
+      "css": ".ds-button{display:inline-flex;min-height:3.4rem;gap:2.8rem;align-items:center;justify-content:space-between;padding:.9rem 1.15rem;border:1px solid var(--color-text);border-radius:999px;background:transparent;color:var(--color-text);font-family:var(--font-mono);font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;transition:gap 240ms ease,transform 240ms ease,background 240ms ease,color 240ms ease}.ds-button svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.ds-button:hover{gap:3.4rem;transform:translateY(-2px);background:var(--color-text);color:var(--color-bg)}.ds-button:active{transform:translateY(0)}.ds-button:focus-visible{outline:2px solid #60e9f6;outline-offset:4px}"
+    },
+    {
+      "name": "Site Navigation",
+      "kind": "nav",
+      "description": "The sticky identity, section links, theme switch, and direct contact action.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Primary\"><a class=\"ds-mark\" href=\"#\"><span>F/J</span><b>FELIX<br>CASTAÑEDA</b></a><div class=\"ds-nav-links\"><a href=\"#about\">ABOUT</a><a href=\"#skills\">SKILLS</a><a href=\"#projects\">PROJECTS</a></div><a class=\"ds-nav-contact\" href=\"#contact\">LET'S TALK <svg aria-hidden=\"true\" viewBox=\"0 0 20 20\"><path d=\"M5.5 14.5 14.5 5.5M7 5.5h7.5V13\" /></svg></a></nav>",
+      "css": ".ds-nav{display:flex;min-height:4.8rem;align-items:center;justify-content:space-between;gap:2rem;padding:0 1rem;border-bottom:1px solid var(--color-line);background:color-mix(in srgb,var(--color-bg) 82%,transparent);color:var(--color-text);backdrop-filter:blur(18px) saturate(140%)}.ds-mark{display:flex;gap:.7rem;align-items:center;color:inherit;text-decoration:none}.ds-mark span{display:grid;width:2.35rem;aspect-ratio:1;place-items:center;border-radius:50%;background:var(--color-text);color:var(--color-bg);font:600 .66rem var(--font-mono)}.ds-mark b{font:650 .72rem/.9 var(--font-display);letter-spacing:-.02em}.ds-nav-links{display:flex;gap:2rem;font:400 .66rem var(--font-mono);letter-spacing:.09em}.ds-nav-links a{position:relative;padding:.5rem 0;color:inherit;text-decoration:none}.ds-nav-links a:after{position:absolute;right:0;bottom:0;left:0;height:1px;background:currentColor;content:'';transform:scaleX(0);transform-origin:right;transition:transform 280ms cubic-bezier(.22,1,.36,1)}.ds-nav-links a:hover:after{transform:scaleX(1);transform-origin:left}.ds-nav a:focus-visible{outline:2px solid #60e9f6;outline-offset:4px}.ds-nav-contact{display:flex;min-height:2.7rem;gap:1.2rem;align-items:center;padding:.7rem 1rem;border:1px solid var(--color-text);border-radius:999px;background:var(--color-text);color:var(--color-bg);font:400 .66rem var(--font-mono);letter-spacing:.07em;text-decoration:none;transition:gap 220ms ease,transform 220ms ease}.ds-nav-contact:hover{gap:1.6rem;transform:translateY(-1px)}.ds-nav-contact:active{transform:none}.ds-nav-contact svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}"
+    },
+    {
+      "name": "Theme Toggle",
+      "kind": "button",
+      "description": "A compact pill track with a circular current-color thumb.",
+      "html": "<button class=\"ds-theme\" aria-label=\"Switch theme\"><span><i><svg aria-hidden=\"true\" viewBox=\"0 0 20 20\"><circle cx=\"10\" cy=\"10\" r=\"3\"/><path d=\"M10 2.5v1.4M10 16.1v1.4M2.5 10h1.4M16.1 10h1.4\"/></svg></i></span></button>",
+      "css": ".ds-theme{display:grid;width:3.6rem;height:2.7rem;cursor:pointer;place-items:center;border:1px solid var(--color-line);border-radius:999px;background:var(--color-surface)}.ds-theme>span{position:relative;display:block;width:2.3rem;height:1.25rem;border-radius:999px;background:var(--color-surface-raised)}.ds-theme i{position:absolute;top:.125rem;left:.125rem;display:grid;width:1rem;height:1rem;place-items:center;border-radius:50%;background:var(--color-text);color:var(--color-bg);transition:transform 280ms cubic-bezier(.22,1,.36,1)}.ds-theme:hover i{transform:translateX(.12rem)}.ds-theme:active i{transform:scale(.92)}.ds-theme:focus-visible{outline:2px solid #60e9f6;outline-offset:4px}.ds-theme svg{width:.72rem;height:.72rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}"
+    },
+    {
+      "name": "System Node",
+      "kind": "custom",
+      "refersTo": "system-node",
+      "description": "A square workflow artifact that exposes step, action, and operational subject.",
+      "html": "<div class=\"ds-node\" tabindex=\"0\"><span>02</span><strong>Engineer</strong><small>Product + workflow</small></div>",
+      "css": ".ds-node{display:flex;min-width:9rem;flex-direction:column;padding:.8rem;border:1px solid var(--color-text);background:color-mix(in srgb,var(--color-surface) 92%,transparent);box-shadow:.35rem .5rem 1.1rem color-mix(in srgb,var(--color-text) 12%,transparent);color:var(--color-text);transition:transform 220ms cubic-bezier(.22,1,.36,1),box-shadow 220ms ease}.ds-node span,.ds-node small{color:var(--color-muted);font:400 .53rem var(--font-mono);letter-spacing:.08em;text-transform:uppercase}.ds-node strong{margin:.65rem 0 .2rem;font:500 1rem var(--font-display)}.ds-node:hover{transform:translate(-2px,-2px);box-shadow:.5rem .7rem 1.4rem color-mix(in srgb,var(--color-text) 14%,transparent)}.ds-node:focus-visible{outline:2px solid #60e9f6;outline-offset:4px}.ds-node:active{transform:none}"
+    },
+    {
+      "name": "Skill Pill",
+      "kind": "chip",
+      "refersTo": "skill-pill",
+      "description": "A technology chip with a real brand-color inline SVG mark.",
+      "html": "<button class=\"ds-skill\" style=\"--ds-skill-color:#3178c6\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\"><path d=\"M1.5 0h21v24h-21z\"/></svg><span>TypeScript</span></button>",
+      "css": ".ds-skill{display:flex;min-width:max-content;gap:.75rem;align-items:center;padding:.75rem 1rem;border:1px solid var(--color-line);border-radius:999px;background:var(--color-surface);color:var(--color-text);font:560 .86rem var(--font-body);transition:border-color 220ms ease,box-shadow 220ms ease,transform 220ms ease}.ds-skill svg{width:1.15rem;height:1.15rem;fill:currentColor;color:var(--ds-skill-color);transition:transform 220ms cubic-bezier(.22,1,.36,1)}.ds-skill:hover{border-color:color-mix(in srgb,var(--ds-skill-color) 72%,var(--color-text));box-shadow:0 0 0 1px color-mix(in srgb,var(--ds-skill-color) 30%,transparent),0 0 2rem color-mix(in srgb,var(--ds-skill-color) 16%,transparent);transform:translateY(-2px)}.ds-skill:hover svg{transform:scale(1.14) rotate(-4deg)}.ds-skill:active{transform:none}.ds-skill:focus-visible{outline:2px solid #60e9f6;outline-offset:4px}"
+    },
+    {
+      "name": "Project Feature Card",
+      "kind": "card",
+      "refersTo": "project-card",
+      "description": "An editorial problem/system case-study panel paired with a diagrammatic preview stage.",
+      "html": "<article class=\"ds-project\"><div class=\"ds-project-copy\"><div class=\"ds-project-meta\"><span>PROJECT 01</span><span>FULL-STACK SYSTEM</span></div><h3>Business Operations Platform</h3><p>A complete operational system framed by the problem and the mechanism.</p><a href=\"#\">VIEW PROJECT <svg aria-hidden=\"true\" viewBox=\"0 0 20 20\"><path d=\"M5.5 14.5 14.5 5.5M7 5.5h7.5V13\"/></svg></a></div><div class=\"ds-project-stage\"><span>REPLACEABLE VISUAL / 01</span><div class=\"ds-project-ui\"></div></div></article>",
+      "css": ".ds-project{display:grid;min-height:32rem;border:1px solid var(--color-line);background:var(--color-surface);color:var(--color-text);grid-template-columns:minmax(18rem,.8fr) minmax(0,1.2fr)}.ds-project-copy{display:flex;padding:clamp(1.5rem,3.4vw,3.5rem);flex-direction:column}.ds-project-meta{display:flex;justify-content:space-between;gap:1rem;padding-bottom:1rem;border-bottom:1px solid var(--color-line);color:var(--color-muted);font:400 .62rem var(--font-mono);letter-spacing:.1em}.ds-project h3{max-width:12ch;margin:3rem 0 1.5rem;font:520 clamp(2.7rem,5vw,5.5rem)/.92 var(--font-display);letter-spacing:-.038em}.ds-project p{max-width:32rem;color:var(--color-muted);font:400 .93rem/1.6 var(--font-body)}.ds-project a{display:flex;justify-content:space-between;margin-top:auto;padding-top:1rem;border-top:1px solid var(--color-line);color:inherit;font:400 .68rem var(--font-mono);letter-spacing:.08em;text-decoration:none}.ds-project a:hover svg{transform:translate(2px,-2px)}.ds-project a:active{opacity:.65}.ds-project a:focus-visible{outline:2px solid #60e9f6;outline-offset:4px}.ds-project svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform 220ms cubic-bezier(.22,1,.36,1)}.ds-project-stage{position:relative;display:grid;overflow:hidden;place-items:center;border-left:1px solid var(--color-line);background:radial-gradient(circle at 30% 20%,rgba(105,227,241,.23),transparent 32%),radial-gradient(circle at 75% 80%,rgba(255,183,126,.18),transparent 34%),linear-gradient(145deg,#101010,#242424)}.ds-project-stage>span{position:absolute;top:1rem;left:1rem;padding:.45rem .6rem;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.35);color:rgba(255,255,255,.72);font:400 .62rem var(--font-mono);letter-spacing:.1em}.ds-project-ui{width:72%;height:58%;border:1px solid rgba(255,255,255,.25);background:#f4f4f1;box-shadow:0 3rem 8rem rgba(0,0,0,.45);transform:rotateX(6deg) rotateY(-7deg) rotateZ(-1deg);transition:transform 700ms cubic-bezier(.22,1,.36,1)}.ds-project:hover .ds-project-ui{transform:rotateX(1deg) rotateY(-2deg) rotateZ(0) translateY(-5px)}"
+    },
+    {
+      "name": "Placeholder Truth Label",
+      "kind": "custom",
+      "description": "An explicit disclosure applied to any unapproved visual or evidence state.",
+      "html": "<span class=\"ds-placeholder\">REPLACEABLE VISUAL / 01</span>",
+      "css": ".ds-placeholder{display:inline-flex;padding:.45rem .6rem;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.35);color:rgba(255,255,255,.72);font:400 .62rem var(--font-mono);letter-spacing:.1em;text-transform:uppercase;backdrop-filter:blur(8px)}.ds-placeholder:hover{background:rgba(0,0,0,.52)}.ds-placeholder:focus-visible{outline:2px solid #60e9f6;outline-offset:4px}"
+    },
+    {
+      "name": "Contact Channel",
+      "kind": "custom",
+      "description": "A full-width inverse contact row that keeps missing public values visibly pending.",
+      "html": "<a class=\"ds-contact\" href=\"#\"><span>01 / EMAIL</span><strong>Contact detail pending</strong><svg aria-hidden=\"true\" viewBox=\"0 0 20 20\"><path d=\"M5.5 14.5 14.5 5.5M7 5.5h7.5V13\"/></svg></a>",
+      "css": ".ds-contact{display:grid;min-height:6.5rem;gap:1rem;align-items:center;padding:0 1rem;border-top:1px solid rgba(255,255,255,.22);border-bottom:1px solid rgba(255,255,255,.22);background:#080808;color:#f6f6f1;grid-template-columns:10rem 1fr 2rem;text-decoration:none;transition:background 260ms ease}.ds-contact span{color:rgba(255,255,255,.5);font:400 .62rem var(--font-mono);letter-spacing:.1em}.ds-contact strong{font:520 clamp(1.3rem,2vw,2rem) var(--font-display);transition:transform 260ms cubic-bezier(.22,1,.36,1)}.ds-contact svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.ds-contact:hover{background:rgba(255,255,255,.05)}.ds-contact:hover strong{transform:translateX(1rem)}.ds-contact:active strong{transform:translateX(.4rem)}.ds-contact:focus-visible{outline:2px solid #60e9f6;outline-offset:4px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Signal Room",
+    "overview": "The portfolio feels like a quiet operating room for complex systems: high-contrast, typographically assured, and structured enough to make mechanisms visible. Its visual foundation is almost entirely monochrome. Spectral cyan, lilac, and apricot appear as refracted light, progress feedback, focus, or a small proof-of-life signal—not as decorative brand fill.\n\nThe page is an Experience surface. The interface demonstrates Felix's way of working through a compact split hero, a live workflow map, an expanding About field, technical labels, and diagrammatic project previews. Nohemi supplies the human, editorial voice; Instrument Sans makes explanations easy to read; IBM Plex Mono marks system state and metadata. Motion explains hierarchy or completion and always has an immediate, fully readable reduced-motion equivalent.",
+    "keyCharacteristics": [
+      "Monochrome Signal / System palette with rare spectral refraction",
+      "Compact, first-viewport hero with editorial copy and an operational workflow map",
+      "Large Nohemi statements paired with quiet Instrument Sans explanations",
+      "IBM Plex Mono metadata, counters, state labels, and controls",
+      "Fine rules, grid fields, soft-offset shadows, and restrained perspective",
+      "Motion used to reveal process, depth, and document progress",
+      "Honest placeholder labels wherever public evidence is not yet approved"
+    ],
+    "rules": [
+      { "name": "The Refracted-Light Rule", "body": "Spectral color is light passing through the system. Use it for progress, focus, ambient beams, glows, and tiny data cues; never turn it into a broad decorative fill or a rainbow UI.", "section": "colors" },
+      { "name": "The Monochrome-First Rule", "body": "A screen must remain coherent and complete before spectral accents are added.", "section": "colors" },
+      { "name": "The Three-Voice Rule", "body": "Nohemi speaks ideas, Instrument Sans explains them, and IBM Plex Mono identifies system state. Do not interchange these roles for novelty.", "section": "typography" },
+      { "name": "The Tight-Display Rule", "body": "Large Nohemi text uses close tracking and sub-1.0 line-height, but must never clip at any viewport or during motion.", "section": "typography" },
+      { "name": "The First-Viewport Rule", "body": "On wide and common laptop viewports, keep the full value proposition, supporting copy, both actions, contact-state metadata, workflow map, and process ticker visible without scrolling.", "section": "layout" },
+      { "name": "The Priority-Collapse Rule", "body": "Responsive adaptation removes or stacks secondary mechanisms before compressing the primary message.", "section": "layout" },
+      { "name": "The Soft-Offset Rule", "body": "Structural surfaces use rules first. Add shadow only when a diagram, preview, or state needs physical separation.", "section": "elevation" },
+      { "name": "The Light-Not-Neon Rule", "body": "Blur spectral accents generously and keep their opacity low enough that typography stays dominant.", "section": "elevation" },
+      { "name": "The Diagram Geometry Rule", "body": "Use square artifacts, hairline connectors, and circular state markers. Rounded rectangles belong to controls and tags, not ordinary content containers.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do establish a complete monochrome hierarchy before adding spectral light.",
+      "Do use Nohemi for statements, Instrument Sans for explanation, and IBM Plex Mono for state and metadata.",
+      "Do preserve the compact first viewport and remove the workflow map at 1080px when it would compete with the primary message.",
+      "Do use one-pixel rules, visible focus, keyboard-complete controls, and minimum 2.7rem control heights.",
+      "Do make reduced motion a direct, complete state: hide particles, remove scroll runways and transforms, stop marquees, and expose all content.",
+      "Do use the shared currentColor SVG icon grammar for directional and theme controls.",
+      "Do label placeholders and pending public evidence in the interface itself."
+    ],
+    "donts": [
+      "Don't spread spectral color across large surfaces or use it as generic decoration.",
+      "Don't replace structural rules with heavy card shadows or stack rounded cards inside rounded cards.",
+      "Don't use IBM Plex Mono for paragraph copy or Instrument Sans for primary display statements.",
+      "Don't compress, clip, or over-wrap Nohemi display type to preserve a desktop composition.",
+      "Don't keep the workflow map, perspective effects, particle motion, or pinned About sequence when the viewport or motion preference makes them secondary.",
+      "Don't publish invented contact details, employer history, project outcomes, screenshots, or testimonial attribution."
+    ]
+  }
+}

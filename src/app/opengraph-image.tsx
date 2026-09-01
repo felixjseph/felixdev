@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Felix Castañeda — Full-Stack & AI Automation Developer";
+export const alt = "Felix Joseph Castañeda — Full-Stack Web & AI Developer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -9,68 +9,57 @@ export default function OpenGraphImage() {
     (
       <div
         style={{
-          alignItems: "center",
-          background: "#F7F7F2",
-          color: "#111316",
+          alignItems: "stretch",
+          background: "#070707",
+          color: "#F7F7F2",
           display: "flex",
           height: "100%",
-          justifyContent: "center",
           overflow: "hidden",
-          padding: "72px",
+          padding: "56px",
           position: "relative",
           width: "100%",
         }}
       >
         <div
           style={{
-            border: "18px solid #2457FF",
-            borderRadius: "50%",
-            height: "470px",
-            opacity: 0.95,
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px)",
+            backgroundSize: "44px 44px",
+            display: "flex",
+            inset: 0,
             position: "absolute",
-            right: "-80px",
-            top: "-130px",
-            transform: "rotate(-18deg)",
-            width: "780px",
           }}
         />
         <div
           style={{
-            background: "#BCE7D0",
-            border: "8px solid #111316",
-            borderRadius: "50%",
-            bottom: "88px",
-            display: "flex",
-            height: "62px",
-            position: "absolute",
-            right: "208px",
-            width: "62px",
-          }}
-        />
-        <div
-          style={{
-            background: "#2457FF",
+            background: "linear-gradient(135deg, #69E7F4 0%, #A9A5FF 48%, #FFBD87 100%)",
             borderRadius: "50%",
             display: "flex",
-            height: "34px",
-            left: "148px",
+            filter: "blur(36px)",
+            height: 420,
+            opacity: 0.33,
             position: "absolute",
-            top: "116px",
-            width: "34px",
+            right: -80,
+            top: 105,
+            width: 420,
           }}
         />
-        <div style={{ display: "flex", flexDirection: "column", maxWidth: "860px" }}>
-          <div style={{ color: "#2457FF", display: "flex", fontSize: 28, fontWeight: 700, letterSpacing: 4 }}>
-            SYSTEMS IN MOTION
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", position: "relative", width: "100%" }}>
+          <div style={{ alignItems: "center", display: "flex", fontSize: 20, justifyContent: "space-between", letterSpacing: 3 }}>
+            <div style={{ display: "flex" }}>F/J · PORTFOLIO</div>
+            <div style={{ display: "flex" }}>AGENTIC AI / FULL-STACK / AUTOMATION</div>
           </div>
-          <div style={{ display: "flex", fontSize: 76, fontWeight: 700, letterSpacing: -4, lineHeight: 1.02, marginTop: 28 }}>
-            Felix Castañeda
+          <div style={{ display: "flex", flexDirection: "column", maxWidth: 900 }}>
+            <div style={{ display: "flex", fontSize: 82, fontWeight: 700, letterSpacing: -5, lineHeight: 0.9 }}>
+              Felix Joseph Castañeda
+            </div>
+            <div style={{ color: "#A8A8A2", display: "flex", fontSize: 34, marginTop: 30 }}>
+              Systems that turn busywork into forward motion.
+            </div>
           </div>
-          <div style={{ display: "flex", fontSize: 34, lineHeight: 1.2, marginTop: 24 }}>
-            Full-Stack &amp; AI Automation Developer
-          </div>
-          <div style={{ color: "#2457FF", display: "flex", fontSize: 30, fontWeight: 600, marginTop: 54 }}>
-            Software that works. Automation that keeps working.
+          <div style={{ alignItems: "center", borderTop: "1px solid #454545", display: "flex", fontSize: 20, justifyContent: "space-between", letterSpacing: 2, paddingTop: 22 }}>
+            <div style={{ display: "flex" }}>FULL-STACK WEB &amp; AI DEVELOPER</div>
+            <div style={{ display: "flex" }}>PHILIPPINES</div>
           </div>
         </div>
       </div>
