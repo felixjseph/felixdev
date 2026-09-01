@@ -4,9 +4,6 @@ export type PublicSiteConfig = {
     facebook: string;
     phone: string;
   };
-  resume: {
-    url: string;
-  };
 };
 
 export const siteConfig: PublicSiteConfig = {
@@ -14,8 +11,5 @@ export const siteConfig: PublicSiteConfig = {
     email: "",
     facebook: "",
     phone: "",
-  },
-  resume: {
-    url: "",
   },
 };

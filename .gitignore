@@ -1,5 +1,4 @@
 .worktrees/
-.superpowers/
 node_modules/
 .next/
 next-env.d.ts
@@ -11,4 +10,3 @@ debug.log
 .impeccable/review/
 *.tsbuildinfo
 .env*
-!.env.example
