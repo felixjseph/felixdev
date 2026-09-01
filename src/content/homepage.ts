@@ -1,0 +1,94 @@
+export type Capability = {
+  title: string;
+  description: string;
+  proof: string;
+};
+
+export type FaqItem = { question: string; answer: string };
+
+export const homepageContent = {
+  role: "Full-Stack & AI Automation Developer",
+  headline: "Software that works. Automation that keeps working.",
+  primaryCta: "Explore my work",
+  secondaryCta: "Download résumé",
+} as const;
+
+export const capabilities: Capability[] = [
+  {
+    title: "Full-stack products",
+    description: "Useful web experiences shaped around the work people need to do.",
+    proof: "From customer-facing pages to operational product workflows.",
+  },
+  {
+    title: "Workflow automation",
+    description: "Reliable systems that reduce repeated manual steps.",
+    proof: "Designed around clear inputs, handoffs, and operational visibility.",
+  },
+  {
+    title: "AI-enabled tools",
+    description: "Practical AI features grounded in the information a business trusts.",
+    proof: "Applied with defined guardrails and a clear purpose.",
+  },
+  {
+    title: "Product discovery",
+    description: "Interfaces that make the right next step easier to find.",
+    proof: "Clear paths from first impression to useful action.",
+  },
+  {
+    title: "Operational visibility",
+    description: "Dashboards and signals that help teams see what needs attention.",
+    proof: "Focused around routine decisions, not decorative data.",
+  },
+  {
+    title: "Responsible AI handoffs",
+    description: "AI flows that know when to use trusted documents and when to stop.",
+    proof: "Human-readable fallbacks keep important answers grounded.",
+  },
+];
+
+export const faqItems: FaqItem[] = [
+  {
+    question: "What kinds of projects do you take on?",
+    answer:
+      "I work on full-stack products, workflow automation, and practical AI tools that help a team improve a real business process.",
+  },
+  {
+    question: "How does a project begin?",
+    answer:
+      "We start with the problem, the people using the system, and the outcome that would make the work meaningfully better.",
+  },
+  {
+    question: "What does collaboration look like?",
+    answer:
+      "The work moves from a clear scope into focused builds, review points, and a handoff that keeps the system understandable.",
+  },
+  {
+    question: "How do you approach automation and AI?",
+    answer:
+      "I use automation and AI where they make a process more dependable, with guardrails and trusted information guiding the result.",
+  },
+];
+
+export const projectPreviews = [
+  {
+    slug: "sayu-cafe",
+    title: "Sayu Café",
+    tier: "flagship",
+    summary: "Product discovery and practical café automation.",
+    proof: "Rule-based builder, daily audit reporting, and low-stock alerts.",
+  },
+  {
+    slug: "solara",
+    title: "Solara",
+    tier: "supporting",
+    summary: "A solar-services platform with grounded quotation assistance.",
+    proof: "Document-first pricing answers and lightweight Gemini assistance.",
+  },
+  {
+    slug: "pach-drugmart",
+    title: "Pach Drugmart",
+    tier: "supporting",
+    summary: "Inventory operations, analytics, and transaction visibility.",
+    proof: "Operational dashboard and inventory insight.",
+  },
+] as const;

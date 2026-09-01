@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Sayu Café development media fallback</title>
+  <desc id="desc">P2 Signal Cobalt fallback artwork for the Sayu Café case study.</desc>
+  <rect width="1440" height="900" fill="#F7F7F2"/>
+  <rect x="72" y="72" width="1296" height="756" fill="#FFFFFF" stroke="#2457FF" stroke-width="8"/>
+  <rect x="112" y="112" width="208" height="36" fill="#BCE7D0"/>
+  <rect x="1080" y="112" width="208" height="36" fill="#9FE0C0"/>
+  <circle cx="720" cy="450" r="164" fill="#0A0D14" stroke="#6B8CFF" stroke-width="24"/>
+  <path d="M650 470h140v64c0 32-26 58-58 58h-24c-32 0-58-26-58-58z" fill="#BCE7D0"/>
+  <path d="M682 430c0-32 24-56 38-75 14 19 38 43 38 75" fill="none" stroke="#9FE0C0" stroke-width="18" stroke-linecap="round"/>
+  <text x="720" y="214" text-anchor="middle" fill="#111316" font-family="Arial, sans-serif" font-size="62" font-weight="700">Sayu Café</text>
+  <text x="720" y="714" text-anchor="middle" fill="#2457FF" font-family="monospace" font-size="30" font-weight="700">DEVELOPMENT MEDIA FALLBACK</text>
+  <text x="720" y="758" text-anchor="middle" fill="#121826" font-family="Arial, sans-serif" font-size="22">P2 Signal Cobalt</text>
+  <rect x="0" y="876" width="1440" height="24" fill="#121826"/>
+  <rect x="0" y="852" width="1440" height="24" fill="#F2F4F8"/>
+</svg>
