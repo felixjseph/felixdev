@@ -22,31 +22,31 @@ colors:
   dark-line: "rgba(255, 255, 255, 0.16)"
 typography:
   display:
-    fontFamily: "Nohemi, Instrument Sans Variable, sans-serif"
+    fontFamily: "Nohemi, -apple-system, BlinkMacSystemFont, SF Pro Display, SF Pro Text, Segoe UI, sans-serif"
     fontSize: "clamp(3rem, 6vw, 6rem)"
-    fontWeight: 500
+    fontWeight: 600
     lineHeight: 0.92
     letterSpacing: "-0.038em"
   hero:
-    fontFamily: "Nohemi, Instrument Sans Variable, sans-serif"
-    fontSize: "clamp(3.4rem, 6.1vw, 6rem)"
-    fontWeight: 500
+    fontFamily: "Nohemi, -apple-system, BlinkMacSystemFont, SF Pro Display, SF Pro Text, Segoe UI, sans-serif"
+    fontSize: "clamp(3.8rem, 7.4vw, 7.8rem)"
+    fontWeight: 700
     lineHeight: 0.88
     letterSpacing: "-0.04em"
   title:
-    fontFamily: "Nohemi, Instrument Sans Variable, sans-serif"
+    fontFamily: "Nohemi, -apple-system, BlinkMacSystemFont, SF Pro Display, SF Pro Text, Segoe UI, sans-serif"
     fontSize: "1.35rem"
     fontWeight: 560
     lineHeight: 1
     letterSpacing: "-0.04em"
   body:
-    fontFamily: "Instrument Sans Variable, sans-serif"
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, SF Pro Text, Segoe UI, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.5
     letterSpacing: "normal"
   body-large:
-    fontFamily: "Instrument Sans Variable, sans-serif"
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, SF Pro Text, Segoe UI, sans-serif"
     fontSize: "clamp(1rem, 1.5vw, 1.22rem)"
     fontWeight: 400
     lineHeight: 1.65
@@ -111,13 +111,13 @@ components:
 
 The portfolio feels like a quiet operating room for complex systems: high-contrast, typographically assured, and structured enough to make mechanisms visible. Its visual foundation is almost entirely monochrome. Spectral cyan, lilac, and apricot appear as refracted light, progress feedback, focus, or a small proof-of-life signal—not as decorative brand fill.
 
-The page is an Experience surface. The interface demonstrates Felix's way of working through a compact split hero, a live workflow map, an expanding About field, technical labels, and diagrammatic project previews. Nohemi supplies the human, editorial voice; Instrument Sans makes explanations easy to read; IBM Plex Mono marks system state and metadata. Motion explains hierarchy or completion and always has an immediate, fully readable reduced-motion equivalent.
+The page is an Experience surface. The interface demonstrates Felix's way of working through a compact split hero, a live workflow map, an expanding About field, technical labels, and diagrammatic project previews. Nohemi supplies the human, editorial voice; Apple-aligned system typography keeps explanations clear and responsive; IBM Plex Mono marks system state and metadata. Motion explains hierarchy or completion and always has an immediate, fully readable reduced-motion equivalent.
 
 **Key Characteristics:**
 
 - Monochrome Signal / System palette with rare spectral refraction
 - Compact, first-viewport hero with editorial copy and an operational workflow map
-- Large Nohemi statements paired with quiet Instrument Sans explanations
+- Large Nohemi statements paired with Apple-aligned system explanations
 - IBM Plex Mono metadata, counters, state labels, and controls
 - Fine rules, grid fields, soft-offset shadows, and restrained perspective
 - Motion used to reveal process, depth, and document progress
@@ -153,13 +153,13 @@ Warm near-whites and dense near-blacks carry the interface; muted grays create h
 
 ## Typography
 
-**Display Font:** Nohemi, self-hosted in Light, Regular, Medium, SemiBold, and Bold, with Instrument Sans Variable and sans-serif fallbacks
+**Display Font:** Nohemi, self-hosted in Light, Regular, Medium, SemiBold, and Bold, with Apple-aligned system fallbacks
 
-**Body Font:** Instrument Sans Variable, with sans-serif fallback
+**Body Font:** Apple system stack (`-apple-system`, SF Pro Display/Text, Segoe UI), with sans-serif fallback
 
 **Label/Mono Font:** IBM Plex Mono in Regular and SemiBold, with monospace fallback
 
-**Character:** Nohemi is compact, confident, and human enough to carry the portfolio's strongest ideas. Instrument Sans supplies unforced reading clarity, while IBM Plex Mono creates a measured systems layer without turning the page into a terminal theme.
+**Character:** Nohemi is compact, confident, and human enough to carry the portfolio's strongest ideas. Apple-aligned system typography supplies responsive reading clarity, while IBM Plex Mono creates a measured systems layer without turning the page into a terminal theme.
 
 ### Hierarchy
 
@@ -170,7 +170,7 @@ Warm near-whites and dense near-blacks carry the interface; muted grays create h
 - **Body** (Regular, 1.5–1.65 line-height): Explanations and narrative copy; use restrained widths of about 36–40rem or 62–68 characters.
 - **Technical Label** (Regular or SemiBold, compact mono scale, uppercase): Navigation, counts, states, tags, rails, metadata, and controls.
 
-**The Three-Voice Rule.** Nohemi speaks ideas, Instrument Sans explains them, and IBM Plex Mono identifies system state. Do not interchange these roles for novelty.
+**The Three-Voice Rule.** Nohemi speaks ideas, the Apple-aligned system stack explains them, and IBM Plex Mono identifies system state. Do not interchange these roles for novelty.
 
 **The Tight-Display Rule.** Large Nohemi text uses close tracking and sub-1.0 line-height, but must never clip at any viewport or during motion.
 
@@ -222,7 +222,7 @@ Grid fields use 32px cells in the workflow map, 42px in project previews, and 56
 
 ### Chips
 
-- **Style:** Skill chips use Paper Surface, a hairline border, pill shape, compact Instrument Sans text, and a real technology-color SVG mark. Technical tags use IBM Plex Mono uppercase text and tighter padding.
+- **Style:** Skill chips use Paper Surface, a hairline border, pill shape, compact system text, and a real technology-color SVG mark. Technical tags use IBM Plex Mono uppercase text and tighter padding.
 - **State:** Skill lanes pause on hover or focus-within. Non-target chips fade while the target rises 2px, gains a restrained brand-color border/halo, and its icon scales and rotates slightly.
 
 ### Cards / Containers
@@ -256,7 +256,7 @@ Featured work pairs editorial problem/system copy with purpose-built diagrammati
 ### Do:
 
 - **Do** establish a complete monochrome hierarchy before adding spectral light.
-- **Do** use Nohemi for statements, Instrument Sans for explanation, and IBM Plex Mono for state and metadata.
+- **Do** use Nohemi for statements, the Apple-aligned system stack for explanation, and IBM Plex Mono for state and metadata.
 - **Do** preserve the compact first viewport and remove the workflow map at 1080px when it would compete with the primary message.
 - **Do** use one-pixel rules, visible focus, keyboard-complete controls, and minimum 2.7rem control heights.
 - **Do** make reduced motion a direct, complete state: hide particles, remove scroll runways and transforms, stop marquees, and expose all content.
@@ -267,7 +267,7 @@ Featured work pairs editorial problem/system copy with purpose-built diagrammati
 
 - **Don't** spread spectral color across large surfaces or use it as generic decoration.
 - **Don't** replace structural rules with heavy card shadows or stack rounded cards inside rounded cards.
-- **Don't** use IBM Plex Mono for paragraph copy or Instrument Sans for primary display statements.
+- **Don't** use IBM Plex Mono for paragraph copy or the system stack for primary display statements.
 - **Don't** compress, clip, or over-wrap Nohemi display type to preserve a desktop composition.
 - **Don't** keep the workflow map, perspective effects, particle motion, or pinned About sequence when the viewport or motion preference makes them secondary.
 - **Don't** publish invented contact details, employer history, project outcomes, screenshots, or testimonial attribution.

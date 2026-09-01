@@ -22,7 +22,7 @@
 
 - Preserve the Next.js App Router, TypeScript, Tailwind CSS, Motion/GSAP, typed local content, and existing theme infrastructure.
 - Prefer server-rendered sections and isolate client code to pointer response, theme controls, navigation, and motion.
-- Use self-hosted Nohemi for display typography, Instrument Sans for body/interface text, and IBM Plex Mono only for genuine technical metadata.
+- Use self-hosted Nohemi for display typography, the Apple-aligned system stack (`-apple-system`, SF Pro Display/Text, Segoe UI) for body/interface text, and IBM Plex Mono only for genuine technical metadata.
 - Keep the hero compact enough to deliver its full message and primary actions inside a common laptop viewport. Its WebGL particle field is atmospheric support, not decorative noise.
 - The About section uses one scroll-expansion sequence to reveal Felix's operating philosophy. Navigation includes a smooth, document-level completion line.
 - Use official Simple Icons data where available. If an official recognizable mark is unavailable, render the technology as structured text outside the logo carousel rather than fabricating a logo.

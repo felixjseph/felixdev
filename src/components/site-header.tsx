@@ -19,6 +19,7 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeAnchor, setActiveAnchor] = useState<string | null>(null);
   const menuId = useId();
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 150, damping: 28, mass: 0.25 });
@@ -33,6 +34,28 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
 
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
+  }, []);
+
+  useEffect(() => {
+    if (!("IntersectionObserver" in window)) return;
+
+    const sections = ["about", "skills", "projects", "experience", "contact"]
+      .map((anchor) => document.getElementById(anchor))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible) setActiveAnchor(visible.target.id);
+      },
+      { rootMargin: "-28% 0px -58%", threshold: [0.05, 0.2, 0.5, 0.8] },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
 
   const closeMenu = () => setIsMenuOpen(false);
@@ -50,10 +73,20 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
         </a>
         <div className="site-nav__links">
           {navigationLinks.map((link) => (
-            <a href={anchorHref(link.anchor)} key={link.anchor} onClick={closeMenu}>
+            <a
+              aria-current={activeAnchor === link.anchor ? "page" : undefined}
+              className={activeAnchor === link.anchor ? "is-active" : undefined}
+              href={anchorHref(link.anchor)}
+              key={link.anchor}
+              onClick={closeMenu}
+            >
               {link.label}
             </a>
           ))}
+        </div>
+        <div aria-hidden="true" className="site-nav__signal">
+          <span />
+          <small>Portfolio / 001</small>
         </div>
         <div className="site-nav__actions">
           <ThemeToggle />
@@ -68,7 +101,8 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
             onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
             type="button"
           >
-            {isMenuOpen ? "Close" : "Menu"}
+            <span aria-hidden="true" className="menu-toggle__dot" />
+            <span>{isMenuOpen ? "Close" : "Menu"}</span>
           </button>
         </div>
       </nav>
