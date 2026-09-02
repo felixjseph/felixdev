@@ -32,9 +32,9 @@ describe("SiteHeader", () => {
       "href",
       "#contact",
     );
-    expect(screen.getByRole("link", { name: /Let's talk/i })).toHaveAttribute(
-      "href",
-      "#contact",
+    expect(screen.getByLabelText(/Resume — download not yet available/i)).toHaveAttribute(
+      "data-resume-state",
+      "unavailable",
     );
     expect(screen.getByRole("button", { name: "Open navigation menu" })).toHaveAttribute(
       "aria-expanded",

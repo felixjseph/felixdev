@@ -17,7 +17,8 @@ export type SkillLogo =
   | "docker"
   | "git"
   | "googlegemini"
-  | "anthropic";
+  | "anthropic"
+  | "zapier";
 
 export type SkillItem = {
   name: string;
@@ -66,6 +67,7 @@ export const skillLanes: SkillLane[] = [
       { name: "Git", logo: "git" },
       { name: "Google Gemini", logo: "googlegemini" },
       { name: "Anthropic", logo: "anthropic" },
+      { name: "Zapier", logo: "zapier" },
       { name: "TypeScript", logo: "typescript" },
       { name: "Python", logo: "python" },
     ],

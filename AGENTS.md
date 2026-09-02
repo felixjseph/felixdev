@@ -5,7 +5,7 @@
 - Build a production-grade portfolio for Felix Joseph Castañeda, a Full-Stack Web and AI Developer focused on agentic AI, AI automation, and practical business systems.
 - The homepage narrative is fixed: Hero → About → Skills → Projects → Testimonial → Experience → Contact.
 - Use a distinctive monochrome "Signal / System" visual world: black, white, graphite, silver, and tightly controlled spectral gradients. Light and dark themes must both feel intentionally designed.
-- The signature motifs are a workflow constellation, refracted-light gradients, precise technical labels, editorial typography, and three counter-moving technology lanes.
+- The signature motifs are a cursor-responsive light field, sparse floating signal particles, precise technical labels, editorial typography, and one continuous monochrome technology ribbon.
 - The site may learn from references at the level of pacing and ambition, but must not copy their composition, assets, language, or interaction choreography.
 - Keep the experience sophisticated and calm. Motion establishes hierarchy; it never competes with the work.
 
@@ -20,11 +20,13 @@
 
 ## Design and Engineering Approach
 
-- Preserve the Next.js App Router, TypeScript, Tailwind CSS, Motion/GSAP, typed local content, and existing theme infrastructure.
+- Preserve the Next.js App Router, TypeScript, Tailwind/PostCSS, typed local content, and existing theme infrastructure. Prefer CSS-native motion and do not add an animation dependency unless the interaction genuinely requires one.
 - Prefer server-rendered sections and isolate client code to pointer response, theme controls, navigation, and motion.
 - Use self-hosted Nohemi for display typography, the Apple-aligned system stack (`-apple-system`, SF Pro Display/Text, Segoe UI) for body/interface text, and IBM Plex Mono only for genuine technical metadata.
-- Keep the hero compact enough to deliver its full message and primary actions inside a common laptop viewport. Its WebGL particle field is atmospheric support, not decorative noise.
-- The About section uses one scroll-expansion sequence to reveal Felix's operating philosophy. Navigation includes a smooth, document-level completion line.
+- Keep the hero compact, horizontally centered, and readable inside a common laptop viewport. The identity line should sit close to the headline, and the two primary actions should remain centered below the supporting sentence.
+- The hero background uses a lightweight CSS cursor glow, a subtle central texture, and sparse particles that remain visible in both light and dark themes. Keep it atmospheric rather than diagrammatic: do not add diagonal divider lines, outlined cursor rings, WebGL, or a heavy particle library.
+- Keep the hero free of redundant category labels below its primary actions. The About section is a compact, static statement of Felix's operating philosophy. Navigation intentionally has no document-progress line.
+- The Skills section uses one endlessly looping, logo-only ribbon. Marks are official Simple Icons, monochrome, large enough to recognize, and spaced densely enough to show many technologies at once.
 - Use official Simple Icons data where available. If an official recognizable mark is unavailable, render the technology as structured text outside the logo carousel rather than fabricating a logo.
 - Maintain semantic landmarks, keyboard-complete controls, visible focus, comfortable touch targets, responsive layouts, and `prefers-reduced-motion` behavior.
 - Keep animation on transforms and opacity for 60fps behavior. Infinite rails must duplicate content without a visible seam and become static/scrollable for reduced-motion users.
@@ -45,6 +47,7 @@
 - Preserve my existing changes and avoid destructive Git commands.
 - Follow the project's existing stack, conventions, and architecture unless the task explicitly requires a change.
 - Prefer focused, maintainable changes over unnecessary rewrites.
+- Whenever a visual or interaction decision changes, update this `AGENTS.md` design guidance in the same iteration so it remains the current source of truth.
 - Commit completed work with a clear, descriptive message when the change is ready.
 - Do not deploy, publish, merge, or push to a remote repository unless I explicitly ask.
 

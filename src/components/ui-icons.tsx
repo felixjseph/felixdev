@@ -29,8 +29,34 @@ export function ArrowUpIcon(props: IconProps) {
   return <svg {...shared} {...props}><path d="M10 16V4M5.5 8.5 10 4l4.5 4.5" /></svg>;
 }
 
-export function RefreshIcon(props: IconProps) {
-  return <svg {...shared} {...props}><path d="M15.6 7.2A6 6 0 1 0 16 11M15.6 3.8v3.6h-3.7" /></svg>;
+export function DownloadIcon(props: IconProps) {
+  return <svg {...shared} {...props}><path d="M10 3.5v9M6.5 9 10 12.5 13.5 9M4 16.5h12" /></svg>;
+}
+
+export function EmailIcon(props: IconProps) {
+  return (
+    <svg {...shared} {...props}>
+      <rect height="12" rx="2" width="15" x="2.5" y="4" />
+      <path d="m4.5 6.5 5.5 4 5.5-4" />
+    </svg>
+  );
+}
+
+export function PhoneIcon(props: IconProps) {
+  return (
+    <svg {...shared} {...props}>
+      <path d="M6.1 3.2 8 6.9 5.9 8.4a11.8 11.8 0 0 0 5.7 5.7L13.1 12l3.7 1.9-.5 2.3c-.2.8-.9 1.3-1.7 1.3C7.9 17.5 2.5 12.1 2.5 5.4c0-.8.5-1.5 1.3-1.7l2.3-.5Z" />
+    </svg>
+  );
+}
+
+export function LocationIcon(props: IconProps) {
+  return (
+    <svg {...shared} {...props}>
+      <path d="M16 8.3c0 4.4-6 9.2-6 9.2s-6-4.8-6-9.2a6 6 0 1 1 12 0Z" />
+      <circle cx="10" cy="8.3" r="2" />
+    </svg>
+  );
 }
 
 export function SunIcon(props: IconProps) {

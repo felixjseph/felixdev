@@ -42,12 +42,12 @@ test("keeps marquee content usable when reduced motion is requested", async ({ p
   expect(animation).toBe("none");
 });
 
-test("does not publish unapproved GitHub, LinkedIn, email, or phone links", async ({ page }) => {
+test("publishes approved contact details without GitHub or LinkedIn", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.locator("a[href*='github']")).toHaveCount(0);
   await expect(page.locator("a[href*='linkedin']")).toHaveCount(0);
-  await expect(page.locator("a[href^='mailto:']")).toHaveCount(0);
-  await expect(page.locator("a[href^='tel:']")).toHaveCount(0);
-  await expect(page.getByText("Contact detail pending")).toHaveCount(3);
+  await expect(page.locator("a[href='mailto:felixjosephcastaneda@gmail.com']").first()).toBeVisible();
+  await expect(page.locator("a[href='tel:09432469897']").first()).toBeVisible();
+  await expect(page.getByText("San Fernando, Cebu, PH")).toBeVisible();
 });

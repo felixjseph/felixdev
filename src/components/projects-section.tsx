@@ -81,8 +81,7 @@ export function ProjectsSection() {
           Products designed around <span>real operational leverage.</span>
         </h2>
         <p data-reveal>
-          These are production-grade case-study placeholders. Final responsibilities, assets, links, and verified
-          outcomes will replace the draft content in the next project pass.
+          Concept studies awaiting approved assets, responsibilities, and verified results.
         </p>
       </div>
 

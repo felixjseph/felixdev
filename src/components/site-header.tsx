@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
-import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
+import { siteConfig } from "@/content/site";
 import { ThemeToggle } from "./theme-toggle";
-import { ArrowUpRightIcon } from "./ui-icons";
+import { DownloadIcon } from "./ui-icons";
 
 const navigationLinks = [
   { anchor: "about", label: "About" },
@@ -21,9 +21,6 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeAnchor, setActiveAnchor] = useState<string | null>(null);
   const menuId = useId();
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 150, damping: 28, mass: 0.25 });
-  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const closeOnEscape = (event: KeyboardEvent) => {
@@ -69,7 +66,7 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
       >
         <a aria-label="Felix Castañeda — Home" className="site-mark" href={anchorHref("hero")} onClick={closeMenu}>
           <span>F/J</span>
-          <span>Felix<br />Castañeda</span>
+          <span>Felix</span>
         </a>
         <div className="site-nav__links">
           {navigationLinks.map((link) => (
@@ -84,15 +81,23 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
             </a>
           ))}
         </div>
-        <div aria-hidden="true" className="site-nav__signal">
-          <span />
-          <small>Portfolio / 001</small>
-        </div>
         <div className="site-nav__actions">
           <ThemeToggle />
-          <a className="nav-contact" href={anchorHref("contact")} onClick={closeMenu}>
-            Let&apos;s talk <ArrowUpRightIcon />
-          </a>
+          {siteConfig.resumeUrl ? (
+            <a className="nav-contact" data-resume-state="available" download href={siteConfig.resumeUrl} onClick={closeMenu}>
+              Resume <DownloadIcon />
+            </a>
+          ) : (
+            <span
+              aria-disabled="true"
+              aria-label="Resume — download not yet available"
+              className="nav-contact nav-contact--disabled"
+              data-resume-state="unavailable"
+              title="Add an approved resume PDF in site configuration to enable this download"
+            >
+              Resume <DownloadIcon />
+            </span>
+          )}
           <button
             aria-controls={menuId}
             aria-expanded={isMenuOpen}
@@ -117,11 +122,13 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
               {link.label}
             </a>
           ))}
+          {siteConfig.resumeUrl ? (
+            <a download href={siteConfig.resumeUrl} onClick={closeMenu}>Download résumé</a>
+          ) : (
+            <span aria-disabled="true" className="mobile-nav__disabled">Résumé unavailable</span>
+          )}
         </nav>
       ) : null}
-      <div aria-hidden="true" className="site-progress">
-        <motion.span style={{ scaleX: prefersReducedMotion ? scrollYProgress : progress }} />
-      </div>
     </header>
   );
 }

@@ -18,16 +18,10 @@ import {
   siSupabase,
   siTailwindcss,
   siTypescript,
+  siZapier,
   type SimpleIcon,
 } from "simple-icons";
-import type { CSSProperties } from "react";
-import {
-  engineeringPractices,
-  skillLanes,
-  textOnlyTechnologies,
-  type SkillItem,
-  type SkillLogo,
-} from "@/content/portfolio";
+import { skillLanes, type SkillItem, type SkillLogo } from "@/content/portfolio";
 
 const icons: Record<SkillLogo, SimpleIcon> = {
   android: siAndroid,
@@ -49,75 +43,52 @@ const icons: Record<SkillLogo, SimpleIcon> = {
   supabase: siSupabase,
   tailwindcss: siTailwindcss,
   typescript: siTypescript,
+  zapier: siZapier,
 };
 
-function SkillPill({ item }: { item: SkillItem }) {
+const carouselSkills = Array.from(
+  new Map(skillLanes.flatMap((lane) => lane.items).map((item) => [item.name, item])).values(),
+);
+
+function SkillMark({ item }: { item: SkillItem }) {
   const icon = icons[item.logo];
-  const brandColor = icon.hex === "000000" ? "var(--color-text)" : `#${icon.hex}`;
 
   return (
-    <li className="skill-pill" style={{ "--skill-color": brandColor } as CSSProperties}>
+    <li
+      aria-label={item.name}
+      className="skill-mark"
+      data-label={item.name}
+      title={item.name}
+    >
       <svg aria-hidden="true" className="skill-logo" viewBox="0 0 24 24">
         <path d={icon.path} />
       </svg>
-      <span>{item.name}</span>
     </li>
   );
 }
 
 export function SkillsSection() {
   return (
-    <section aria-labelledby="skills-heading" className="section-shell skills-section" id="skills">
-      <div className="section-heading-grid">
-        <h2 data-reveal id="skills-heading">
-          A broad stack.
-          <span> One operating standard.</span>
+    <section aria-labelledby="skills-heading" className="skills-section" id="skills">
+      <div className="skills-heading">
+        <h2 id="skills-heading">
+          A broad stack. <span>One clear standard.</span>
         </h2>
-        <p data-reveal>
-          I choose tools around the workflow—not the other way around. Every layer should make the system clearer,
-          faster, or easier to maintain.
-        </p>
+        <p>A focused toolkit for useful, maintainable products.</p>
       </div>
 
-      <div aria-label="Technology skills" className="skill-lanes" data-reveal>
-        {skillLanes.map((lane) => (
-          <div className="skill-lane" data-direction={lane.direction} key={lane.label}>
-            <p className="skill-lane__label">{lane.label}</p>
-            <div className="skill-lane__viewport">
-              <div className="skill-track">
-                <ul className="skill-set">
-                  {lane.items.map((item) => (
-                    <SkillPill item={item} key={`${lane.label}-${item.name}`} />
-                  ))}
-                </ul>
-                <ul aria-hidden="true" className="skill-set">
-                  {lane.items.map((item) => (
-                    <SkillPill item={item} key={`${lane.label}-duplicate-${item.name}`} />
-                  ))}
-                </ul>
-              </div>
+      <div aria-label="Technology skills" className="skill-lanes">
+        <div className="skill-lane">
+          <div className="skill-lane__viewport">
+            <div className="skill-track">
+              <ul className="skill-set">
+                {carouselSkills.map((item) => <SkillMark item={item} key={item.name} />)}
+              </ul>
+              <ul aria-hidden="true" className="skill-set">
+                {carouselSkills.map((item) => <SkillMark item={item} key={`duplicate-${item.name}`} />)}
+              </ul>
             </div>
           </div>
-        ))}
-      </div>
-
-      <div className="skills-details" data-reveal>
-        <div>
-          <p className="micro-label">Also in the toolbox</p>
-          <div className="text-tech-list">
-            {textOnlyTechnologies.map((technology) => (
-              <span key={technology}>{technology}</span>
-            ))}
-          </div>
-        </div>
-        <div className="practice-grid">
-          {engineeringPractices.map((practice) => (
-            <article className="practice-card" key={practice.title}>
-              <span>{practice.index}</span>
-              <h3>{practice.title}</h3>
-              <p>{practice.description}</p>
-            </article>
-          ))}
         </div>
       </div>
     </section>
