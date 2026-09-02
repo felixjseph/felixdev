@@ -6,6 +6,7 @@
 - The homepage narrative is fixed: Hero → About → Skills → Projects → Testimonial → Experience → Contact.
 - Use a distinctive monochrome "Signal / System" visual world: black, white, graphite, silver, and tightly controlled spectral gradients. Light and dark themes must both feel intentionally designed.
 - The signature motifs are a cursor-responsive light field, sparse floating signal particles, precise technical labels, editorial typography, and one continuous monochrome technology ribbon.
+- The approved identity mark is the square “Nested System” F/J monogram: nested orthogonal frames, F/J negative space, and a forward diagonal exit. Use the shared inline SVG component for interface placement and `src/app/icon.svg` for the adaptive favicon; never substitute the earlier circular F/J badge or generated raster concept.
 - The site may learn from references at the level of pacing and ambition, but must not copy their composition, assets, language, or interaction choreography.
 - Keep the experience sophisticated and calm. Motion establishes hierarchy; it never competes with the work.
 
@@ -23,6 +24,7 @@
 - Preserve the Next.js App Router, TypeScript, Tailwind/PostCSS, typed local content, and existing theme infrastructure. Prefer CSS-native motion and do not add an animation dependency unless the interaction genuinely requires one.
 - Prefer server-rendered sections and isolate client code to pointer response, theme controls, navigation, and motion.
 - Use self-hosted Nohemi for display typography, the Apple-aligned system stack (`-apple-system`, SF Pro Display/Text, Segoe UI) for body/interface text, and IBM Plex Mono only for genuine technical metadata.
+- Render the Nested System mark in `currentColor` so it is near-black in light mode and warm white in dark mode. Preserve its square proportions, crisp corners, and legibility at small sizes.
 - Keep the hero compact, horizontally centered, and readable inside a common laptop viewport. The identity line should sit close to the headline, and the two primary actions should remain centered below the supporting sentence.
 - The hero background uses a lightweight CSS cursor glow, a subtle central texture, and sparse particles that remain visible in both light and dark themes. Keep it atmospheric rather than diagrammatic: do not add diagonal divider lines, outlined cursor rings, WebGL, or a heavy particle library.
 - Keep the hero free of redundant category labels below its primary actions. The About section is a compact, static statement of Felix's operating philosophy. Navigation intentionally has no document-progress line.

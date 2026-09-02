@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 import { siteConfig } from "@/content/site";
+import { BrandMark } from "./brand-mark";
 import { ThemeToggle } from "./theme-toggle";
 import { DownloadIcon } from "./ui-icons";
 
@@ -65,7 +66,7 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
         className="site-nav"
       >
         <a aria-label="Felix Castañeda — Home" className="site-mark" href={anchorHref("hero")} onClick={closeMenu}>
-          <span>F/J</span>
+          <span aria-hidden="true" className="site-mark__symbol"><BrandMark /></span>
           <span>Felix</span>
         </a>
         <div className="site-nav__links">
