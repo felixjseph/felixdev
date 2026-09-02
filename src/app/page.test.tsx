@@ -32,6 +32,8 @@ describe("HomePage", () => {
     ).toBeInTheDocument();
     expect(screen.getAllByText(/Full-Stack Web & AI Developer/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole("link", { name: /View my work/i })).toHaveAttribute("href", "#projects");
+    expect(screen.queryByText("Full-stack systems")).not.toBeInTheDocument();
+    expect(screen.queryByText("Workflow automation")).not.toBeInTheDocument();
   });
 
   it("keeps the requested portfolio section order", () => {
@@ -51,15 +53,13 @@ describe("HomePage", () => {
     ]);
   });
 
-  it("keeps unapproved contact channels and GitHub out of public output", () => {
+  it("publishes approved contact channels while keeping GitHub and LinkedIn out", () => {
     const { container } = render(<HomePage />);
-    const privateRepositoryEmail = ["felixjosephcastaneda", "gmail.com"].join("@");
-
-    expect(container.innerHTML).not.toContain(privateRepositoryEmail);
     expect(container.innerHTML.toLowerCase()).not.toContain("github");
     expect(container.innerHTML.toLowerCase()).not.toContain("linkedin");
-    expect(container.querySelector("a[href^='mailto:']")).not.toBeInTheDocument();
-    expect(screen.getAllByText("Contact detail pending")).toHaveLength(3);
+    expect(container.querySelector("a[href='mailto:felixjosephcastaneda@gmail.com']")).toBeInTheDocument();
+    expect(container.querySelector("a[href='tel:09432469897']")).toBeInTheDocument();
+    expect(screen.getByText("San Fernando, Cebu, PH")).toBeInTheDocument();
   });
 
   it("renders the three placeholder project concepts", () => {

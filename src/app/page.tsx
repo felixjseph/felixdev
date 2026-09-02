@@ -7,13 +7,11 @@ import { SkillsSection } from "@/components/skills-section";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { TestimonialsSection } from "@/components/testimonials-section";
-import { RevampMotion } from "@/components/revamp-motion";
 
 export default function HomePage() {
   return (
     <>
       <SiteHeader />
-      <RevampMotion />
       <main>
         <SignalHero />
         <AboutSection />

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .background { fill: #f3f3ef; }
+    .mark { color: #0a0a0a; }
+    @media (prefers-color-scheme: dark) {
+      .background { fill: #050505; }
+      .mark { color: #f5f5f1; }
+    }
+  </style>
+  <rect class="background" width="64" height="64" rx="8" />
+  <g class="mark" fill="none">
+    <path d="M7 7h50v39L43 57H7V7Z" stroke="currentColor" stroke-linejoin="miter" stroke-width="6" />
+    <path d="M18 18h28v22L37 49H18V18Z" stroke="currentColor" stroke-linejoin="miter" stroke-width="4" />
+    <path d="M27 43V26h13M27 34h9M37 35v8h-6" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter" stroke-width="4" />
+    <path d="m42 57 15-15v15H42Z" fill="currentColor" />
+  </g>
+</svg>

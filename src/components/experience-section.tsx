@@ -31,8 +31,7 @@ export function ExperienceSection() {
             Built to adapt. <span>Expected to own the outcome.</span>
           </h2>
           <p data-reveal>
-            A concise view of how my experience compounds. Verified employers, role dates, and final timeline details
-            will be added only after content review.
+            A practical summary. Verified employers and role dates will follow content review.
           </p>
         </div>
         <ol className="experience-list">

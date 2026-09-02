@@ -27,7 +27,7 @@ Visitors move through a single portfolio narrative: Hero → About → Skills �
 - Next.js App Router, TypeScript, React, Motion, and GSAP.
 - Responsive light and dark themes.
 - Smooth interaction with a complete reduced-motion experience.
-- Public contact channels are Facebook, email, and phone only.
+- Public contact channels are Facebook, email, and phone only; the approved location is San Fernando, Cebu, PH.
 - Do not add GitHub, LinkedIn, fabricated employers, or unverified outcome claims.
 
 ## Brand Commitments
@@ -43,7 +43,8 @@ Visitors move through a single portfolio narrative: Hero → About → Skills �
 - Approved biography and positioning copy supplied in the project brief.
 - Draft testimonial without approved attribution.
 - Three explicitly labeled placeholder project concepts and target outcomes.
-- No approved project screenshots, employer history, contact values, or testimonial attribution yet.
+- Approved public email, phone, and location supplied by Felix.
+- No approved project screenshots, employer history, Facebook URL, or testimonial attribution yet.
 
 ## Product Principles
 

@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import localFont from "next/font/local";
 import { siteUrl } from "@/lib/site-url";
-import "@fontsource-variable/instrument-sans";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/600.css";
 import "./globals.css";

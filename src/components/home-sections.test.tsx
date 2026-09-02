@@ -22,22 +22,28 @@ describe("endgame portfolio sections", () => {
       </>,
     );
 
-    expect(screen.getByRole("heading", { name: /Technology matters/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Technology should move work forward/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /A broad stack/i })).toBeInTheDocument();
     expect(screen.getAllByText(/Placeholder target/i)).toHaveLength(3);
-    expect(screen.getByText(/publication approval pending/i)).toBeInTheDocument();
-    expect(screen.getByText(/Verified employers, role dates/i)).toBeInTheDocument();
+    expect(screen.getByText(/Business name pending/i)).toBeInTheDocument();
+    expect(screen.getByText(/Attribution pending approval/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/5 out of 5 stars, draft rating/i)).toBeInTheDocument();
+    expect(container.querySelectorAll(".contact-detail-icon")).toHaveLength(3);
+    expect(screen.getByText("felixjosephcastaneda@gmail.com")).toBeInTheDocument();
+    expect(screen.getByText("San Fernando, Cebu, PH")).toBeInTheDocument();
+    expect(screen.getByText(/Verified employers and role dates/i)).toBeInTheDocument();
     expect(container.innerHTML.toLowerCase()).not.toContain("github");
     expect(container.innerHTML.toLowerCase()).not.toContain("linkedin");
   });
 
-  it("renders official technology marks only inside continuous duplicated lanes", () => {
+  it("renders official technology marks in one continuous duplicated lane", () => {
     const { container } = render(<SkillsSection />);
 
-    expect(container.querySelectorAll(".skill-lane")).toHaveLength(3);
-    expect(container.querySelectorAll(".skill-set")).toHaveLength(6);
-    expect(screen.getAllByText("TypeScript").length).toBeGreaterThanOrEqual(2);
-    expect(screen.getAllByText("Google Gemini").length).toBeGreaterThanOrEqual(2);
+    expect(container.querySelectorAll(".skill-lane")).toHaveLength(1);
+    expect(container.querySelectorAll(".skill-set")).toHaveLength(2);
+    expect(screen.getAllByLabelText("TypeScript").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByLabelText("Google Gemini").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByLabelText("Zapier").length).toBeGreaterThanOrEqual(2);
     expect(container.querySelectorAll(".skill-logo").length).toBeGreaterThan(20);
   });
 

@@ -1,17 +1,26 @@
 export function TestimonialsSection() {
   return (
     <section aria-labelledby="testimonial-heading" className="testimonial-section" id="testimonial">
-      <div className="section-shell">
-        <figure className="testimonial-quote" data-reveal>
-          <blockquote id="testimonial-heading">
-            “Felix truly understands what we need. His technical solutions have reduced our workload, improved our
-            efficiency, and helped us grow. The websites he creates are professional, effective, and built to attract
-            more customers.”
-          </blockquote>
-          <figcaption>
-            <span>Draft client testimonial</span>
-            <span>Name, role, and publication approval pending</span>
-          </figcaption>
+      <div className="section-shell testimonial-shell">
+        <figure className="testimonial-quote">
+          <div className="testimonial-brand">
+            <span aria-hidden="true" className="testimonial-brand__mark">B/01</span>
+            <div>
+              <strong>Business name pending</strong>
+              <span>Client testimonial</span>
+            </div>
+          </div>
+
+          <div className="testimonial-content">
+            <span aria-label="5 out of 5 stars, draft rating" className="testimonial-stars">
+              <b aria-hidden="true">★★★★★</b>
+            </span>
+            <blockquote id="testimonial-heading">
+              “Felix understands what the work actually needs. His solutions are <em>clear, practical, and built to
+              create meaningful value.</em>”
+            </blockquote>
+            <figcaption>Draft testimonial · attribution pending approval</figcaption>
+          </div>
         </figure>
       </div>
     </section>
