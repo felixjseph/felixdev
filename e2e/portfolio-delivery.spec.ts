@@ -40,7 +40,7 @@ test("compact sections fit narrow viewports and follow the active theme", async 
     await page.setViewportSize({ width, height: 900 });
     for (const theme of ["light", "dark"]) {
       await page.evaluate((value) => { document.documentElement.dataset.theme = value; }, theme);
-      const testimonial = page.locator("#testimonial figure");
+      const testimonial = page.locator("#testimonial figure").first();
       await testimonial.scrollIntoViewIfNeeded();
       const colors = await testimonial.evaluate((element) => {
         const style = getComputedStyle(element);
@@ -50,13 +50,13 @@ test("compact sections fit narrow viewports and follow the active theme", async 
       expect(colors.color).toBe(theme === "light" ? "rgb(10, 10, 10)" : "rgb(245, 245, 241)");
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     }
-    if (width <= 600) {
-      const [identity, name, role] = await Promise.all([
+    {
+      const [identity, dot, text] = await Promise.all([
         page.locator(".hero-identity").boundingBox(),
-        page.locator(".hero-identity__name").boundingBox(),
-        page.locator(".hero-identity__role").boundingBox(),
+        page.locator(".hero-identity__dot").boundingBox(),
+        page.locator(".hero-identity__text").boundingBox(),
       ]);
-      expect(role!.y).toBeGreaterThan(name!.y);
+      expect(Math.abs((dot!.y + dot!.height / 2) - (text!.y + text!.height / 2))).toBeLessThan(1);
       expect(identity!.width).toBeLessThan(width);
     }
   }

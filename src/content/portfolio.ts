@@ -111,7 +111,7 @@ export type PortfolioProject = {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
-    number: "02",
+    number: "03",
     title: "AI Document Intelligence",
     category: "AI Automation / Full-Stack",
     problem:
@@ -122,7 +122,7 @@ export const portfolioProjects: PortfolioProject[] = [
     target: "Placeholder target · minutes instead of repetitive data entry",
   },
   {
-    number: "03",
+    number: "04",
     title: "Agentic Workflow Command Center",
     category: "Agentic AI / Operations",
     problem:

@@ -1,6 +1,7 @@
 import { siteConfig } from "@/content/site";
-import { ArrowUpIcon } from "./ui-icons";
+import { ArrowUpIcon, EmailIcon, PhoneIcon } from "./ui-icons";
 import { BrandMark } from "./brand-mark";
+import styles from "./contact-actions.module.css";
 
 export function SiteFooter() {
   return (
@@ -10,11 +11,11 @@ export function SiteFooter() {
         <p>Full-Stack Web &amp; AI Developer</p>
       </div>
       <p data-reveal data-reveal-delay="50">© {new Date().getFullYear()} Felix Joseph Castañeda</p>
-      <nav aria-label="Footer navigation" data-reveal data-reveal-delay="100">
-        <a href="#hero">Back to top <ArrowUpIcon /></a>
+      <nav aria-label="Footer navigation" className={styles.footerNav} data-reveal data-reveal-delay="100">
+        <a className={styles.backTop} href="/#hero">Back to top <span><ArrowUpIcon /></span></a>
         {siteConfig.publicContact.facebook ? <a href={siteConfig.publicContact.facebook}>Facebook</a> : null}
-        {siteConfig.publicContact.email ? <a href={`mailto:${siteConfig.publicContact.email}`}>Email</a> : null}
-        {siteConfig.publicContact.phone ? <a href={`tel:${siteConfig.publicContact.phone.replace(/[^+\d]/g, "")}`}>Phone</a> : null}
+        {siteConfig.publicContact.email ? <a aria-label="Send me an email" title="Send me an email" className={styles.icon} href={`mailto:${siteConfig.publicContact.email}`}><EmailIcon /></a> : null}
+        {siteConfig.publicContact.phone ? <a aria-label="Call Felix" title="Call Felix" className={styles.icon} href={`tel:${siteConfig.publicContact.phone.replace(/[^+\d]/g, "")}`}><PhoneIcon /></a> : null}
       </nav>
     </footer>
   );

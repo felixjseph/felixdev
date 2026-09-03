@@ -3015,24 +3015,51 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
   .site-nav, .hero-enter { animation: none !important; }
 }
 
-/* The identity wraps as name + role, with no status dot competing for space. */
+/* The dot is centered against the complete label, including wrapped mobile lines. */
 .hero-identity {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  gap: 0.3rem 0.65rem;
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
   max-width: 100%;
   margin: 0 0 1rem;
-  line-height: 1.4;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: clamp(0.61rem, 0.9vw, 0.72rem);
+  line-height: 1.7;
+  letter-spacing: 0.07em;
   text-align: center;
+  text-transform: uppercase;
 }
-.hero-identity__name { color: var(--color-text); font-family: var(--font-display); font-size: 0.95rem; font-weight: 550; }
-.hero-identity__role { color: var(--color-muted); font-size: 0.81rem; }
-.hero-identity__role::before { content: "·"; margin-right: 0.65rem; }
+.hero-identity__text { min-width: 0; text-wrap: balance; }
+.hero-identity__dot {
+  position: relative;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #34bb59;
+}
+.hero-identity__dot::after {
+  position: absolute;
+  inset: -4px;
+  border: 1px solid #34bb59;
+  border-radius: inherit;
+  content: "";
+  animation: identity-pulse 2.8s ease-out infinite;
+  animation-play-state: paused;
+}
+.signal-hero[data-motion-active="true"][data-motion-paused="false"] .hero-identity__dot::after {
+  animation-play-state: running;
+}
+@keyframes identity-pulse {
+  0% { transform: scale(0.6); opacity: 0.65; }
+  75%, 100% { transform: scale(1.6); opacity: 0; }
+}
 @media (max-width: 600px) {
-  .hero-identity { flex-direction: column; align-items: center; gap: 0.3rem; margin-bottom: 1.15rem; }
-  .hero-identity__name { font-size: 1.05rem; }
-  .hero-identity__role { font-size: 0.76rem; text-wrap: balance; }
-  .hero-identity__role::before { content: none; }
+  .hero-identity { width: fit-content; max-width: 100%; gap: 0.7rem; margin-bottom: 1.15rem; }
+  .hero-identity__text { display: flex; flex-direction: column; }
+  .hero-identity__separator { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-identity__dot::after { animation: none; opacity: 0.3; }
 }

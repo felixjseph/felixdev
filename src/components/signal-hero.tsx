@@ -97,8 +97,8 @@ export function SignalHero() {
       <div className="hero-shell">
         <div className="hero-copy">
           <p className="hero-identity hero-enter hero-enter--one">
-            <span className="hero-identity__name">Felix Joseph Castañeda</span>
-            <span className="hero-identity__role">Full-Stack Web &amp; AI Developer</span>
+            <span aria-hidden="true" className="hero-identity__dot" />
+            <span className="hero-identity__text"><span>Felix Joseph Castañeda</span><span className="hero-identity__separator"> · </span><span>Full-Stack Web &amp; AI Developer</span></span>
           </p>
 
           <h1
