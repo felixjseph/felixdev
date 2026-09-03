@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import localFont from "next/font/local";
 import { siteUrl } from "@/lib/site-url";
+import { SiteLoader } from "@/components/site-loader";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/600.css";
 import "./globals.css";
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className={nohemi.variable}>
+        <SiteLoader />
         {children}
         <Analytics />
       </body>
