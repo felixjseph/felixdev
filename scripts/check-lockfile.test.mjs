@@ -24,6 +24,12 @@ describe("deployment lockfile guard", () => {
     expect(validateLockfile(manifest, broken)).toContain("node_modules/next: missing tarball integrity hash.");
   });
 
+  it("checks dependencies of platform variants even when they are bundled", () => {
+    const broken = structuredClone(lock);
+    delete broken.packages["node_modules/@emnapi/core"];
+    expect(validateLockfile(manifest, broken)).toContain("node_modules/@tailwindcss/oxide-wasm32-wasi: dependency @emnapi/core is missing from the lockfile.");
+  });
+
   it("catches manifest drift before installation", () => {
     const changed = structuredClone(manifest);
     changed.dependencies.next = "0.0.0";

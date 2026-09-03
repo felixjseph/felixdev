@@ -28,6 +28,27 @@ export function validateLockfile(manifest, lock) {
       if (!/^sha(512|384|256|1)-[\w+/=]+$/.test(entry.integrity ?? "")) errors.push(`${name}: missing tarball integrity hash.`);
     }
   }
+
+  // Validate dependencies of every platform variant, including bundled WASM
+  // packages. Windows can otherwise pass while Linux npm rejects a missing node.
+  for (const [name, entry] of Object.entries(lock.packages)) {
+    const dependencies = { ...entry.dependencies, ...(!name ? entry.devDependencies : {}) };
+    for (const dependency of Object.keys(dependencies)) {
+      let parent = name;
+      let found = false;
+      while (parent) {
+        if (lock.packages[`${parent}/node_modules/${dependency}`]) {
+          found = true;
+          break;
+        }
+        const index = parent.lastIndexOf("/node_modules/");
+        parent = index < 0 ? "" : parent.slice(0, index);
+      }
+      if (!found && !lock.packages[`node_modules/${dependency}`]) {
+        errors.push(`${name || "root"}: dependency ${dependency} is missing from the lockfile.`);
+      }
+    }
+  }
   return errors;
 }
 
