@@ -40,13 +40,13 @@ test("compact sections fit narrow viewports and follow the active theme", async 
     await page.setViewportSize({ width, height: 900 });
     for (const theme of ["light", "dark"]) {
       await page.evaluate((value) => { document.documentElement.dataset.theme = value; }, theme);
-      const testimonial = page.locator("#testimonial figure").first();
+      const testimonial = page.locator("#testimonial figure[aria-hidden='false']");
       await testimonial.scrollIntoViewIfNeeded();
       const colors = await testimonial.evaluate((element) => {
         const style = getComputedStyle(element);
         return { background: style.backgroundColor, color: style.color };
       });
-      expect(colors.background).toBe(theme === "light" ? "rgb(255, 255, 255)" : "rgb(14, 14, 14)");
+      expect(colors.background).toBe("rgba(0, 0, 0, 0)");
       expect(colors.color).toBe(theme === "light" ? "rgb(10, 10, 10)" : "rgb(245, 245, 241)");
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     }

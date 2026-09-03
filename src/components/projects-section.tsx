@@ -45,7 +45,7 @@ export function ProjectsSection() {
           <ProjectPreviewGallery title={sayu.title} background="#354fa3" media={[{
             src: "/images/brands/sayu.jpg", alt: "Sayu Café brand identity — project screenshots to follow.",
             width: 2048, height: 2030, caption: "Brand preview",
-          }]} />
+          }]} stackSize={3} />
         </div>
         <div className={styles["featured-work__content"]}>
           <div className={styles["featured-work__eyebrow"]} data-reveal="fade"><span>02 / Project study</span><span>Café & hospitality</span></div>

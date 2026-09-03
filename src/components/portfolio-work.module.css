@@ -37,15 +37,13 @@
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
   gap: clamp(1.5rem, 3vw, 2.5rem);
-  padding: clamp(1rem, 2.2vw, 1.65rem);
-  border: 1px solid var(--color-line);
-  border-radius: 1.15rem;
-  background: var(--color-surface);
+  padding: 0;
 }
 
 .featured-list {
   display: grid;
-  gap: 1.75rem;
+  gap: clamp(5.5rem, 10vw, 9rem);
+  margin-top: clamp(3rem, 6vw, 5rem);
 }
 
 .featured-list > .featured-work:nth-child(even) {
@@ -198,6 +196,7 @@
 .project-preview {
   margin: 0;
   min-width: 0;
+  perspective: 1000px;
 }
 
 .project-preview__stage {
@@ -206,36 +205,25 @@
   padding: 0;
   position: relative;
   aspect-ratio: 1080 / 560;
-  overflow: hidden;
-  border: 1px solid var(--color-line);
-  border-radius: 0.7rem;
-  background: #0b0e15;
+  overflow: visible;
+  border: 0;
+  border-radius: 0.8rem;
+  background: transparent;
   color: #fff;
   cursor: zoom-in;
-  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
-  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
-  box-shadow: 0 12px 26px -18px color-mix(in srgb, var(--color-text) 35%, transparent);
+  transform: perspective(1000px) rotateX(3deg) rotateY(-6deg) rotateZ(-1.2deg);
+  transform-style: preserve-3d;
+  transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-preview__deck {
   position: relative;
-  padding-top: 0.65rem;
+  padding: 1.65rem 0.8rem 0.65rem;
   isolation: isolate;
 }
 
-.project-preview__deck::before, .project-preview__deck::after {
-  content: "";
-  position: absolute;
-  inset: 0.1rem 1.4rem 1rem;
-  z-index: -1;
-  border: 1px solid var(--color-line);
-  border-radius: 0.7rem;
-  background: var(--color-bg);
-}
-
-.project-preview__deck::after {
-  inset: 0.4rem 0.7rem 0.7rem;
-  background: var(--color-surface-raised);
+.project-preview__stage:is(:hover, :focus-visible) {
+  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) rotateZ(0deg) translateY(-0.2rem);
 }
 
 .project-preview__expand {
@@ -249,6 +237,7 @@
   background: #101010c9;
   border: 1px solid #ffffff40;
   border-radius: 50%;
+  z-index: 6;
   transition: transform 300ms ease;
 }
 
@@ -264,16 +253,37 @@
 .project-preview__image {
   position: absolute;
   inset: 0;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(0.8rem) scale(0.975);
-  transition: opacity 750ms ease, transform 900ms cubic-bezier(0.22, 1, 0.36, 1), visibility 750ms;
+  z-index: calc(4 - var(--stack-position));
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-text) 24%, transparent);
+  border-radius: 0.8rem;
+  background: var(--preview-background, #0b0e15);
+  box-shadow: 0 24px 38px -24px color-mix(in srgb, #000 72%, transparent);
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transform-origin: center;
+  transition: opacity 650ms ease, transform 900ms cubic-bezier(0.16, 1, 0.3, 1), filter 650ms ease;
 }
 
 .project-preview__image.is-active {
-  opacity: 1;
-  visibility: visible;
+  z-index: 4;
   transform: translateY(0) scale(1);
+}
+
+.project-preview__image[data-stack-position="1"] {
+  filter: brightness(0.82);
+  transform: translate3d(0.82rem, -0.72rem, -1px) rotate(1.25deg) scale(0.988);
+}
+
+.project-preview__image[data-stack-position="2"] {
+  filter: brightness(0.66);
+  transform: translate3d(1.64rem, -1.44rem, -2px) rotate(2.5deg) scale(0.976);
+}
+
+.project-preview__image[data-stack-position]:not([data-stack-position="0"]):not([data-stack-position="1"]):not([data-stack-position="2"]) {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .project-preview__image img {
@@ -281,6 +291,23 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.project-preview__shine {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 0.8rem;
+  background: radial-gradient(circle 11rem at var(--shine-x, 28%) var(--shine-y, 20%), rgba(255, 255, 255, 0.24), transparent 62%);
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transition: opacity 450ms ease;
+}
+
+.project-preview__stage:is(:hover, :focus-visible) .project-preview__shine {
+  opacity: 0.55;
 }
 
 .project-preview__caption {
@@ -643,8 +670,10 @@
     margin-bottom: 1.5rem;
   }
   .featured-work {
-    padding: 0.8rem;
-    gap: 1.3rem;
+    gap: 1.7rem;
+  }
+  .featured-list {
+    gap: 5.5rem;
   }
   .project-preview__caption {
     font-size: 0.51rem;
@@ -673,9 +702,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-preview__image, .project-preview__control, .project-preview__stage, .project-preview__expand, .work-actions a, .work-actions a svg, .work-exploration__toggle {
+  .project-preview__image, .project-preview__control, .project-preview__stage, .project-preview__expand, .project-preview__shine, .work-actions a, .work-actions a svg, .work-exploration__toggle {
     transition: none;
     transform: none !important;
+  }
+  .project-preview__shine {
+    display: none;
   }
   .preview-dialog[open] {
     animation: none;

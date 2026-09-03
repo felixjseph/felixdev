@@ -72,14 +72,6 @@ export function MoonIcon(props: IconProps) {
   return <svg {...shared} {...props}><path d="M15.8 12.4A6.3 6.3 0 0 1 7.6 4.2 6.3 6.3 0 1 0 15.8 12.4Z" /></svg>;
 }
 
-export function CopyIcon(props: IconProps) {
-  return <svg {...shared} {...props}><rect x="6" y="6" width="10" height="11" rx="2" /><path d="M12 6V3H3v10h3" /></svg>;
-}
-
-export function CheckIcon(props: IconProps) {
-  return <svg {...shared} {...props}><path d="m4 10 4 4 8-8" /></svg>;
-}
-
 export function ExpandIcon(props: IconProps) {
   return <svg {...shared} {...props}><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4" /></svg>;
 }

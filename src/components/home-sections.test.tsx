@@ -29,11 +29,12 @@ describe("endgame portfolio sections", () => {
     expect(screen.getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://www.softpointenterprise.com/");
     expect(screen.getByText("30%")).toBeInTheDocument();
     expect(screen.getByRole("img", { name: "Softpoint Enterprise logo" })).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: "Sayu Café logo" })).toBeInTheDocument();
+    expect(screen.getAllByAltText("Sayu Café logo").length).toBeGreaterThanOrEqual(1);
     expect(screen.queryByText(/Attribution pending approval/i)).not.toBeInTheDocument();
     expect(screen.getByLabelText("5 out of 5 stars")).toBeInTheDocument();
     expect(screen.getByLabelText("5 out of 5 stars, sample rating")).toBeInTheDocument();
-    expect(screen.getByText(/not client-submitted/i)).toBeInTheDocument();
+    expect(screen.getByText("Draft testimonial")).toBeInTheDocument();
+    expect(screen.queryByText(/not client-submitted/i)).not.toBeInTheDocument();
     expect(container.querySelectorAll(".contact-detail-icon")).toHaveLength(3);
     expect(screen.getByText("felixjosephcastaneda@gmail.com")).toBeInTheDocument();
     expect(screen.getByText("San Fernando, Cebu, PH")).toBeInTheDocument();

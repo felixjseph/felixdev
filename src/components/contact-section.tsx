@@ -1,7 +1,5 @@
 import { siteConfig } from "@/content/site";
 import { ArrowUpRightIcon, EmailIcon, LocationIcon, PhoneIcon } from "./ui-icons";
-import { CopyEmailButton } from "./copy-email-button";
-import styles from "./contact-actions.module.css";
 
 const contactDetails = [
   { label: "Email", value: siteConfig.publicContact.email, href: `mailto:${siteConfig.publicContact.email}`, icon: EmailIcon },
@@ -34,10 +32,7 @@ export function ContactSection() {
                 <span aria-hidden="true" className="contact-detail-icon"><Icon /></span>
                 <div>
                   <dt>{detail.label}</dt>
-                  <dd className={detail.label === "Email" ? styles.emailRow : undefined}>
-                    {"href" in detail ? <a href={detail.href}>{detail.value}</a> : detail.value}
-                    {detail.label === "Email" && <CopyEmailButton email={detail.value} />}
-                  </dd>
+                  <dd>{"href" in detail ? <a href={detail.href}>{detail.value}</a> : detail.value}</dd>
                 </div>
               </div>
             );

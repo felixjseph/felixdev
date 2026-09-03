@@ -50,17 +50,91 @@ test("slideshow advances only while visible and idle, with explicit and reduced-
   await expect(gallery.getByRole("button", { name: /preview slideshow/ })).toHaveCount(0);
 });
 
-test("contact copies the exact email and footer icons retain accessible destinations", async ({ page, context }) => {
-  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+test("contact remains direct and footer controls share one visual size", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Copy email address" }).click();
-  await expect(page.getByRole("status")).toHaveText("Email address copied.");
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe("felixjosephcastaneda@gmail.com");
+  await expect(page.getByRole("button", { name: "Copy email address" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Send me an email", exact: true }).first()).toHaveAttribute("href", "mailto:felixjosephcastaneda@gmail.com");
   const footer = page.getByRole("navigation", { name: "Footer navigation" });
   await expect(footer.getByRole("link", { name: "Send me an email" })).toHaveAttribute("href", "mailto:felixjosephcastaneda@gmail.com");
   await expect(footer.getByRole("link", { name: "Call Felix" })).toHaveAttribute("href", "tel:09432469897");
+  const controls = await Promise.all([
+    footer.getByRole("link", { name: "Back to top" }).locator("span").boundingBox(),
+    footer.getByRole("link", { name: "Send me an email" }).boundingBox(),
+    footer.getByRole("link", { name: "Call Felix" }).boundingBox(),
+  ]);
+  expect(new Set(controls.map((box) => `${box!.width}x${box!.height}`)).size).toBe(1);
   await footer.getByRole("link", { name: "Back to top" }).click();
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(150);
+});
+
+test("the first viewport contains the complete hero and no following section", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await page.locator(".site-loader").waitFor({ state: "detached" });
+  for (const viewport of [
+    { width: 320, height: 568 }, { width: 390, height: 844 }, { width: 768, height: 1024 },
+    { width: 1024, height: 600 }, { width: 1440, height: 900 }, { width: 1920, height: 1080 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    const about = await page.locator("#about").boundingBox();
+    expect(about!.y).toBeGreaterThanOrEqual(viewport.height - 1);
+    await expect(page.getByRole("heading", { name: /I build systems that turn busywork/i })).toBeVisible();
+    await expect(page.getByRole("link", { name: "View my work" })).toBeVisible();
+  }
+});
+
+test("featured work floats without outer cards and uses three responsive visual layers", async ({ page, isMobile }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const first = page.locator("#projects article").first();
+  await first.scrollIntoViewIfNeeded();
+  const shell = await first.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { background: style.backgroundColor, border: style.borderTopWidth, radius: style.borderRadius };
+  });
+  expect(shell.background).toBe("rgba(0, 0, 0, 0)");
+  expect(shell.border).toBe("0px");
+  expect(shell.radius).toBe("0px");
+  const stage = first.getByRole("button", { name: "Expand Softpoint Enterprise previews" });
+  await expect(stage.locator("[data-stack-position]")).toHaveCount(3);
+  if (!isMobile) {
+    const before = await stage.evaluate((element) => getComputedStyle(element).transform);
+    const box = await stage.boundingBox();
+    await page.mouse.move(box!.x + box!.width * 0.6, box!.y + box!.height * 0.45);
+    await expect.poll(() => stage.evaluate((element) => getComputedStyle(element).transform)).not.toBe(before);
+    await expect(first.locator("span[class*='project-preview__shine']")).toHaveCSS("opacity", "0.55");
+  }
+});
+
+test("testimonial carousel shows one compact entry and supports manual navigation", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const section = page.locator("#testimonial");
+  await section.scrollIntoViewIfNeeded();
+  await expect(section.getByRole("figure")).toHaveCount(1);
+  await expect(section.getByText("Softpoint Enterprise")).toBeVisible();
+  await section.getByRole("button", { name: "Next testimonial" }).click();
+  await expect(section.getByText("Sayu Café")).toBeVisible();
+  await expect(section.getByText("Draft testimonial")).toBeVisible();
+  await expect(section.getByText(/not client-submitted/i)).toHaveCount(0);
+});
+
+test("testimonial autoplay advances only while visible and idle", async ({ page, isMobile }) => {
+  test.skip(Boolean(isMobile), "Desktop coverage is sufficient for the shared carousel timer.");
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const section = page.locator("#testimonial");
+  await section.scrollIntoViewIfNeeded();
+  await page.mouse.move(0, 0);
+  await expect(section).toHaveAttribute("data-playing", "true");
+  await expect(section.getByText("Softpoint Enterprise")).toBeVisible();
+  await expect.poll(() => section.getByRole("figure").textContent(), { timeout: 9000 }).toContain("Sayu Café");
+  const box = await section.boundingBox();
+  await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+  await expect(section).toHaveAttribute("data-playing", "false");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(section.getByRole("button", { name: /testimonial slideshow/ })).toHaveCount(0);
 });
 
 test("project rows alternate on desktop and stack without overflow on mobile", async ({ page, isMobile }) => {

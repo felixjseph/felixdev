@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useId, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import type { ProjectMedia } from "@/types/project";
 import { ExpandIcon, PauseIcon, PlayIcon, CloseIcon } from "./ui-icons";
 import styles from "./portfolio-work.module.css";
@@ -11,9 +11,15 @@ type ProjectPreviewGalleryProps = {
   title: string;
   wide?: boolean;
   background?: string;
+  stackSize?: number;
 };
 
-export function ProjectPreviewGallery({ media, title, wide = false, background }: ProjectPreviewGalleryProps) {
+type StackStyle = CSSProperties & {
+  "--stack-position": number;
+  "--preview-background"?: string;
+};
+
+export function ProjectPreviewGallery({ media, title, wide = false, background, stackSize = 3 }: ProjectPreviewGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [inView, setInView] = useState(false);
   const [motionAllowed, setMotionAllowed] = useState(false);
@@ -28,6 +34,14 @@ export function ProjectPreviewGallery({ media, title, wide = false, background }
   const pointerFrame = useRef(0);
   const previewId = useId();
   const active = media[activeIndex] ?? media[0];
+  const layerCount = Math.max(stackSize, media.length);
+  const layers = Array.from({ length: layerCount }, (_, layerIndex) => {
+    const sourceIndex = media.length > 1 ? layerIndex % media.length : 0;
+    const position = media.length > 1
+      ? (sourceIndex - activeIndex + media.length) % media.length
+      : layerIndex;
+    return { item: media[sourceIndex], sourceIndex, position, layerIndex };
+  });
   const playing = motionAllowed && inView && !paused && !hovered && !focused && !expanded && media.length > 1;
 
   useEffect(() => {
@@ -66,6 +80,8 @@ export function ProjectPreviewGallery({ media, title, wide = false, background }
     cancelAnimationFrame(pointerFrame.current);
     stageRef.current?.style.removeProperty("--tilt-x");
     stageRef.current?.style.removeProperty("--tilt-y");
+    stageRef.current?.style.removeProperty("--shine-x");
+    stageRef.current?.style.removeProperty("--shine-y");
   };
 
   const tilt = (event: PointerEvent<HTMLButtonElement>) => {
@@ -78,6 +94,8 @@ export function ProjectPreviewGallery({ media, title, wide = false, background }
     pointerFrame.current = requestAnimationFrame(() => {
       stage.style.setProperty("--tilt-x", `${-y * 8}deg`);
       stage.style.setProperty("--tilt-y", `${x * 8}deg`);
+      stage.style.setProperty("--shine-x", `${(x + 0.5) * 100}%`);
+      stage.style.setProperty("--shine-y", `${(y + 0.5) * 100}%`);
     });
   };
 
@@ -108,18 +126,20 @@ export function ProjectPreviewGallery({ media, title, wide = false, background }
       onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
       <div className={styles["project-preview__deck"]}>
         <button className={styles["project-preview__stage"]} id={previewId} ref={stageRef}
-          style={background ? { backgroundColor: background } : undefined}
           aria-label={`Expand ${title} previews`} aria-haspopup="dialog" type="button"
           onPointerMove={tilt} onPointerLeave={resetTilt} onFocus={resetTilt}
           onClick={() => { resetTilt(); setExpanded(true); dialogRef.current?.showModal(); }}>
-          {media.map((item, index) => (
-            <span aria-hidden={index !== activeIndex}
-              className={`${styles["project-preview__image"]} ${index === activeIndex ? styles["is-active"] : ""}`} key={item.src}>
+          {layers.map(({ item, sourceIndex, position, layerIndex }) => item ? (
+            <span aria-hidden={position !== 0} data-stack-position={position}
+              style={{ "--stack-position": position, "--preview-background": background } as StackStyle}
+              className={`${styles["project-preview__image"]} ${position === 0 ? styles["is-active"] : ""}`}
+              key={`${item.src}-${layerIndex}`}>
               <Image alt={item.alt} height={item.height} width={item.width} src={item.src}
-                ref={(image) => { imagesRef.current[index] = image; }} loading={inView ? "eager" : "lazy"}
+                ref={(image) => { imagesRef.current[sourceIndex] = image; }} loading={wide || inView ? "eager" : "lazy"}
                 sizes={wide ? "(max-width: 1120px) 95vw, 1088px" : "(max-width: 900px) 95vw, 650px"} />
             </span>
-          ))}
+          ) : null)}
+          <span aria-hidden="true" className={styles["project-preview__shine"]} />
           <span aria-hidden="true" className={styles["project-preview__expand"]}><ExpandIcon /></span>
         </button>
       </div>
