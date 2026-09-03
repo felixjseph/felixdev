@@ -112,7 +112,7 @@ export function SignalHero() {
           </h1>
 
           <p className="hero-statement hero-enter hero-enter--three">
-            Full-stack applications, intelligent workflows, and automation built around real business problems.
+            Useful software, thoughtful design, and fewer unnecessary steps.
           </p>
 
           <div className="hero-actions hero-enter hero-enter--four">
