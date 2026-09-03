@@ -890,6 +890,21 @@ summary {
 .skill-lanes {
   margin-top: clamp(4rem, 8vw, 7rem);
   border-top: 1px solid var(--color-line);
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 640ms cubic-bezier(0.22, 1, 0.36, 1), transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Loader removal starts the reveal and marquee together, including on reload. */
+body:has(.site-loader) .skill-lanes {
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition: none;
+  pointer-events: none;
+}
+
+body:has(.site-loader) .skill-track {
+  animation-play-state: paused;
 }
 
 .skill-lane {
@@ -1485,6 +1500,7 @@ summary {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior:auto; }
+  .skill-lanes, body:has(.site-loader) .skill-lanes { transform:none; transition:none; }
   *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; }
   .skill-lane__viewport { overflow-x:auto; mask-image:none; scrollbar-width:thin; }
   .skill-track,.skill-lane[data-direction="right"] .skill-track { transform:none !important; animation:none !important; }
