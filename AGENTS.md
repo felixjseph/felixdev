@@ -6,7 +6,7 @@
 - The homepage narrative is fixed: Hero → About → Skills → Projects → Testimonial → Experience → Contact.
 - Use a distinctive monochrome "Signal / System" visual world: black, white, graphite, silver, and tightly controlled spectral gradients. Light and dark themes must both feel intentionally designed.
 - The signature motifs are a cursor-responsive light field, sparse floating signal particles, precise technical labels, editorial typography, and one continuous monochrome technology ribbon.
-- The approved identity mark is the square “Nested System” F/J monogram: nested orthogonal frames, F/J negative space, and a forward diagonal exit. Use the shared inline SVG component for interface placement and `src/app/icon.svg` for the adaptive favicon; never substitute the earlier circular F/J badge or generated raster concept.
+- The approved identity mark is the square “Nested System” F/J monogram: nested orthogonal frames, F/J negative space, and a forward diagonal exit. Use the approved transparent PNG asset (`public/images/nested-system-mark.png`) for interface placement and the matching adaptive favicon routes; never substitute the earlier circular F/J badge or an unapproved logo.
 - The site may learn from references at the level of pacing and ambition, but must not copy their composition, assets, language, or interaction choreography.
 - Keep the experience sophisticated and calm. Motion establishes hierarchy; it never competes with the work.
 

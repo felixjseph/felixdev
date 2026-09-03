@@ -35,6 +35,12 @@ export const metadata: Metadata = {
   title: "Felix Joseph Castañeda — Full-Stack Web & AI Developer",
   description: "Full-stack applications, agentic AI, and automation built around real business problems.",
   alternates: { canonical: "/" },
+  icons: {
+    icon: [
+      { url: "/images/nested-system-mark.png", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
+    ],
+  },
   openGraph: {
     type: "website",
     locale: "en_US",

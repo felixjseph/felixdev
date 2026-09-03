@@ -2022,10 +2022,19 @@ summary {
 }
 
 .site-mark__symbol svg,
-.site-footer__mark svg {
+.site-mark__symbol img,
+.site-footer__mark svg,
+.site-footer__mark img {
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: contain;
+}
+
+:root[data-theme="dark"] .site-mark__symbol img,
+:root[data-theme="dark"] .site-footer__mark img,
+:root[data-theme="dark"] .site-loader__mark {
+  filter: invert(1);
 }
 
 .site-mark:hover .site-mark__symbol {
