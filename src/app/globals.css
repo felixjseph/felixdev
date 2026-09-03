@@ -45,6 +45,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5.5rem;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -890,11 +891,6 @@ summary {
 .skill-lanes {
   margin-top: clamp(4rem, 8vw, 7rem);
   border-top: 1px solid var(--color-line);
-}
-
-/* Logos are ready beneath the loader; motion starts as its fade-out begins. */
-body:has(.site-loader[data-phase="visible"]) .skill-track {
-  animation-play-state: paused;
 }
 
 .skill-lane {
@@ -2056,11 +2052,7 @@ body:has(.site-loader[data-phase="visible"]) .skill-track {
   }
 }
 
-/* Branded startup loader */
-body.is-loading {
-  overflow: hidden;
-}
-
+/* The startup overlay never hides the page scrollbar or changes its width. */
 .site-loader {
   position: fixed;
   z-index: 600;

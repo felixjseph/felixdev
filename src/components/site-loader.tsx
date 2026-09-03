@@ -18,8 +18,6 @@ export function SiteLoader() {
     let delayTimer: number | undefined;
     let exitTimer: number | undefined;
 
-    document.body.classList.add("is-loading");
-
     const beginExit = () => {
       if (settled) return;
       settled = true;
@@ -28,7 +26,6 @@ export function SiteLoader() {
       delayTimer = window.setTimeout(() => {
         setPhase("exiting");
         exitTimer = window.setTimeout(() => {
-          document.body.classList.remove("is-loading");
           setMounted(false);
         }, exitDuration);
       }, remaining);
@@ -45,7 +42,6 @@ export function SiteLoader() {
       window.clearTimeout(fallbackTimer);
       if (delayTimer) window.clearTimeout(delayTimer);
       if (exitTimer) window.clearTimeout(exitTimer);
-      document.body.classList.remove("is-loading");
     };
   }, []);
 

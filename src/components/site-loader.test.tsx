@@ -19,24 +19,26 @@ function stubMatchMedia(matches = false) {
 }
 
 afterEach(() => {
-  document.body.classList.remove("is-loading");
   vi.useRealTimers();
   vi.restoreAllMocks();
 });
 
 describe("SiteLoader", () => {
-  it("releases the page scroll lock after the startup sequence", async () => {
+  it.each([false, true])("keeps scrolling available throughout startup (reduced motion: %s)", async (reducedMotion) => {
     vi.useFakeTimers();
-    stubMatchMedia();
+    stubMatchMedia(reducedMotion);
     render(<SiteLoader />);
 
-    expect(document.body).toHaveClass("is-loading");
+    expect(document.querySelector(".site-loader")).toBeInTheDocument();
+    expect(document.body).not.toHaveClass("is-loading");
+    expect(document.body.style.overflow).not.toBe("hidden");
 
     await act(async () => {
       vi.advanceTimersByTime(1_600);
     });
 
     expect(document.body).not.toHaveClass("is-loading");
+    expect(document.body.style.overflow).not.toBe("hidden");
     expect(document.querySelector(".site-loader")).not.toBeInTheDocument();
   });
 });
