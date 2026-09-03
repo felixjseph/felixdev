@@ -27,7 +27,10 @@ export function SiteLoader() {
 
       delayTimer = window.setTimeout(() => {
         setPhase("exiting");
-        exitTimer = window.setTimeout(() => setMounted(false), exitDuration);
+        exitTimer = window.setTimeout(() => {
+          document.body.classList.remove("is-loading");
+          setMounted(false);
+        }, exitDuration);
       }, remaining);
     };
 
