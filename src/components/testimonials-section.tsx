@@ -1,25 +1,26 @@
+import styles from "./testimonials-section.module.css";
+
 export function TestimonialsSection() {
   return (
-    <section aria-labelledby="testimonial-heading" className="testimonial-section" id="testimonial">
-      <div className="section-shell testimonial-shell">
-        <figure className="testimonial-quote">
-          <div className="testimonial-brand" data-reveal="left">
-            <span aria-hidden="true" className="testimonial-brand__mark">B/01</span>
+    <section aria-labelledby="testimonial-heading" className={styles.section} id="testimonial">
+      <div className={styles.shell}>
+        <figure className={styles.quote}>
+          <figcaption className={styles.brand} data-reveal="left">
+            <span aria-hidden="true" className={styles.mark}>B/01</span>
             <div>
               <strong>Business name pending</strong>
               <span>Client testimonial</span>
             </div>
-          </div>
+          </figcaption>
 
-          <div className="testimonial-content">
-            <span aria-label="5 out of 5 stars, draft rating" className="testimonial-stars" data-reveal="fade">
+          <div className={styles.content}>
+            <span aria-label="5 out of 5 stars, draft rating" className={styles.stars} data-reveal="fade">
               <b aria-hidden="true">★★★★★</b>
             </span>
             <blockquote data-reveal="right" data-reveal-delay="60" id="testimonial-heading">
-              “Felix understands what the work actually needs. His solutions are <em>clear, practical, and built to
-              create meaningful value.</em>”
+              “Felix understands what the work needs. <em>Clear, practical solutions that create value.</em>”
             </blockquote>
-            <figcaption data-reveal data-reveal-delay="120">Draft testimonial · attribution pending approval</figcaption>
+            <p className={styles.note} data-reveal data-reveal-delay="120">Draft testimonial · attribution pending approval</p>
           </div>
         </figure>
       </div>

@@ -96,10 +96,10 @@ export function SignalHero() {
 
       <div className="hero-shell">
         <div className="hero-copy">
-          <div className="availability hero-enter hero-enter--one">
-            <span aria-hidden="true" />
-            Felix Joseph Castañeda · Full-Stack Web &amp; AI Developer
-          </div>
+          <p className="hero-identity hero-enter hero-enter--one">
+            <span className="hero-identity__name">Felix Joseph Castañeda</span>
+            <span className="hero-identity__role">Full-Stack Web &amp; AI Developer</span>
+          </p>
 
           <h1
             aria-label="I build systems that turn busywork into forward motion."

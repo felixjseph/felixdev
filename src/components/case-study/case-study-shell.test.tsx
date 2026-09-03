@@ -4,15 +4,14 @@ import { CaseStudyHero } from "./case-study-hero";
 import { CaseStudyNavigation } from "./case-study-navigation";
 import { CaseStudySection } from "./case-study-section";
 import { ProjectGallery } from "./project-gallery";
-import { projects } from "@/content/projects";
-import { getNextProject } from "@/lib/projects";
+import { getNextProject, getProjectBySlug } from "@/lib/projects";
 
 vi.mock("next/image", () => ({
   default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => <img {...props} />,
 }));
 
 function SayuFixture() {
-  const project = projects[0];
+  const project = getProjectBySlug("sayu-cafe")!;
   const nextProject = getNextProject(project.slug);
 
   return (
@@ -29,7 +28,7 @@ function SayuFixture() {
 
 describe("case study shell", () => {
   it("does not infer a project-wide shipped state for Sayu's mixed proof", () => {
-    render(<CaseStudyHero project={projects[0]} />);
+    render(<CaseStudyHero project={getProjectBySlug("sayu-cafe")!} />);
 
     expect(screen.queryByText("Shipped")).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 1, name: "Sayu Café" })).toBeInTheDocument();
@@ -44,7 +43,7 @@ describe("case study shell", () => {
     expect(screen.getByRole("navigation", { name: "Case study chapters" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Next project: Solara/i })).toHaveAttribute("href", "/work/solara");
 
-    for (const section of projects[0].sections) {
+    for (const section of getProjectBySlug("sayu-cafe")!.sections) {
       const anchor = screen.getByRole("link", { name: section.title });
       expect(anchor).toHaveAttribute("href", `#${section.id}`);
       expect(container.querySelector(`section#${section.id}`)).toBeInTheDocument();

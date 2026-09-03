@@ -33,10 +33,8 @@ describe("SiteHeader", () => {
       "href",
       "#contact",
     );
-    expect(screen.getByLabelText(/Resume — download not yet available/i)).toHaveAttribute(
-      "data-resume-state",
-      "unavailable",
-    );
+    expect(screen.getByRole("link", { name: "Resume" })).toHaveAttribute("href", "/downloads/felix-dev-cv.pdf");
+    expect(screen.getByRole("link", { name: "Resume" })).toHaveAttribute("download");
     expect(screen.getByRole("button", { name: "Open navigation menu" })).toHaveAttribute(
       "aria-expanded",
       "false",

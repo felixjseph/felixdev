@@ -105,6 +105,17 @@ components:
 
 # Design System: Felix Joseph Castañeda Portfolio
 
+## Current work and proof presentation — September 2026
+
+The following decisions supersede the earlier project-preview and testimonial direction below:
+
+- Mobile hero identity: centered name above role, no status dot, and no forced single-line label. Supporting copy remains “Useful software, thoughtful design, and fewer unnecessary steps.”
+- Selected work: one compact, rounded Softpoint Enterprise feature with its original screenshots, a manual three-view gallery, role/date, technology tags, the supplied 30% outcome, live-site link, and a concise case study. The two unverified concepts use small disclosure rows.
+- Gallery: images remain uncropped inside a reserved frame; keyboard-operable buttons select Website, Client portal, and Operations. A short opacity transition respects reduced motion. No autoplay or synthetic project screenshots.
+- Testimonial: a short quote on the current theme's surface, never inverted; warm white in light mode and charcoal in dark mode. Small business identity, readable attribution, gold stars, and a single-column layout below 700px. Business and rating attribution remain draft.
+- The official CV is downloadable from the navigation in desktop and mobile layouts. Keep the supplied PDF intact.
+- Work and testimonial components own their styles through CSS modules, keeping these designs independent of legacy global overrides.
+
 ## Overview
 
 **Creative North Star: "The Signal Room"**

@@ -16,7 +16,7 @@ export type ProjectMedia = {
 };
 
 export type CaseStudyProject = {
-  slug: "sayu-cafe" | "solara" | "pach-drugmart";
+  slug: "softpoint-enterprise" | "sayu-cafe" | "solara" | "pach-drugmart";
   title: string;
   proofAngle: string;
   summary: string;

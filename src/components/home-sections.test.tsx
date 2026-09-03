@@ -24,7 +24,10 @@ describe("endgame portfolio sections", () => {
 
     expect(screen.getByRole("heading", { name: /Technology should move work forward/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /A broad stack/i })).toBeInTheDocument();
-    expect(screen.getAllByText(/Placeholder target/i)).toHaveLength(3);
+    expect(screen.getAllByText(/Placeholder target/i)).toHaveLength(2);
+    expect(screen.getByRole("heading", { name: "Softpoint Enterprise" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://www.softpointenterprise.com/");
+    expect(screen.getByText("30%")).toBeInTheDocument();
     expect(screen.getByText(/Business name pending/i)).toBeInTheDocument();
     expect(screen.getByText(/Attribution pending approval/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/5 out of 5 stars, draft rating/i)).toBeInTheDocument();

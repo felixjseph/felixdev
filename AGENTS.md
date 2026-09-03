@@ -27,12 +27,16 @@
 - Render the Nested System mark in `currentColor` so it is near-black in light mode and warm white in dark mode. Preserve its square proportions, crisp corners, and legibility at small sizes.
 - Keep the hero compact, horizontally centered, and readable inside a common laptop viewport. The identity line should sit close to the headline, and the two primary actions should remain centered below the supporting sentence.
 - Keep the hero supporting sentence concise: “Useful software, thoughtful design, and fewer unnecessary steps.”
+- The hero identity uses separate name and role spans. At phone widths, place the name above the role, centered, with no status dot or separator; never force the combined label onto one line.
 - The hero background uses a lightweight CSS cursor glow, a subtle central texture, and sparse particles that remain visible in both light and dark themes. Keep it atmospheric rather than diagrammatic: do not add diagonal divider lines, outlined cursor rings, WebGL, or a heavy particle library.
 - Keep the hero free of redundant category labels below its primary actions. The About section is a compact, static statement of Felix's operating philosophy. Navigation intentionally has no document-progress line.
 - Every full page load opens with a short, branded startup loader built around the Nested System mark. It may use a refined progress line inside the loader only; it must exit within roughly 1.4 seconds, never delay navigation, and collapse to a brief fade for reduced-motion users.
 - The startup loader is a visual overlay only: never hide the document scrollbar or change body/html overflow during startup. Reserve scrollbar space on the root with `scrollbar-gutter: stable` so the page and navbar keep the same framing before, during, and after the reveal. Scrolling must remain available throughout initialization, including reduced-motion mode and interrupted startup.
 - The Skills section uses one endlessly looping, logo-only ribbon. Marks are official Simple Icons, monochrome, large enough to recognize, and spaced densely enough to show many technologies at once.
-- The testimonial is a compact, theme-safe card: use inverse-surface tokens instead of hard-coded light text, preserve the business mark/rating/quote hierarchy, and stack the brand and content cleanly below tablet width.
+- The testimonial follows the active theme: `--color-surface` with `--color-text` and `--color-muted`, never an inverse panel. Keep a short quote, a small business identity, and five stars; stack below 700px. Attribution and rating remain drafts until approved. Its CSS module is the sole source of testimonial styling.
+- Lead selected work with Softpoint Enterprise (Feb 2026, Full Stack Developer), its supplied screenshots, Next.js/Supabase/Vercel/Gemini API stack, live website, and the supplied 30% administrative-workload reduction. Keep the outcome attributed to Felix's supplied project facts in source documentation; do not invent further metrics or AI behavior. This project has a real `/work/softpoint-enterprise` case study; other concepts remain explicitly labeled and collapsed by default.
+- Project previews use the shared accessible `ProjectPreviewGallery`: fixed-ratio stages, uncropped original screenshots, manual buttons with pressed state, a quiet crossfade, and no autoplay. Keep portfolio work styles in their CSS module and source project facts from typed content.
+- The official CV is `/downloads/felix-dev-cv.pdf`, supplied and approved by Felix for download. Preserve the original PDF bytes and use `siteConfig.resumeUrl` for desktop and mobile navigation links.
 - Render and animate the skills ribbon from the first paint, independently of startup state or hydration. The overlay reveals an already moving page: do not add loader-dependent animation pauses, a second ribbon fade, an entrance delay, a remount, an animation restart, or a scroll lock. Preserve hover/focus pauses after the reveal and the static, horizontally scrollable ribbon for reduced-motion users.
 - Use official Simple Icons data where available. If an official recognizable mark is unavailable, render the technology as structured text outside the logo carousel rather than fabricating a logo.
 - Maintain semantic landmarks, keyboard-complete controls, visible focus, comfortable touch targets, responsive layouts, and `prefers-reduced-motion` behavior.
@@ -73,6 +77,7 @@
 - Never claim that a check passed unless you actually ran it.
 - Fix failures caused by your changes before handing the work back.
 - Start localhost only when it is useful for verification or when I request a live preview.
+- Run production builds before starting the live preview to avoid competing writes to Next's build cache. Browser checks may use an installed Chrome via `PLAYWRIGHT_CHROMIUM_CHANNEL=chrome` when the bundled Playwright browser is absent.
 - When localhost is running, give me the exact URL and keep the process available for review.
 - Stop localhost and related task processes when I ask you to stop.
 
