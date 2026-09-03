@@ -11,8 +11,9 @@ test("follows the requested homepage story and opens project details", async ({ 
   await expect(page.getByRole("heading", { name: /turn busywork into forward motion/i })).toBeVisible();
   await page.getByRole("link", { name: /View my work/i }).click();
   await expect(page.locator("#projects")).toBeInViewport();
-  await page.locator(".project-disclosure summary").first().click();
-  await expect(page.getByText(/Case study route pending/i).first()).toBeVisible();
+  await page.getByRole("link", { name: "View case study" }).click();
+  await expect(page).toHaveURL(/\/work\/softpoint-enterprise$/);
+  await expect(page.getByRole("heading", { level: 1, name: "Softpoint Enterprise" })).toBeVisible();
 });
 
 test("persists a manual dark theme", async ({ page }) => {

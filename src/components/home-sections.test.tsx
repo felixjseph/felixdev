@@ -24,10 +24,16 @@ describe("endgame portfolio sections", () => {
 
     expect(screen.getByRole("heading", { name: /Technology should move work forward/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /A broad stack/i })).toBeInTheDocument();
-    expect(screen.getAllByText(/Placeholder target/i)).toHaveLength(3);
-    expect(screen.getByText(/Business name pending/i)).toBeInTheDocument();
-    expect(screen.getByText(/Attribution pending approval/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/5 out of 5 stars, draft rating/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Placeholder target/i)).toHaveLength(2);
+    expect(screen.getByRole("heading", { name: "Softpoint Enterprise" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://www.softpointenterprise.com/");
+    expect(screen.getByText("30%")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Softpoint Enterprise logo" })).toBeInTheDocument();
+    expect(screen.getAllByAltText("Sayu Café logo").length).toBeGreaterThanOrEqual(1);
+    expect(screen.queryByText(/Attribution pending approval/i)).not.toBeInTheDocument();
+    expect(screen.getAllByLabelText("5 out of 5 stars")).toHaveLength(2);
+    expect(screen.getAllByText("Client testimonial")).toHaveLength(2);
+    expect(screen.queryByText(/not client-submitted/i)).not.toBeInTheDocument();
     expect(container.querySelectorAll(".contact-detail-icon")).toHaveLength(3);
     expect(screen.getByText("felixjosephcastaneda@gmail.com")).toBeInTheDocument();
     expect(screen.getByText("San Fernando, Cebu, PH")).toBeInTheDocument();

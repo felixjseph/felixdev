@@ -105,6 +105,18 @@ components:
 
 # Design System: Felix Joseph Castañeda Portfolio
 
+## Current work and proof presentation — September 2026
+
+The following decisions supersede the earlier project-preview and testimonial direction below:
+
+- First viewport: the normal-flow header and hero together occupy at least `100svh` at every supported ratio, preventing the About section from peeking into the opening frame. Use minimum height so short landscape viewports grow rather than clip hero content. The original mono name · role label and green pulse remain centered above the headline.
+- Selected work: borderless, background-free alternating rows float on the page with a fluid 5.5–9rem separation. Softpoint screenshots lead on the left; the existing Sayu study reverses the arrangement. Mobile stacks preview above copy. Minimal underlined actions keep visual priority on the work.
+- Gallery: show three physical media layers inside a deliberately smaller preview footprint with an editorial gap before its description. The resting deck uses a restrained 3D tilt; hover/focus faces the main card forward, fans the rear pair to opposite sides with about 20–30% exposure, and adds capped cursor response plus a soft radial shine. Real media rotates forward every 4.4 seconds; single-image projects repeat that approved visual only as decorative hidden-from-assistive-technology rear layers. Pause on all interaction, hidden/offscreen states, and reduced motion. The accessible expanded viewer uses overlaid previous/next arrows plus keyboard Left/Right navigation, with no caption breadcrumbs, and never mutates page overflow.
+- Testimonials: one compact same-theme entry at a time in a hairline carousel, using 2.8rem logos, restrained stars, a small quote, counter, navigation, and pause/resume. Auto-advance every 6.2 seconds only while visible and idle. Softpoint and Sayu are approved five-star client testimonials. Each active quote receives a short character reveal after entering view; assistive technology receives the complete sentence and reduced motion renders it immediately.
+- Contact and footer: restore direct contact details with no copy-email control. Keep the send-email CTA. Footer email, phone, and back-to-top arrow circles share the same 2.75rem visual size and accessible labels; motion is removed when reduced motion is requested.
+- The official CV is downloadable from the navigation in desktop and mobile layouts. Keep the supplied PDF intact.
+- Work and testimonial components own their styles through CSS modules, keeping these designs independent of legacy global overrides.
+
 ## Overview
 
 **Creative North Star: "The Signal Room"**

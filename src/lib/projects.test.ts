@@ -5,6 +5,7 @@ import { projects, requiredChapterTitles } from "@/content/projects";
 import { getNextProject, getProjectBySlug, getProjectSlugs } from "./projects";
 
 const approvedChapterTitles = {
+  "softpoint-enterprise": ["A clearer customer experience", "Less repetition behind the scenes", "Built, connected, and deployed"],
   "sayu-cafe": [
     "Business context and operational friction",
     "Responsive product discovery",
@@ -42,8 +43,9 @@ const approvedP2HexTokens = new Set([
 ]);
 
 describe("project content", () => {
-  it("exposes the three approved slugs in order", () => {
+  it("leads with Softpoint and retains the existing case studies", () => {
     expect(getProjectSlugs()).toEqual([
+      "softpoint-enterprise",
       "sayu-cafe",
       "solara",
       "pach-drugmart",
@@ -104,8 +106,13 @@ describe("project content", () => {
         expect(media.width).toBeGreaterThan(0);
         expect(media.height).toBeGreaterThan(0);
         expect(media.alt.trim().length).toBeGreaterThan(10);
-        expect(media.src).toMatch(/^\/images\/projects\/.*-fallback\.svg$/);
-        expect(media.caption).toMatch(/development media fallback/i);
+        if (project.slug === "softpoint-enterprise") {
+          expect(media.src).toMatch(/^\/images\/projects\/softpoint\/.+\.webp$/);
+          expect(readFileSync(resolve(process.cwd(), "public", media.src.slice(1))).length).toBeGreaterThan(0);
+        } else {
+          expect(media.src).toMatch(/^\/images\/projects\/.*-fallback\.svg$/);
+          expect(media.caption).toMatch(/development media fallback/i);
+        }
       }
     }
   });
@@ -132,8 +139,8 @@ describe("project content", () => {
   });
 
   it("cycles to the next project, resolves Solara, and deliberately falls back for an unknown slug", () => {
-    expect(getNextProject("pach-drugmart")?.slug).toBe("sayu-cafe");
+    expect(getNextProject("pach-drugmart")?.slug).toBe("softpoint-enterprise");
     expect(getProjectBySlug("solara")?.title).toBe("Solara");
-    expect(getNextProject("unknown-project")?.slug).toBe("sayu-cafe");
+    expect(getNextProject("unknown-project")?.slug).toBe("softpoint-enterprise");
   });
 });

@@ -107,24 +107,11 @@ export type PortfolioProject = {
   solution: string;
   technologies: string[];
   target: string;
-  visual: "operations" | "documents" | "agents";
 };
 
 export const portfolioProjects: PortfolioProject[] = [
   {
-    number: "01",
-    title: "Business Operations Platform",
-    category: "Full-Stack SaaS / Automation",
-    problem:
-      "Teams lose time moving between disconnected tools, manual approvals, and repetitive administrative work.",
-    solution:
-      "A unified operations workspace that centralizes workflows, automates recurring actions, and makes operational signals visible in real time.",
-    technologies: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS", "AI API"],
-    target: "Placeholder target · 30% less manual administrative work",
-    visual: "operations",
-  },
-  {
-    number: "02",
+    number: "03",
     title: "AI Document Intelligence",
     category: "AI Automation / Full-Stack",
     problem:
@@ -133,10 +120,9 @@ export const portfolioProjects: PortfolioProject[] = [
       "An auditable processing pipeline that extracts structured data, validates it against business rules, and routes exceptions to a human reviewer.",
     technologies: ["React", "Python", "FastAPI", "AI / LLM", "Docker"],
     target: "Placeholder target · minutes instead of repetitive data entry",
-    visual: "documents",
   },
   {
-    number: "03",
+    number: "04",
     title: "Agentic Workflow Command Center",
     category: "Agentic AI / Operations",
     problem:
@@ -145,6 +131,5 @@ export const portfolioProjects: PortfolioProject[] = [
       "A supervision layer for AI agents with live run states, approval gates, traceable decisions, and clear human handoffs.",
     technologies: ["Next.js", "Python", "OpenAI", "Event Streams", "PostgreSQL"],
     target: "Placeholder target · faster resolution with human control intact",
-    visual: "agents",
   },
 ];

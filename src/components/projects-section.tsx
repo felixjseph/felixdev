@@ -1,126 +1,78 @@
-import { portfolioProjects, type PortfolioProject } from "@/content/portfolio";
+import styles from "./portfolio-work.module.css";
+import Link from "next/link";
+import { portfolioProjects } from "@/content/portfolio";
+import { softpointProject as project } from "@/content/softpoint";
+import { projects } from "@/content/projects";
+import { ProjectPreviewGallery } from "./project-preview-gallery";
 import { ArrowUpRightIcon } from "./ui-icons";
 
-function OperationsVisual() {
-  return (
-    <div aria-hidden="true" className="project-ui project-ui--operations">
-      <div className="mock-sidebar">
-        <span className="mock-brand">F/OPS</span>
-        <i className="is-active" />
-        <i />
-        <i />
-        <i />
-      </div>
-      <div className="mock-dashboard">
-        <div className="mock-topbar"><span>Operations overview</span><b>Live</b></div>
-        <div className="mock-metrics">
-          <div><small>Open work</small><strong>24</strong><i /></div>
-          <div><small>Automated</small><strong>81%</strong><i /></div>
-          <div><small>Exceptions</small><strong>03</strong><i /></div>
-        </div>
-        <div className="mock-chart"><i /><i /><i /><i /><i /><i /><i /><i /></div>
-        <div className="mock-table"><span /><span /><span /><span /></div>
-      </div>
-    </div>
-  );
-}
-
-function DocumentsVisual() {
-  return (
-    <div aria-hidden="true" className="project-ui project-ui--documents">
-      <div className="document-stack">
-        <div className="document-page document-page--back" />
-        <div className="document-page document-page--front">
-          <span>INPUT / PDF</span>
-          <i /><i /><i /><i /><i />
-          <b>98.4%</b>
-        </div>
-      </div>
-      <div className="extraction-line"><i /><span>Extract</span><i /><span>Validate</span><i /></div>
-      <div className="json-panel">
-        <span>{"{"}</span>
-        <span>&nbsp;&nbsp;&quot;status&quot;: &quot;verified&quot;,</span>
-        <span>&nbsp;&nbsp;&quot;confidence&quot;: 0.984</span>
-        <span>{"}"}</span>
-      </div>
-    </div>
-  );
-}
-
-function AgentsVisual() {
-  return (
-    <div aria-hidden="true" className="project-ui project-ui--agents">
-      <div className="agent-orbit">
-        <span className="agent-core">Human</span>
-        <span className="agent-node agent-node--one">Research</span>
-        <span className="agent-node agent-node--two">Act</span>
-        <span className="agent-node agent-node--three">Verify</span>
-        <i className="orbit orbit--one" />
-        <i className="orbit orbit--two" />
-      </div>
-      <div className="agent-log">
-        <span><i /> Agent run started</span>
-        <span><i /> Approval requested</span>
-        <span><i /> Human decision recorded</span>
-      </div>
-    </div>
-  );
-}
-
-function ProjectVisual({ visual }: Pick<PortfolioProject, "visual">) {
-  if (visual === "operations") return <OperationsVisual />;
-  if (visual === "documents") return <DocumentsVisual />;
-  return <AgentsVisual />;
-}
-
 export function ProjectsSection() {
+  const sayu = projects.find((item) => item.slug === "sayu-cafe")!;
   return (
-    <section aria-labelledby="projects-heading" className="section-shell projects-section" id="projects">
-      <div className="section-heading-grid projects-heading">
-        <h2 data-reveal="left" id="projects-heading">
-          Products designed around <span>real operational leverage.</span>
-        </h2>
-        <p data-reveal="right" data-reveal-delay="70">
-          Concept studies awaiting approved assets, responsibilities, and verified results.
-        </p>
+    <section aria-labelledby="projects-heading" className={`section-shell ${styles["projects-section"]}`} id="projects">
+      <div className={styles["selected-work-heading"]}>
+        <h2 data-reveal="left" id="projects-heading">Selected work. <em>Useful by design.</em></h2>
+        <p data-reveal="right">Thoughtful interfaces. Practical systems.</p>
       </div>
-
-      <div className="project-list">
-        {portfolioProjects.map((project, index) => (
-          <article className="project-feature" key={project.number}>
-            <div className="project-feature__content">
-              <div className="project-feature__meta" data-reveal="fade">
-                <span>Project {project.number}</span>
-                <span>{project.category}</span>
-              </div>
-              <h3 data-reveal={index % 2 === 0 ? "left" : "right"}>{project.title}</h3>
-              <div className="project-story">
-                <div data-reveal data-reveal-delay="50">
-                  <span>Problem</span>
-                  <p>{project.problem}</p>
-                </div>
-                <div data-reveal data-reveal-delay="100">
-                  <span>System</span>
-                  <p>{project.solution}</p>
-                </div>
-              </div>
-              <ul aria-label={`${project.title} technologies`} className="project-tags" data-reveal>
-                {project.technologies.map((technology) => <li key={technology}>{technology}</li>)}
-              </ul>
-              <p className="project-target" data-reveal><span aria-hidden="true" />{project.target}</p>
-              <details className="project-disclosure" data-reveal>
-                <summary>View project <ArrowUpRightIcon /></summary>
-                <p>
-                  Case study route pending. Replace this panel with approved screenshots, responsibilities, and
-                  verified results before launch.
-                </p>
-              </details>
-            </div>
-            <div className="project-feature__visual" data-reveal="card" data-reveal-delay="90">
-              <div className="placeholder-label">Replaceable visual / {project.number}</div>
-              <ProjectVisual visual={project.visual} />
-            </div>
-          </article>
+      <div className={styles["featured-list"]}>
+      <article className={styles["featured-work"]} aria-labelledby="softpoint-title">
+        <div className={styles["featured-work__preview"]} data-reveal="card">
+          <ProjectPreviewGallery title={project.title} media={project.media} />
+        </div>
+        <div className={styles["featured-work__content"]}>
+          <div className={styles["featured-work__eyebrow"]} data-reveal="fade">
+            <span>01 / Featured project</span>
+            <time dateTime={project.date}>{project.dateLabel}</time>
+          </div>
+          <h3 id="softpoint-title" data-reveal="right">{project.title}</h3>
+          <p className={styles["featured-work__role"]} data-reveal>{project.role}</p>
+          <p className={styles["featured-work__summary"]} data-reveal>{project.summary}</p>
+          <p className={styles["featured-work__outcome"]} data-reveal>
+            <strong>{project.outcome.value}</strong>
+            <span>{project.outcome.label}<small>through workflow automation</small></span>
+          </p>
+          <ul aria-label={`${project.title} technologies`} className={styles["work-technologies"]} data-reveal>
+            {project.technologies.map((technology) => <li key={technology}>{technology}</li>)}
+          </ul>
+          <div className={styles["work-actions"]} data-reveal>
+            <a href={project.website} target="_blank" rel="noopener noreferrer">Visit website <ArrowUpRightIcon /></a>
+            <Link href={`/work/${project.slug}`}>View case study <ArrowUpRightIcon /></Link>
+          </div>
+        </div>
+      </article>
+      <article className={styles["featured-work"]} aria-labelledby="sayu-title">
+        <div className={styles["featured-work__preview"]} data-reveal="card">
+          <ProjectPreviewGallery title={sayu.title} background="#354fa3" media={[{
+            src: "/images/brands/sayu.jpg", alt: "Sayu Café brand identity — project screenshots to follow.",
+            width: 2048, height: 2030, caption: "Brand preview",
+          }]} stackSize={3} />
+        </div>
+        <div className={styles["featured-work__content"]}>
+          <div className={styles["featured-work__eyebrow"]} data-reveal="fade"><span>02 / Project study</span><span>Café & hospitality</span></div>
+          <h3 id="sayu-title" data-reveal="left">{sayu.title}</h3>
+          <p className={styles["featured-work__summary"]} data-reveal>{sayu.summary}</p>
+          <ul className={styles["work-technologies"]} aria-label={`${sayu.title} technologies`} data-reveal>
+            {sayu.technologies.map((technology) => <li key={technology}>{technology}</li>)}
+          </ul>
+          <div className={styles["work-actions"]} data-reveal><Link href={`/work/${sayu.slug}`}>Explore project study <ArrowUpRightIcon /></Link></div>
+          <p className={styles["featured-work__note"]}>Brand identity shown. Project screenshots to follow.</p>
+        </div>
+      </article>
+      </div>
+      <div className={styles["work-explorations"]} aria-label="Concept explorations">
+        {portfolioProjects.map((concept) => (
+          <details className={styles["work-exploration"]} key={concept.number} data-reveal="rise">
+            <summary>
+              <span className={styles["work-exploration__label"]}>Concept / {concept.number}</span>
+              <span className={styles["work-exploration__title"]}>{concept.title}</span>
+              <span className={styles["work-exploration__toggle"]} aria-hidden="true">+</span>
+            </summary>
+            <p>{concept.solution}</p>
+            <ul className={styles["work-technologies"]} aria-label={`${concept.title} technologies`}>
+              {concept.technologies.map((technology) => <li key={technology}>{technology}</li>)}
+            </ul>
+            <small>{concept.target}</small>
+          </details>
         ))}
       </div>
     </section>

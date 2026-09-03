@@ -62,10 +62,11 @@ describe("HomePage", () => {
     expect(screen.getByText("San Fernando, Cebu, PH")).toBeInTheDocument();
   });
 
-  it("renders the three placeholder project concepts", () => {
+  it("features the delivered project and retains two labeled concepts", () => {
     render(<HomePage />);
-    expect(screen.getByRole("heading", { name: "Business Operations Platform" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "AI Document Intelligence" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Agentic Workflow Command Center" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Softpoint Enterprise" })).toBeInTheDocument();
+    expect(screen.getByText("AI Document Intelligence")).toBeInTheDocument();
+    expect(screen.getByText("Agentic Workflow Command Center")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "View case study" })).toHaveAttribute("href", "/work/softpoint-enterprise");
   });
 });

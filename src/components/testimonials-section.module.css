@@ -1,0 +1,248 @@
+.section {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.shell {
+  width: min(100% - 2rem, 62rem);
+  margin-inline: auto;
+  padding-block: clamp(2.25rem, 4.5vw, 4rem);
+}
+
+.headingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.3vw, 1.85rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+.heading em {
+  color: inherit;
+  font-family: var(--font-editorial);
+}
+
+.track {
+  display: grid;
+  border-block: 1px solid var(--color-line);
+}
+
+.quote {
+  display: grid;
+  grid-area: 1 / 1;
+  grid-template-columns: minmax(11rem, 0.7fr) minmax(0, 1.7fr);
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  min-width: 0;
+  min-height: 11.5rem;
+  margin: 0;
+  padding: clamp(1.1rem, 2.4vw, 1.75rem) 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, 0.6rem, 0);
+  visibility: hidden;
+  transition: opacity 650ms ease, transform 760ms cubic-bezier(0.16, 1, 0.3, 1), visibility 650ms;
+}
+
+.quote.active {
+  z-index: 1;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  visibility: visible;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.mark {
+  display: grid;
+  flex: 0 0 2.8rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  overflow: hidden;
+  place-items: center;
+  border: 1px solid var(--color-line);
+  border-radius: 0.4rem;
+}
+
+.mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.softpoint {
+  background: #fff;
+}
+
+.softpoint img {
+  transform: scale(1.28);
+}
+
+.sayu {
+  background: #364ea0;
+}
+
+.brand > div {
+  display: grid;
+  gap: 0.22rem;
+  min-width: 0;
+}
+
+.brand strong {
+  font-size: 0.86rem;
+  font-weight: 560;
+  line-height: 1.25;
+}
+
+.brand div span {
+  color: var(--color-muted);
+  font: 0.58rem/1.5 var(--font-mono);
+  text-transform: uppercase;
+}
+
+.content {
+  min-width: 0;
+}
+
+.stars {
+  display: inline-flex;
+  color: #896000;
+}
+
+:global(:root[data-theme="dark"]) .stars {
+  color: #eed179;
+}
+
+.stars b {
+  font-size: 1rem;
+  letter-spacing: 0.11em;
+  line-height: 1;
+}
+
+.content blockquote {
+  max-width: 39ch;
+  margin: 0.65rem 0 0;
+  font-family: var(--font-nohemi, var(--font-system));
+  font-size: clamp(1.1rem, 1.85vw, 1.45rem);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -0.025em;
+  text-wrap: pretty;
+}
+
+.content blockquote em {
+  color: inherit;
+  font-family: var(--font-editorial);
+  font-weight: 500;
+}
+
+.character {
+  opacity: 1;
+}
+
+.section[data-typing="true"] .quote.active .character {
+  animation: testimonial-type 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(90ms + var(--character-index) * 18ms);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.controls > span {
+  margin-right: 0.25rem;
+  color: var(--color-muted);
+  font: 0.57rem/1.5 var(--font-mono);
+}
+
+.controls button {
+  display: grid;
+  flex: 0 0 2.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--color-line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 220ms, color 220ms, transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.controls button:first-of-type svg {
+  transform: rotate(180deg);
+}
+
+.controls button:is(:hover, :focus-visible) {
+  background: var(--color-text);
+  color: var(--color-bg);
+  transform: translateY(-2px);
+}
+
+.controls svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+@keyframes testimonial-type {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .shell {
+    width: calc(100% - 1.25rem);
+  }
+  .headingRow {
+    align-items: flex-end;
+  }
+  .heading {
+    max-width: 12ch;
+  }
+  .quote {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    min-height: 15rem;
+    gap: 1rem;
+  }
+  .controls > span {
+    display: none;
+  }
+  .controls button {
+    flex-basis: 2.35rem;
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quote, .controls button {
+    transition: none;
+    transform: none !important;
+  }
+  .section[data-typing="true"] .quote.active .character {
+    animation: none;
+  }
+}

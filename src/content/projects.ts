@@ -1,6 +1,8 @@
 import type { CaseStudyProject } from "@/types/project";
+import { softpointProject } from "./softpoint";
 
 export const requiredChapterTitles = {
+  "softpoint-enterprise": softpointProject.sections.map((section) => section.title),
   "sayu-cafe": [
     "Business context and operational friction",
     "Responsive product discovery",
@@ -25,6 +27,7 @@ export const requiredChapterTitles = {
 } as const;
 
 export const projects: CaseStudyProject[] = [
+  softpointProject,
   {
     slug: "sayu-cafe",
     title: "Sayu Café",

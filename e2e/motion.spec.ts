@@ -7,7 +7,7 @@ test("reveals section titles and copy once and keeps focused controls readable",
 
   for (const selector of [
     "#about-heading", "#skills-heading", "#projects-heading",
-    ".project-story p", "#testimonial-heading", "#experience-heading", "#contact-heading",
+    "#projects article p", "#testimonial-heading", "#experience-heading", "#contact-heading",
   ]) {
     const element = page.locator(selector).first();
     const reveal = element.locator("xpath=ancestor-or-self::*[@data-reveal][1]");
@@ -63,7 +63,7 @@ test("starts reveals at the first visible sliver without requiring more scrollin
   await page.goto("/");
   await expect(page.locator(".site-loader")).toHaveCount(0);
   for (const selector of [
-    "#skills-heading", "#projects-heading", ".project-feature__visual",
+    "#skills-heading", "#projects-heading", "#projects article > [data-reveal]",
     "#testimonial-heading", "#experience-heading", "#contact-heading",
   ]) {
     const target = page.locator(selector).first();

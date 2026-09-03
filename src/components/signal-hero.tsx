@@ -96,10 +96,10 @@ export function SignalHero() {
 
       <div className="hero-shell">
         <div className="hero-copy">
-          <div className="availability hero-enter hero-enter--one">
-            <span aria-hidden="true" />
-            Felix Joseph Castañeda · Full-Stack Web &amp; AI Developer
-          </div>
+          <p className="hero-identity hero-enter hero-enter--one">
+            <span aria-hidden="true" className="hero-identity__dot" />
+            <span className="hero-identity__text"><span>Felix Joseph Castañeda</span><span className="hero-identity__separator"> · </span><span>Full-Stack Web &amp; AI Developer</span></span>
+          </p>
 
           <h1
             aria-label="I build systems that turn busywork into forward motion."
@@ -112,7 +112,7 @@ export function SignalHero() {
           </h1>
 
           <p className="hero-statement hero-enter hero-enter--three">
-            Full-stack applications, intelligent workflows, and automation built around real business problems.
+            Useful software, thoughtful design, and fewer unnecessary steps.
           </p>
 
           <div className="hero-actions hero-enter hero-enter--four">

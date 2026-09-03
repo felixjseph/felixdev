@@ -9,7 +9,7 @@ export type PublicSiteConfig = {
 };
 
 export const siteConfig: PublicSiteConfig = {
-  resumeUrl: "",
+  resumeUrl: "/downloads/felix-dev-cv.pdf",
   publicContact: {
     email: "felixjosephcastaneda@gmail.com",
     facebook: "",
