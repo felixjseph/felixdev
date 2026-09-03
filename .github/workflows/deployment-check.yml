@@ -1,0 +1,32 @@
+name: Deployment check
+
+on:
+  push:
+    branches: [main, felixdev-design-revamp]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deployment-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux-build:
+    name: Clean install and production build (Node 24 / Linux)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Validate deployment dependency metadata
+        run: node scripts/check-lockfile.mjs
+      - name: Install the exact locked dependencies
+        run: npm ci --include=dev
+      - name: Check types, unit tests, and production build
+        run: npm run verify

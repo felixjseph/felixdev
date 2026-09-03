@@ -11,7 +11,8 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:e2e": "playwright test",
-    "verify": "npm run typecheck && npm run test:run && npm run build"
+    "check:lockfile": "node scripts/check-lockfile.mjs",
+    "verify": "npm run check:lockfile && npm run typecheck && npm run test:run && npm run build"
   },
   "type": "module",
   "dependencies": {
@@ -38,6 +39,6 @@
     "vitest": "^4.1.11"
   },
   "engines": {
-    "node": ">=20.19.0"
+    "node": "24.x"
   }
 }
