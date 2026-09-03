@@ -5,11 +5,9 @@ type Testimonial = {
   quote: string | null;
   emphasis?: string;
   rating: 1 | 2 | 3 | 4 | 5 | null;
-  sample?: boolean;
 };
 
-// Felix approved the existing Softpoint quote/attribution in this iteration.
-// Sayu copy/rating are a sample explicitly requested by Felix, not received client feedback.
+// Felix approved both client entries, their wording, and their five-star ratings.
 export const testimonials: Testimonial[] = [
   {
     business: "Softpoint Enterprise",
@@ -26,6 +24,5 @@ export const testimonials: Testimonial[] = [
     quote: "Easy to work with and thoughtful about the details.",
     emphasis: "Felix made the whole process feel simple.",
     rating: 5,
-    sample: true,
   },
 ];

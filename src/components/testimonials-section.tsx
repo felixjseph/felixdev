@@ -1,10 +1,32 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { testimonials } from "@/content/testimonials";
 import { ArrowRightIcon, PauseIcon, PlayIcon } from "./ui-icons";
 import styles from "./testimonials-section.module.css";
+
+type CharacterStyle = CSSProperties & { "--character-index": number };
+
+function TypedCharacters({ text, offset = 0 }: { text: string; offset?: number }) {
+  return text.split("").map((character, index) => (
+    <span className={styles.character} key={`${offset}-${index}`}
+      style={{ "--character-index": offset + index } as CharacterStyle}>{character}</span>
+  ));
+}
+
+function TypedQuote({ quote, emphasis }: { quote: string; emphasis?: string }) {
+  const lead = `“${quote}${emphasis ? " " : "”"}`;
+  const ending = emphasis ? `${emphasis}”` : "";
+  return (
+    <blockquote aria-label={`${lead}${ending}`}>
+      <span aria-hidden="true">
+        <TypedCharacters text={lead} />
+        {ending && <em><TypedCharacters text={ending} offset={lead.length} /></em>}
+      </span>
+    </blockquote>
+  );
+}
 
 export function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -48,7 +70,7 @@ export function TestimonialsSection() {
 
   return (
     <section aria-labelledby="testimonial-heading" className={styles.section} id="testimonial" ref={sectionRef}
-      data-playing={playing}
+      data-playing={playing} data-typing={inView && motionAllowed}
       onPointerEnter={(event) => { if (event.pointerType === "mouse") setInteracting(true); }}
       onPointerLeave={() => setInteracting(false)}
       onFocusCapture={() => setInteracting(true)}
@@ -77,16 +99,16 @@ export function TestimonialsSection() {
                   </span>
                   <div>
                     <strong>{testimonial.business}</strong>
-                    <span>{testimonial.sample ? "Draft testimonial" : "Client testimonial"}</span>
+                    <span>Client testimonial</span>
                   </div>
                 </figcaption>
                 <div className={styles.content}>
                   {testimonial.rating !== null && (
-                    <span aria-label={`${testimonial.rating} out of 5 stars${testimonial.sample ? ", sample rating" : ""}`} className={styles.stars}>
+                    <span aria-label={`${testimonial.rating} out of 5 stars`} className={styles.stars}>
                       <b aria-hidden="true">{"★".repeat(testimonial.rating)}{"☆".repeat(5 - testimonial.rating)}</b>
                     </span>
                   )}
-                  {testimonial.quote && <blockquote>“{testimonial.quote} {testimonial.emphasis && <em>{testimonial.emphasis}</em>}”</blockquote>}
+                  {testimonial.quote && <TypedQuote quote={testimonial.quote} emphasis={testimonial.emphasis} />}
                 </div>
               </figure>
             );

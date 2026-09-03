@@ -35,8 +35,8 @@
 
 .featured-work {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.9fr);
+  gap: clamp(3.5rem, 7vw, 6rem);
   padding: 0;
 }
 
@@ -47,7 +47,7 @@
 }
 
 .featured-list > .featured-work:nth-child(even) {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  grid-template-columns: minmax(18rem, 0.9fr) minmax(0, 1.05fr);
 }
 
 .featured-list > .featured-work:nth-child(even) .featured-work__preview {
@@ -70,6 +70,14 @@
 .featured-work__preview {
   min-width: 0;
   align-self: center;
+}
+
+.featured-list > .featured-work:nth-child(odd) .project-preview {
+  margin-right: auto;
+}
+
+.featured-list > .featured-work:nth-child(even) .project-preview {
+  margin-left: auto;
 }
 
 .featured-work__content {
@@ -194,6 +202,7 @@
 }
 
 .project-preview {
+  width: min(100%, 36rem);
   margin: 0;
   min-width: 0;
   perspective: 1000px;
@@ -218,12 +227,25 @@
 
 .project-preview__deck {
   position: relative;
-  padding: 1.65rem 0.8rem 0.65rem;
+  padding: 2rem clamp(2.75rem, 5vw, 4.5rem) 1rem;
   isolation: isolate;
 }
 
-.project-preview__stage:is(:hover, :focus-visible) {
+.project-preview__deck:hover .project-preview__stage,
+.project-preview__stage:focus-visible {
   transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) rotateZ(0deg) translateY(-0.2rem);
+}
+
+.project-preview__deck:hover .project-preview__image[data-stack-position="1"],
+.project-preview__stage:focus-visible .project-preview__image[data-stack-position="1"] {
+  filter: brightness(0.9);
+  transform: translate3d(-28%, 4%, -18px) rotate(-5deg) scale(0.93);
+}
+
+.project-preview__deck:hover .project-preview__image[data-stack-position="2"],
+.project-preview__stage:focus-visible .project-preview__image[data-stack-position="2"] {
+  filter: brightness(0.78);
+  transform: translate3d(29%, 4%, -36px) rotate(5.5deg) scale(0.93);
 }
 
 .project-preview__expand {
@@ -246,7 +268,8 @@
   height: 1rem;
 }
 
-.project-preview__stage:is(:hover, :focus-visible) .project-preview__expand {
+.project-preview__deck:hover .project-preview__expand,
+.project-preview__stage:focus-visible .project-preview__expand {
   transform: scale(1.12);
 }
 
@@ -306,7 +329,8 @@
   transition: opacity 450ms ease;
 }
 
-.project-preview__stage:is(:hover, :focus-visible) .project-preview__shine {
+.project-preview__deck:hover .project-preview__shine,
+.project-preview__stage:focus-visible .project-preview__shine {
   opacity: 0.55;
 }
 
@@ -458,6 +482,7 @@
 }
 
 .preview-dialog__image {
+  position: relative;
   display: grid;
   place-items: center;
   background: #0b0e15;
@@ -472,8 +497,44 @@
   object-fit: contain;
 }
 
-.preview-dialog .project-preview__controls {
-  margin-top: 0.65rem;
+.preview-dialog__navigation {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: clamp(0.65rem, 2vw, 1.25rem);
+  pointer-events: none;
+}
+
+.preview-dialog__navigation button {
+  display: grid;
+  width: 2.9rem;
+  height: 2.9rem;
+  padding: 0;
+  place-items: center;
+  border: 1px solid #ffffff52;
+  border-radius: 50%;
+  background: #090b10c7;
+  color: #fff;
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: blur(0.7rem);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), background 220ms ease;
+}
+
+.preview-dialog__navigation button:first-child svg {
+  transform: rotate(180deg);
+}
+
+.preview-dialog__navigation button:is(:hover, :focus-visible) {
+  background: #090b10;
+  transform: scale(1.08);
+}
+
+.preview-dialog__navigation svg {
+  width: 1rem;
+  height: 1rem;
 }
 
 @keyframes preview-open {
@@ -650,6 +711,10 @@
   .featured-work__content {
     padding: 0.25rem;
   }
+  .project-preview {
+    width: min(100%, 40rem);
+    margin-inline: auto !important;
+  }
   .featured-work__summary {
     max-width: 54ch;
   }
@@ -670,13 +735,24 @@
     margin-bottom: 1.5rem;
   }
   .featured-work {
-    gap: 1.7rem;
+    gap: 2.4rem;
   }
   .featured-list {
     gap: 5.5rem;
   }
   .project-preview__caption {
     font-size: 0.51rem;
+  }
+  .project-preview__deck {
+    padding: 1.7rem 1.85rem 0.75rem;
+  }
+  .project-preview__deck:hover .project-preview__image[data-stack-position="1"],
+  .project-preview__stage:focus-visible .project-preview__image[data-stack-position="1"] {
+    transform: translate3d(-11%, 3%, -12px) rotate(-3deg) scale(0.96);
+  }
+  .project-preview__deck:hover .project-preview__image[data-stack-position="2"],
+  .project-preview__stage:focus-visible .project-preview__image[data-stack-position="2"] {
+    transform: translate3d(12%, 3%, -24px) rotate(3deg) scale(0.96);
   }
   .project-preview__control {
     font-size: 0.66rem;

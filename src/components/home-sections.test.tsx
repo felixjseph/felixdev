@@ -31,9 +31,8 @@ describe("endgame portfolio sections", () => {
     expect(screen.getByRole("img", { name: "Softpoint Enterprise logo" })).toBeInTheDocument();
     expect(screen.getAllByAltText("Sayu Café logo").length).toBeGreaterThanOrEqual(1);
     expect(screen.queryByText(/Attribution pending approval/i)).not.toBeInTheDocument();
-    expect(screen.getByLabelText("5 out of 5 stars")).toBeInTheDocument();
-    expect(screen.getByLabelText("5 out of 5 stars, sample rating")).toBeInTheDocument();
-    expect(screen.getByText("Draft testimonial")).toBeInTheDocument();
+    expect(screen.getAllByLabelText("5 out of 5 stars")).toHaveLength(2);
+    expect(screen.getAllByText("Client testimonial")).toHaveLength(2);
     expect(screen.queryByText(/not client-submitted/i)).not.toBeInTheDocument();
     expect(container.querySelectorAll(".contact-detail-icon")).toHaveLength(3);
     expect(screen.getByText("felixjosephcastaneda@gmail.com")).toBeInTheDocument();

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useId, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import type { ProjectMedia } from "@/types/project";
-import { ExpandIcon, PauseIcon, PlayIcon, CloseIcon } from "./ui-icons";
+import { ArrowRightIcon, ExpandIcon, PauseIcon, PlayIcon, CloseIcon } from "./ui-icons";
 import styles from "./portfolio-work.module.css";
 
 type ProjectPreviewGalleryProps = {
@@ -101,7 +101,12 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
 
   const selectPreview = (index: number) => {
     setPaused(true);
-    setActiveIndex(index);
+    setActiveIndex((index + media.length) % media.length);
+  };
+
+  const stepPreview = (offset: number) => {
+    if (media.length < 2) return;
+    selectPreview(activeIndex + offset);
   };
 
   const controls = (target: string) => (
@@ -157,6 +162,8 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
       </div>
       <dialog className={styles["preview-dialog"]} ref={dialogRef} aria-label={`${title} expanded previews`}
         onKeyDown={(event) => {
+          if (event.key === "ArrowLeft") { event.preventDefault(); stepPreview(-1); return; }
+          if (event.key === "ArrowRight") { event.preventDefault(); stepPreview(1); return; }
           // Keep boundary Tab navigation inside the viewer, including in browsers
           // that let native dialogs hand their final tab stop to browser chrome.
           if (event.key !== "Tab") return;
@@ -175,8 +182,11 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
           <div className={styles["preview-dialog__image"]} id={`${previewId}-expanded`} style={background ? { backgroundColor: background } : undefined}>
             <Image key={active.src} src={active.src} alt={active.alt} width={active.width} height={active.height}
               sizes="(max-width: 1200px) 95vw, 1200px" loading="eager" />
+            {media.length > 1 && <div className={styles["preview-dialog__navigation"]} role="group" aria-label="Navigate project images">
+              <button aria-label="Previous project image" onClick={() => stepPreview(-1)} type="button"><ArrowRightIcon /></button>
+              <button aria-label="Next project image" onClick={() => stepPreview(1)} type="button"><ArrowRightIcon /></button>
+            </div>}
           </div>
-          {controls(`${previewId}-expanded`)}
         </div>}
       </dialog>
     </figure>

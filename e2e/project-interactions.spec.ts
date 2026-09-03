@@ -11,8 +11,9 @@ test("previews expand, trap focus, close, and preserve document scrolling", asyn
   await expect(dialog).toBeVisible();
   await expect(dialog.getByRole("button", { name: "Close expanded previews" })).toBeFocused();
   await page.keyboard.press("Shift+Tab");
-  await expect(dialog.getByRole("button", { name: "Operations", exact: true })).toBeFocused();
-  await dialog.getByRole("button", { name: "Operations", exact: true }).click();
+  await expect(dialog.getByRole("button", { name: "Next project image" })).toBeFocused();
+  await dialog.getByRole("button", { name: "Next project image" }).click();
+  await dialog.getByRole("button", { name: "Next project image" }).click();
   await expect(dialog.getByRole("img", { name: /operations dashboard/i })).toBeVisible();
   await page.keyboard.press("Tab");
   expect(await dialog.evaluate((element) => element.contains(document.activeElement))).toBe(true);
@@ -104,6 +105,13 @@ test("featured work floats without outer cards and uses three responsive visual 
     await page.mouse.move(box!.x + box!.width * 0.6, box!.y + box!.height * 0.45);
     await expect.poll(() => stage.evaluate((element) => getComputedStyle(element).transform)).not.toBe(before);
     await expect(first.locator("span[class*='project-preview__shine']")).toHaveCSS("opacity", "0.55");
+    const [front, leftRear, rightRear] = await Promise.all([
+      stage.locator("[data-stack-position='0']").boundingBox(),
+      stage.locator("[data-stack-position='1']").boundingBox(),
+      stage.locator("[data-stack-position='2']").boundingBox(),
+    ]);
+    expect(front!.x - leftRear!.x).toBeGreaterThan(front!.width * 0.15);
+    expect(rightRear!.x + rightRear!.width - (front!.x + front!.width)).toBeGreaterThan(front!.width * 0.15);
   }
 });
 
@@ -116,7 +124,9 @@ test("testimonial carousel shows one compact entry and supports manual navigatio
   await expect(section.getByText("Softpoint Enterprise")).toBeVisible();
   await section.getByRole("button", { name: "Next testimonial" }).click();
   await expect(section.getByText("Sayu Café")).toBeVisible();
-  await expect(section.getByText("Draft testimonial")).toBeVisible();
+  const activeTestimonial = section.getByRole("figure");
+  await expect(activeTestimonial.getByText("Client testimonial")).toBeVisible();
+  await expect(activeTestimonial.getByLabel("5 out of 5 stars")).toBeVisible();
   await expect(section.getByText(/not client-submitted/i)).toHaveCount(0);
 });
 

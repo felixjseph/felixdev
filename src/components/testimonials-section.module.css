@@ -150,6 +150,15 @@
   font-weight: 500;
 }
 
+.character {
+  opacity: 1;
+}
+
+.section[data-typing="true"] .quote.active .character {
+  animation: testimonial-type 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(90ms + var(--character-index) * 18ms);
+}
+
 .controls {
   display: flex;
   align-items: center;
@@ -193,6 +202,15 @@
   height: 0.9rem;
 }
 
+@keyframes testimonial-type {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 700px) {
   .shell {
     width: calc(100% - 1.25rem);
@@ -223,5 +241,8 @@
   .quote, .controls button {
     transition: none;
     transform: none !important;
+  }
+  .section[data-typing="true"] .quote.active .character {
+    animation: none;
   }
 }
