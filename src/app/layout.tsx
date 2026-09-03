@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import localFont from "next/font/local";
 import { siteUrl } from "@/lib/site-url";
+import { SiteLoader } from "@/components/site-loader";
+import { ScrollReveals } from "@/components/scroll-reveals";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/600.css";
 import "./globals.css";
@@ -34,6 +36,12 @@ export const metadata: Metadata = {
   title: "Felix Joseph Castañeda — Full-Stack Web & AI Developer",
   description: "Full-stack applications, agentic AI, and automation built around real business problems.",
   alternates: { canonical: "/" },
+  icons: {
+    icon: [
+      { url: "/images/nested-system-mark.png", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
+    ],
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -51,7 +59,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className={nohemi.variable}>
+        <SiteLoader />
+        <noscript><style>{`.site-loader { display: none !important; } .site-nav, .hero-enter, .hero-light-drift span, .hero-copy h1 .hero-keyword, .hero-keyword::after, .hero-floating-signals span, .availability > span { animation: none !important; opacity: 1 !important; transform: none !important; } .hero-keyword::after { display: none; }`}</style></noscript>
         {children}
+        <ScrollReveals />
         <Analytics />
       </body>
     </html>

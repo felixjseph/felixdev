@@ -9,6 +9,9 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     background_color: "#F3F3EF",
     theme_color: "#0A0A0A",
-    icons: [{ src: "/icon.svg", sizes: "any", type: "image/svg+xml" }],
+    icons: [
+      { src: "/images/nested-system-mark.png", sizes: "any", type: "image/png" },
+      { src: "/icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
+    ],
   };
 }

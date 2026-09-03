@@ -24,7 +24,7 @@ describe("SiteHeader", () => {
     const { container } = render(<SiteHeader />);
 
     expect(screen.getByRole("link", { name: /Felix Castañeda/i })).toHaveAttribute("href", "#hero");
-    expect(container.querySelector(".site-mark__symbol svg[viewBox='0 0 64 64']")).toBeInTheDocument();
+    expect(container.querySelector(".site-mark__symbol img[src='/images/nested-system-mark.png']")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "About" })).toHaveAttribute("href", "#about");
     expect(screen.getByRole("link", { name: "Skills" })).toHaveAttribute("href", "#skills");
     expect(screen.getByRole("link", { name: "Projects" })).toHaveAttribute("href", "#projects");

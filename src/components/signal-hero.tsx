@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, PointerEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import { ArrowDownRightIcon, ArrowRightIcon } from "./ui-icons";
 
 const floatingSignals = [
@@ -22,7 +22,38 @@ type SignalStyle = CSSProperties & {
 };
 
 export function SignalHero() {
+  const heroRef = useRef<HTMLElement>(null);
+  const motionAllowed = useRef(true);
+  const [paused, setPaused] = useState(false);
+  const [motionReady, setMotionReady] = useState(false);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let inView = true;
+    const syncMotion = () => {
+      motionAllowed.current = inView && !document.hidden && !preference.matches;
+      hero.dataset.motionActive = String(motionAllowed.current);
+    };
+    const observer = "IntersectionObserver" in window ? new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      syncMotion();
+    }, { threshold: 0 }) : null;
+    observer?.observe(hero);
+    syncMotion();
+    setMotionReady(true);
+    preference.addEventListener("change", syncMotion);
+    document.addEventListener("visibilitychange", syncMotion);
+    return () => {
+      observer?.disconnect();
+      preference.removeEventListener("change", syncMotion);
+      document.removeEventListener("visibilitychange", syncMotion);
+    };
+  }, []);
+
   const updateCursor = (event: PointerEvent<HTMLElement>) => {
+    if (paused || !motionAllowed.current || event.pointerType === "touch") return;
     const bounds = event.currentTarget.getBoundingClientRect();
     event.currentTarget.style.setProperty("--cursor-x", `${event.clientX - bounds.left}px`);
     event.currentTarget.style.setProperty("--cursor-y", `${event.clientY - bounds.top}px`);
@@ -37,11 +68,14 @@ export function SignalHero() {
     <section
       aria-labelledby="hero-heading"
       className="signal-hero"
+      data-motion-paused={paused}
       id="hero"
+      ref={heroRef}
       onPointerLeave={resetCursor}
       onPointerMove={updateCursor}
     >
       <div aria-hidden="true" className="hero-atmosphere">
+        <div className="hero-light-drift"><span /><span /></div>
         <div className="hero-cursor-light" />
         <div className="hero-grain" />
         <div className="hero-floating-signals">
@@ -73,7 +107,7 @@ export function SignalHero() {
             id="hero-heading"
           >
             <span>I build systems</span>
-            <span>that turn <em>busywork</em></span>
+            <span>that turn <em className="hero-keyword">busywork</em></span>
             <span>into forward motion.</span>
           </h1>
 
@@ -91,6 +125,19 @@ export function SignalHero() {
           </div>
         </div>
       </div>
+      <button
+        aria-label={paused ? "Resume hero animation" : "Pause hero animation"}
+        aria-pressed={paused}
+        className="hero-motion-toggle"
+        hidden={!motionReady}
+        onClick={() => setPaused((value) => !value)}
+        type="button"
+      >
+        <svg aria-hidden="true" fill="none" viewBox="0 0 16 16">
+          {paused ? <path d="m5 3 7 5-7 5Z" fill="currentColor" /> : <path d="M5 3v10M11 3v10" stroke="currentColor" strokeWidth="1.5" />}
+        </svg>
+        {paused ? "Resume motion" : "Pause motion"}
+      </button>
     </section>
   );
 }

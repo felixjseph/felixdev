@@ -5,12 +5,12 @@ import { BrandMark } from "./brand-mark";
 export function SiteFooter() {
   return (
     <footer className="site-footer">
-      <div>
+      <div data-reveal>
         <span aria-hidden="true" className="site-footer__mark"><BrandMark /></span>
         <p>Full-Stack Web &amp; AI Developer</p>
       </div>
-      <p>© {new Date().getFullYear()} Felix Joseph Castañeda</p>
-      <nav aria-label="Footer navigation">
+      <p data-reveal data-reveal-delay="50">© {new Date().getFullYear()} Felix Joseph Castañeda</p>
+      <nav aria-label="Footer navigation" data-reveal data-reveal-delay="100">
         <a href="#hero">Back to top <ArrowUpIcon /></a>
         {siteConfig.publicContact.facebook ? <a href={siteConfig.publicContact.facebook}>Facebook</a> : null}
         {siteConfig.publicContact.email ? <a href={`mailto:${siteConfig.publicContact.email}`}>Email</a> : null}

@@ -20,13 +20,13 @@ export function AboutSection() {
   return (
     <section aria-labelledby="about-heading" className="about-focus" id="about">
       <div className="about-focus__inner">
-        <h2 id="about-heading">
+        <h2 data-reveal="left" id="about-heading">
           Technology should <em>move work forward.</em>
         </h2>
 
         <ol className="about-principles">
-          {principles.map((principle) => (
-            <li key={principle.label}>
+          {principles.map((principle, index) => (
+            <li data-reveal="rise" data-reveal-delay={index * 55} key={principle.label}>
               <span>{principle.label}</span>
               <strong>{principle.title}</strong>
               <p>{principle.description}</p>
