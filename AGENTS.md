@@ -35,6 +35,9 @@
 - Use official Simple Icons data where available. If an official recognizable mark is unavailable, render the technology as structured text outside the logo carousel rather than fabricating a logo.
 - Maintain semantic landmarks, keyboard-complete controls, visible focus, comfortable touch targets, responsive layouts, and `prefers-reduced-motion` behavior.
 - Keep animation on transforms and opacity for 60fps behavior. Infinite rails must duplicate content without a visible seam and become static/scrollable for reduced-motion users.
+- Navigation drops gently into place as the startup overlay starts exiting, alongside the existing staggered hero entrance. Keep the entrance under a second, preserve sticky positioning, and let keyboard focus bypass it. The mobile menu uses a short downward reveal. Never gate the technology ribbon or scrollbar on these animations.
+- Page reveals use the shared `ScrollReveals` observer and opt-in `data-reveal` attributes (`title`, `card`, or default text), with optional `data-reveal-delay` capped at 140 ms. Titles lead, supporting text follows, and visuals settle once per visit. Avoid animating both a container and its descendants; do not split readable paragraphs into individual characters. Replace competing scroll-timeline effects rather than layering animations.
+- Reveal effects only enhance already-rendered content: no persistent opacity-zero state, extra loading gate, layout-changing animation, or scroll listener. Disconnect observers and cancel active effects on route cleanup; skip motion when requested, finish on keyboard focus or print, and leave all content usable when JavaScript or animation APIs are unavailable.
 - Every visual placeholder must still look intentional and production-ready while being clearly replaceable.
 
 ## How to Work With Me

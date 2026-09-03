@@ -77,38 +77,38 @@ export function ProjectsSection() {
   return (
     <section aria-labelledby="projects-heading" className="section-shell projects-section" id="projects">
       <div className="section-heading-grid projects-heading">
-        <h2 data-reveal id="projects-heading">
+        <h2 data-reveal="title" id="projects-heading">
           Products designed around <span>real operational leverage.</span>
         </h2>
-        <p data-reveal>
+        <p data-reveal data-reveal-delay="70">
           Concept studies awaiting approved assets, responsibilities, and verified results.
         </p>
       </div>
 
       <div className="project-list">
         {portfolioProjects.map((project) => (
-          <article className="project-feature" data-reveal key={project.number}>
+          <article className="project-feature" key={project.number}>
             <div className="project-feature__content">
-              <div className="project-feature__meta">
+              <div className="project-feature__meta" data-reveal>
                 <span>Project {project.number}</span>
                 <span>{project.category}</span>
               </div>
-              <h3>{project.title}</h3>
+              <h3 data-reveal="title">{project.title}</h3>
               <div className="project-story">
-                <div>
+                <div data-reveal data-reveal-delay="50">
                   <span>Problem</span>
                   <p>{project.problem}</p>
                 </div>
-                <div>
+                <div data-reveal data-reveal-delay="100">
                   <span>System</span>
                   <p>{project.solution}</p>
                 </div>
               </div>
-              <ul aria-label={`${project.title} technologies`} className="project-tags">
+              <ul aria-label={`${project.title} technologies`} className="project-tags" data-reveal>
                 {project.technologies.map((technology) => <li key={technology}>{technology}</li>)}
               </ul>
-              <p className="project-target"><span aria-hidden="true" />{project.target}</p>
-              <details className="project-disclosure">
+              <p className="project-target" data-reveal><span aria-hidden="true" />{project.target}</p>
+              <details className="project-disclosure" data-reveal>
                 <summary>View project <ArrowUpRightIcon /></summary>
                 <p>
                   Case study route pending. Replace this panel with approved screenshots, responsibilities, and
@@ -116,7 +116,7 @@ export function ProjectsSection() {
                 </p>
               </details>
             </div>
-            <div className="project-feature__visual">
+            <div className="project-feature__visual" data-reveal="card" data-reveal-delay="90">
               <div className="placeholder-label">Replaceable visual / {project.number}</div>
               <ProjectVisual visual={project.visual} />
             </div>

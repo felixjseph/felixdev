@@ -27,24 +27,24 @@ export function ExperienceSection() {
     <section aria-labelledby="experience-heading" className="section-shell experience-section" id="experience">
       <div className="experience-layout">
         <div className="experience-intro">
-          <h2 data-reveal id="experience-heading">
+          <h2 data-reveal="title" id="experience-heading">
             Built to adapt. <span>Expected to own the outcome.</span>
           </h2>
-          <p data-reveal>
+          <p data-reveal data-reveal-delay="70">
             A practical summary. Verified employers and role dates will follow content review.
           </p>
         </div>
         <ol className="experience-list">
           {experienceSignals.map((item, index) => (
-            <li data-reveal key={item.marker}>
-              <div className="experience-marker">
+            <li key={item.marker}>
+              <div className="experience-marker" data-reveal>
                 <span>0{index + 1}</span>
                 <strong>{item.marker}</strong>
               </div>
               <div>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                <ul>
+                <h3 data-reveal="title">{item.title}</h3>
+                <p data-reveal data-reveal-delay="60">{item.description}</p>
+                <ul data-reveal data-reveal-delay="100">
                   {item.tags.map((tag) => <li key={tag}>{tag}</li>)}
                 </ul>
               </div>

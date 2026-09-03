@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import localFont from "next/font/local";
 import { siteUrl } from "@/lib/site-url";
 import { SiteLoader } from "@/components/site-loader";
+import { ScrollReveals } from "@/components/scroll-reveals";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/600.css";
 import "./globals.css";
@@ -59,7 +60,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className={nohemi.variable}>
         <SiteLoader />
+        <noscript><style>{`.site-loader { display: none !important; } .site-nav, .hero-enter { animation: none !important; opacity: 1 !important; transform: none !important; }`}</style></noscript>
         {children}
+        <ScrollReveals />
         <Analytics />
       </body>
     </html>
