@@ -71,7 +71,7 @@ export function SkillsSection() {
   return (
     <section aria-labelledby="skills-heading" className="skills-section" id="skills">
       <div className="skills-heading">
-        <h2 data-reveal="title" id="skills-heading">
+        <h2 data-reveal="fade" id="skills-heading">
           A broad stack. <span>One clear standard.</span>
         </h2>
         <p data-reveal data-reveal-delay="70">A focused toolkit for useful, maintainable products.</p>

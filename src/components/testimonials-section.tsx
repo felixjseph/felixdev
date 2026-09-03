@@ -3,7 +3,7 @@ export function TestimonialsSection() {
     <section aria-labelledby="testimonial-heading" className="testimonial-section" id="testimonial">
       <div className="section-shell testimonial-shell">
         <figure className="testimonial-quote">
-          <div className="testimonial-brand" data-reveal="card">
+          <div className="testimonial-brand" data-reveal="left">
             <span aria-hidden="true" className="testimonial-brand__mark">B/01</span>
             <div>
               <strong>Business name pending</strong>
@@ -12,10 +12,10 @@ export function TestimonialsSection() {
           </div>
 
           <div className="testimonial-content">
-            <span aria-label="5 out of 5 stars, draft rating" className="testimonial-stars" data-reveal>
+            <span aria-label="5 out of 5 stars, draft rating" className="testimonial-stars" data-reveal="fade">
               <b aria-hidden="true">★★★★★</b>
             </span>
-            <blockquote data-reveal="title" data-reveal-delay="60" id="testimonial-heading">
+            <blockquote data-reveal="right" data-reveal-delay="60" id="testimonial-heading">
               “Felix understands what the work actually needs. His solutions are <em>clear, practical, and built to
               create meaningful value.</em>”
             </blockquote>

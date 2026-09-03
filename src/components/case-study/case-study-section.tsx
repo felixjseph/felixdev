@@ -8,7 +8,7 @@ export function CaseStudySection({ section }: { section: ProjectSection }) {
     <section aria-labelledby={headingId} className="border-b-2 border-[var(--color-text)] py-10 sm:py-14" id={section.id}>
       <div className="mx-auto max-w-5xl px-4 lg:px-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
-          <h2 className="max-w-3xl text-3xl font-semibold tracking-[-0.04em]" data-reveal="title" id={headingId}>{section.title}</h2>
+          <h2 className="max-w-3xl text-3xl font-semibold tracking-[-0.04em]" data-reveal="left" id={headingId}>{section.title}</h2>
           {section.proofState ? <ProofStateBadge state={section.proofState} /> : null}
         </div>
         <div className="mt-5 max-w-3xl space-y-4 text-[color-mix(in_srgb,var(--color-text)_80%,transparent)]">

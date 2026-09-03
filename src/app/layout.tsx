@@ -60,7 +60,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className={nohemi.variable}>
         <SiteLoader />
-        <noscript><style>{`.site-loader { display: none !important; } .site-nav, .hero-enter { animation: none !important; opacity: 1 !important; transform: none !important; }`}</style></noscript>
+        <noscript><style>{`.site-loader { display: none !important; } .site-nav, .hero-enter, .hero-light-drift span, .hero-copy h1 .hero-keyword, .hero-keyword::after, .hero-floating-signals span, .availability > span { animation: none !important; opacity: 1 !important; transform: none !important; } .hero-keyword::after { display: none; }`}</style></noscript>
         {children}
         <ScrollReveals />
         <Analytics />

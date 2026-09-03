@@ -77,23 +77,23 @@ export function ProjectsSection() {
   return (
     <section aria-labelledby="projects-heading" className="section-shell projects-section" id="projects">
       <div className="section-heading-grid projects-heading">
-        <h2 data-reveal="title" id="projects-heading">
+        <h2 data-reveal="left" id="projects-heading">
           Products designed around <span>real operational leverage.</span>
         </h2>
-        <p data-reveal data-reveal-delay="70">
+        <p data-reveal="right" data-reveal-delay="70">
           Concept studies awaiting approved assets, responsibilities, and verified results.
         </p>
       </div>
 
       <div className="project-list">
-        {portfolioProjects.map((project) => (
+        {portfolioProjects.map((project, index) => (
           <article className="project-feature" key={project.number}>
             <div className="project-feature__content">
-              <div className="project-feature__meta" data-reveal>
+              <div className="project-feature__meta" data-reveal="fade">
                 <span>Project {project.number}</span>
                 <span>{project.category}</span>
               </div>
-              <h3 data-reveal="title">{project.title}</h3>
+              <h3 data-reveal={index % 2 === 0 ? "left" : "right"}>{project.title}</h3>
               <div className="project-story">
                 <div data-reveal data-reveal-delay="50">
                   <span>Problem</span>

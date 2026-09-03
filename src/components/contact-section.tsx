@@ -12,11 +12,11 @@ export function ContactSection() {
     <section aria-labelledby="contact-heading" className="contact-section" id="contact">
       <div className="section-shell contact-shell">
         <div className="contact-heading">
-          <h2 data-reveal="title" id="contact-heading">
+          <h2 data-reveal="right" id="contact-heading">
             Let’s build something <em>useful.</em>
           </h2>
           <div className="contact-intro">
-            <p data-reveal data-reveal-delay="60">Have a project or workflow that deserves a better system? Tell me about it.</p>
+            <p data-reveal="fade" data-reveal-delay="60">Have a project or workflow that deserves a better system? Tell me about it.</p>
             <a className="contact-email-button" data-reveal data-reveal-delay="120" href={`mailto:${siteConfig.publicContact.email}`}>
               Send me an email <ArrowUpRightIcon />
             </a>
@@ -28,7 +28,7 @@ export function ContactSection() {
             const Icon = detail.icon;
 
             return (
-              <div data-reveal="card" data-reveal-delay={index * 65} key={detail.label}>
+              <div data-reveal="left" data-reveal-delay={index * 55} key={detail.label}>
                 <span aria-hidden="true" className="contact-detail-icon"><Icon /></span>
                 <div>
                   <dt>{detail.label}</dt>

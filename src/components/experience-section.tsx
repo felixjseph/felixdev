@@ -37,12 +37,12 @@ export function ExperienceSection() {
         <ol className="experience-list">
           {experienceSignals.map((item, index) => (
             <li key={item.marker}>
-              <div className="experience-marker" data-reveal>
+              <div className="experience-marker" data-reveal="fade">
                 <span>0{index + 1}</span>
                 <strong>{item.marker}</strong>
               </div>
               <div>
-                <h3 data-reveal="title">{item.title}</h3>
+                <h3 data-reveal="left">{item.title}</h3>
                 <p data-reveal data-reveal-delay="60">{item.description}</p>
                 <ul data-reveal data-reveal-delay="100">
                   {item.tags.map((tag) => <li key={tag}>{tag}</li>)}
