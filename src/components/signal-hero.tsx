@@ -24,6 +24,8 @@ type SignalStyle = CSSProperties & {
 export function SignalHero() {
   const heroRef = useRef<HTMLElement>(null);
   const motionAllowed = useRef(true);
+  const cursorFrame = useRef(0);
+  const cursorPosition = useRef({ x: 0, y: 0 });
   const [paused, setPaused] = useState(false);
   const [motionReady, setMotionReady] = useState(false);
 
@@ -46,6 +48,7 @@ export function SignalHero() {
     preference.addEventListener("change", syncMotion);
     document.addEventListener("visibilitychange", syncMotion);
     return () => {
+      cancelAnimationFrame(cursorFrame.current);
       observer?.disconnect();
       preference.removeEventListener("change", syncMotion);
       document.removeEventListener("visibilitychange", syncMotion);
@@ -54,12 +57,20 @@ export function SignalHero() {
 
   const updateCursor = (event: PointerEvent<HTMLElement>) => {
     if (paused || !motionAllowed.current || event.pointerType === "touch") return;
-    const bounds = event.currentTarget.getBoundingClientRect();
-    event.currentTarget.style.setProperty("--cursor-x", `${event.clientX - bounds.left}px`);
-    event.currentTarget.style.setProperty("--cursor-y", `${event.clientY - bounds.top}px`);
+    const hero = event.currentTarget;
+    cursorPosition.current = { x: event.clientX, y: event.clientY };
+    if (cursorFrame.current) return;
+    cursorFrame.current = requestAnimationFrame(() => {
+      cursorFrame.current = 0;
+      const bounds = hero.getBoundingClientRect();
+      hero.style.setProperty("--cursor-x", `${cursorPosition.current.x - bounds.left}px`);
+      hero.style.setProperty("--cursor-y", `${cursorPosition.current.y - bounds.top}px`);
+    });
   };
 
   const resetCursor = (event: PointerEvent<HTMLElement>) => {
+    cancelAnimationFrame(cursorFrame.current);
+    cursorFrame.current = 0;
     event.currentTarget.style.setProperty("--cursor-x", "50%");
     event.currentTarget.style.setProperty("--cursor-y", "42%");
   };

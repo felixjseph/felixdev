@@ -60,6 +60,10 @@ test("contact remains direct and footer controls share one visual size", async (
   await expect.poll(() => contactHeading.locator("[data-contact-type-char]").evaluateAll((characters) =>
     characters.some((character) => character.getAnimations().length > 0),
   )).toBe(true);
+  const caret = contactHeading.locator("[data-contact-type-caret]");
+  await expect.poll(() => caret.evaluate((element) =>
+    element.getAnimations().some((animation) => animation.effect?.getTiming().iterations === Infinity),
+  ), { timeout: 4000 }).toBe(true);
   await expect(page.getByRole("button", { name: "Copy email address" })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Send me an email", exact: true }).first()).toHaveAttribute("href", "mailto:felixjosephcastaneda@gmail.com");
   const footer = page.getByRole("navigation", { name: "Footer navigation" });
@@ -245,6 +249,7 @@ test("mobile project decks fan open as they enter the center viewing band", asyn
 test("experience timeline follows viewport progress and keeps competencies divider-free", async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
+  await expect(page.locator(".site-loader")).toHaveCount(0);
   const timeline = page.locator("#experience .experience-list");
   await timeline.scrollIntoViewIfNeeded();
   await expect.poll(() => timeline.evaluate((element) =>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 
 const experience = [
   {
@@ -45,60 +45,67 @@ const competencies = [
 export function ExperienceSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLOListElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [pointerProgress, setPointerProgress] = useState<number | null>(null);
-  const progress = pointerProgress ?? scrollProgress;
 
   useEffect(() => {
     const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    const timelineItems = Array.from(timelineRef.current?.children ?? []) as HTMLElement[];
     let frame = 0;
     let pointerFrame = 0;
-    const update = () => {
+
+    const applyProgress = (next: number) => {
+      const timeline = timelineRef.current;
+      if (!timeline) return;
+      const progress = Math.max(0, Math.min(1, next));
+      timeline.style.setProperty("--experience-progress", String(progress));
+      timelineItems.forEach((item, index) => {
+        item.dataset.active = String(progress >= (index + 0.12) / experience.length);
+      });
+    };
+
+    const updateFromScroll = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         const timeline = timelineRef.current;
         if (!timeline) return;
-        setPointerProgress(null);
         if (reducedMotion?.matches) {
-          setScrollProgress(1);
+          applyProgress(1);
           return;
         }
         const bounds = timeline.getBoundingClientRect();
         const viewportGuide = window.innerHeight * 0.56;
         const next = (viewportGuide - bounds.top) / Math.max(bounds.height, 1);
-        setScrollProgress(Math.max(0, Math.min(1, next)));
+        applyProgress(next);
       });
     };
+
     const followPointer = (event: globalThis.PointerEvent) => {
       if (event.pointerType !== "mouse" || reducedMotion?.matches) return;
-      const { clientX, clientY } = event;
+      const { clientY } = event;
       cancelAnimationFrame(pointerFrame);
       pointerFrame = requestAnimationFrame(() => {
-        const section = sectionRef.current;
         const timeline = timelineRef.current;
-        if (!section || !timeline) return;
-        const sectionBounds = section.getBoundingClientRect();
-        if (clientX < sectionBounds.left || clientX > sectionBounds.right || clientY < sectionBounds.top || clientY > sectionBounds.bottom) {
-          setPointerProgress(null);
-          return;
-        }
+        if (!timeline) return;
         const timelineBounds = timeline.getBoundingClientRect();
         const next = (clientY - timelineBounds.top) / Math.max(timelineBounds.height, 1);
-        setPointerProgress(Math.max(0, Math.min(1, next)));
+        applyProgress(next);
       });
     };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    window.addEventListener("pointermove", followPointer, { passive: true });
-    reducedMotion?.addEventListener("change", update);
+
+    const section = sectionRef.current;
+    updateFromScroll();
+    window.addEventListener("scroll", updateFromScroll, { passive: true });
+    window.addEventListener("resize", updateFromScroll);
+    section?.addEventListener("pointermove", followPointer, { passive: true });
+    section?.addEventListener("pointerleave", updateFromScroll);
+    reducedMotion?.addEventListener("change", updateFromScroll);
     return () => {
       cancelAnimationFrame(frame);
       cancelAnimationFrame(pointerFrame);
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-      window.removeEventListener("pointermove", followPointer);
-      reducedMotion?.removeEventListener("change", update);
+      window.removeEventListener("scroll", updateFromScroll);
+      window.removeEventListener("resize", updateFromScroll);
+      section?.removeEventListener("pointermove", followPointer);
+      section?.removeEventListener("pointerleave", updateFromScroll);
+      reducedMotion?.removeEventListener("change", updateFromScroll);
     };
   }, []);
 
@@ -113,9 +120,9 @@ export function ExperienceSection() {
             Selected experience, distilled to the responsibility, delivery, and skills that shaped the work.
           </p>
         </div>
-        <ol className="experience-list" ref={timelineRef} style={{ "--experience-progress": progress } as TimelineStyle}>
+        <ol className="experience-list" ref={timelineRef} style={{ "--experience-progress": 0 } as TimelineStyle}>
           {experience.map((item, index) => (
-            <li data-active={progress >= (index + 0.12) / experience.length} key={item.company}>
+            <li data-active="false" key={item.company}>
               <span className="experience-node" aria-hidden="true" />
               <article className="experience-entry">
                 <header data-reveal="left">
