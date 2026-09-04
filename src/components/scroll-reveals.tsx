@@ -14,6 +14,7 @@ export function ScrollReveals() {
 
     const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
     const active = new Map<HTMLElement, Animation>();
+    const supplemental = new Set<Animation>();
     const compact = window.matchMedia("(max-width: 640px)");
     let stopped = false;
     const observer = new IntersectionObserver((entries) => {
@@ -24,6 +25,55 @@ export function ScrollReveals() {
         observer.unobserve(element);
         if (element.dataset.revealed) continue;
         element.dataset.revealed = "true";
+
+        if (element.dataset.reveal === "type") {
+          const characters = Array.from(element.querySelectorAll<HTMLElement>("[data-contact-type-char]"));
+          const characterDuration = compact.matches ? 190 : 230;
+          const stagger = compact.matches ? 19 : 24;
+
+          characters.forEach((character, index) => {
+            const animation = character.animate(
+              [
+                { opacity: 0, transform: "translateY(0.22em)" },
+                { opacity: 1, transform: "translateY(0)" },
+              ],
+              {
+                delay: index * stagger,
+                duration: characterDuration,
+                easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+                fill: "backwards",
+              },
+            );
+            supplemental.add(animation);
+            animation.onfinish = () => {
+              supplemental.delete(animation);
+              animation.cancel();
+            };
+          });
+
+          const caret = element.querySelector<HTMLElement>("[data-contact-type-caret]");
+          if (caret) {
+            const caretAnimation = caret.animate(
+              [
+                { opacity: 0 },
+                { opacity: 1, offset: 0.05 },
+                { opacity: 1, offset: 0.78 },
+                { opacity: 0 },
+              ],
+              {
+                duration: Math.max(900, characters.length * stagger + characterDuration + 240),
+                easing: "linear",
+                fill: "both",
+              },
+            );
+            supplemental.add(caretAnimation);
+            caretAnimation.onfinish = () => {
+              supplemental.delete(caretAnimation);
+              caretAnimation.cancel();
+            };
+          }
+          continue;
+        }
 
         const { keyframes, options } = revealMotion(element.dataset.reveal, element.dataset.revealDelay, compact.matches);
         const animation = element.animate(keyframes, options);
@@ -46,6 +96,8 @@ export function ScrollReveals() {
       observer.disconnect();
       active.forEach((animation) => animation.cancel());
       active.clear();
+      supplemental.forEach((animation) => animation.cancel());
+      supplemental.clear();
       elements.forEach((element) => { element.dataset.revealed = "true"; });
     };
     const onPreferenceChange = () => {
@@ -68,6 +120,7 @@ export function ScrollReveals() {
       stopped = true;
       observer.disconnect();
       active.forEach((animation) => animation.cancel());
+      supplemental.forEach((animation) => animation.cancel());
       preference.removeEventListener("change", onPreferenceChange);
       document.removeEventListener("focusin", onFocus);
       window.removeEventListener("beforeprint", finishAll);

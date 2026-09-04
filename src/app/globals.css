@@ -2311,6 +2311,25 @@ summary {
   font-size: clamp(3rem, 5.4vw, 5.35rem);
 }
 
+.contact-type-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+[data-contact-type-char] {
+  display: inline-block;
+}
+
+.contact-type-caret {
+  display: inline-block;
+  width: 0.055em;
+  height: 0.78em;
+  margin-left: 0.08em;
+  background: currentColor;
+  opacity: 0;
+  transform: translateY(0.06em);
+}
+
 .contact-intro {
   display: grid;
   justify-items: start;
@@ -2323,6 +2342,10 @@ summary {
   color: rgba(255, 255, 255, 0.62);
   font-size: 1rem;
   line-height: 1.55;
+}
+
+.contact-intro p span {
+  display: block;
 }
 
 .contact-email-button {

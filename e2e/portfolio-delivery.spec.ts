@@ -39,9 +39,11 @@ test("Solara publishes three supplied previews and links to the live client proj
   await project.scrollIntoViewIfNeeded();
   await expect(project.getByText("Web Developer")).toBeVisible();
   await expect(project.getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://solaraservices.vercel.app/");
-  await expect(project.getByRole("button", { name: "Service discovery", exact: true })).toBeVisible();
-  await expect(project.getByRole("button", { name: "System starting points", exact: true })).toBeVisible();
-  await expect(project.getByRole("button", { name: "Assessment inquiry", exact: true })).toBeVisible();
+  await expect(project.getByRole("button", { name: "Service discovery", exact: true })).toHaveCount(0);
+  await expect(project.getByRole("button", { name: "System starting points", exact: true })).toHaveCount(0);
+  await expect(project.getByRole("button", { name: "Assessment inquiry", exact: true })).toHaveCount(0);
+  await expect(project.getByRole("button", { name: "Pause preview slideshow" })).toBeVisible();
+  await expect(page.locator("#projects [class*='project-preview__toolbar']")).toHaveCount(0);
 });
 
 test("the mobile hero motion control clears the lower viewport edge", async ({ page }) => {

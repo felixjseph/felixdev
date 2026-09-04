@@ -20,6 +20,7 @@ export type CaseStudyProject = {
   title: string;
   proofAngle: string;
   summary: string;
+  homepageDescription?: string[];
   technologies: string[];
   role?: string;
   website?: string;

@@ -12,6 +12,7 @@ type ProjectPreviewGalleryProps = {
   wide?: boolean;
   background?: string;
   stackSize?: number;
+  showSelectors?: boolean;
 };
 
 type StackStyle = CSSProperties & {
@@ -19,7 +20,7 @@ type StackStyle = CSSProperties & {
   "--preview-background"?: string;
 };
 
-export function ProjectPreviewGallery({ media, title, wide = false, background, stackSize = 3 }: ProjectPreviewGalleryProps) {
+export function ProjectPreviewGallery({ media, title, wide = false, background, stackSize = 3, showSelectors = true }: ProjectPreviewGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [inView, setInView] = useState(false);
   const [centerInView, setCenterInView] = useState(false);
@@ -175,16 +176,22 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
       </div>
       <figcaption className={styles["project-preview__caption"]} aria-live={paused ? "polite" : "off"}>
         <span>{title} / {active.caption}</span>
-        <span>{String(activeIndex + 1).padStart(2, "0")} / {String(media.length).padStart(2, "0")}</span>
+        <span className={styles["project-preview__caption-status"]}>
+          <span>{String(activeIndex + 1).padStart(2, "0")} / {String(media.length).padStart(2, "0")}</span>
+          {!showSelectors && media.length > 1 && motionAllowed && <button
+            className={`${styles["project-preview__play"]} ${styles["project-preview__play--inline"]}`}
+            aria-label={paused ? "Resume preview slideshow" : "Pause preview slideshow"} aria-pressed={paused}
+            type="button" onClick={togglePlayback}>{paused ? <PlayIcon /> : <PauseIcon />}</button>}
+        </span>
       </figcaption>
-      <div className={styles["project-preview__toolbar"]}>
+      {showSelectors && <div className={styles["project-preview__toolbar"]}>
         {controls(previewId)}
         {media.length > 1 && motionAllowed && <button className={styles["project-preview__play"]}
           aria-label={paused ? "Resume preview slideshow" : "Pause preview slideshow"} aria-pressed={paused}
           type="button" onClick={togglePlayback}>
           {paused ? <PlayIcon /> : <PauseIcon />}
         </button>}
-      </div>
+      </div>}
       <dialog className={styles["preview-dialog"]} ref={dialogRef} aria-label={`${title} expanded previews`}
         onKeyDown={(event) => {
           if (event.key === "ArrowLeft") { event.preventDefault(); stepPreview(-1); return; }

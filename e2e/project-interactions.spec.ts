@@ -54,6 +54,12 @@ test("slideshow advances only while visible and idle, with explicit and reduced-
 
 test("contact remains direct and footer controls share one visual size", async ({ page }) => {
   await page.goto("/");
+  const contactHeading = page.getByRole("heading", { name: "Let’s build something useful." });
+  await contactHeading.scrollIntoViewIfNeeded();
+  await expect(contactHeading).toHaveAttribute("data-revealed", "true");
+  await expect.poll(() => contactHeading.locator("[data-contact-type-char]").evaluateAll((characters) =>
+    characters.some((character) => character.getAnimations().length > 0),
+  )).toBe(true);
   await expect(page.getByRole("button", { name: "Copy email address" })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Send me an email", exact: true }).first()).toHaveAttribute("href", "mailto:felixjosephcastaneda@gmail.com");
   const footer = page.getByRole("navigation", { name: "Footer navigation" });
@@ -167,6 +173,18 @@ test("project rows alternate on desktop and stack without overflow on mobile", a
   await expect.poll(() => brand.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
   await third.scrollIntoViewIfNeeded();
   await expect(third.getByRole("button", { name: "Expand Solara previews" }).locator("[data-stack-position]")).toHaveCount(3);
+});
+
+test("testimonial shell stays compact and centered at tablet width", async ({ page }) => {
+  await page.setViewportSize({ width: 848, height: 912 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const shell = page.locator("#testimonial > div");
+  await shell.scrollIntoViewIfNeeded();
+  const bounds = await shell.boundingBox();
+  const sectionBounds = await page.locator("#testimonial").boundingBox();
+  expect(bounds!.width).toBeLessThan(848 * 0.9);
+  expect(Math.abs((bounds!.x + bounds!.width / 2) - (sectionBounds!.x + sectionBounds!.width / 2))).toBeLessThan(2);
 });
 
 test("mobile project decks fan open as they enter the center viewing band", async ({ page, isMobile }) => {
