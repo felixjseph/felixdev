@@ -122,7 +122,7 @@ test("featured work floats without outer cards and uses three responsive visual 
   }
 });
 
-test("testimonial carousel shows one compact entry and supports manual navigation", async ({ page }) => {
+test("testimonial carousel shows one compact entry and supports manual navigation", async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   const section = page.locator("#testimonial");
@@ -135,6 +135,14 @@ test("testimonial carousel shows one compact entry and supports manual navigatio
   await expect(activeTestimonial.getByText("Client testimonial")).toBeVisible();
   await expect(activeTestimonial.getByLabel("5 out of 5 stars")).toBeVisible();
   await expect(section.getByText(/not client-submitted/i)).toHaveCount(0);
+  if (isMobile) {
+    await expect.poll(() => section.locator("h2").evaluate((element) => getComputedStyle(element).textAlign)).toBe("left");
+    await expect.poll(() => section.locator("[class*='headingRow']").evaluate((element) => getComputedStyle(element).alignItems)).toBe("center");
+    await expect.poll(() => section.locator("[class*='headingRow']").evaluate((element) => getComputedStyle(element).justifyContent)).toBe("space-between");
+    await expect.poll(() => section.locator("[class*='controls']").evaluate((element) => getComputedStyle(element).marginLeft)).not.toBe("0px");
+    await expect.poll(() => activeTestimonial.evaluate((element) => getComputedStyle(element).textAlign)).toBe("left");
+    await expect.poll(() => activeTestimonial.locator("[class*='brand']").evaluate((element) => getComputedStyle(element).justifyContent)).toBe("flex-start");
+  }
 });
 
 test("testimonial autoplay advances only while visible and idle", async ({ page, isMobile }) => {
