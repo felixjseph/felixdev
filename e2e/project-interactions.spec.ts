@@ -187,6 +187,24 @@ test("testimonial shell stays compact and centered at tablet width", async ({ pa
   expect(Math.abs((bounds!.x + bounds!.width / 2) - (sectionBounds!.x + sectionBounds!.width / 2))).toBeLessThan(2);
 });
 
+test("testimonial follows selected work with measured breathing room", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  for (const viewport of [{ width: 390, height: 844 }, { width: 1141, height: 912 }]) {
+    await page.setViewportSize(viewport);
+    const finalProject = page.locator("#projects article").last();
+    const testimonialHeading = page.getByRole("heading", { name: /Good work. Good company./i });
+    const [projectBounds, testimonialBounds] = await Promise.all([
+      finalProject.boundingBox(),
+      testimonialHeading.boundingBox(),
+    ]);
+    const gap = testimonialBounds!.y - (projectBounds!.y + projectBounds!.height);
+    expect(gap).toBeGreaterThanOrEqual(64);
+    expect(gap).toBeLessThanOrEqual(132);
+  }
+});
+
 test("mobile project decks fan open as they enter the center viewing band", async ({ page, isMobile }) => {
   test.skip(!isMobile, "The centered fan replaces hover only on mobile layouts.");
   await page.emulateMedia({ reducedMotion: "no-preference" });

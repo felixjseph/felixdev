@@ -1,4 +1,5 @@
 .section {
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
   background: var(--color-bg);
   color: var(--color-text);
 }
