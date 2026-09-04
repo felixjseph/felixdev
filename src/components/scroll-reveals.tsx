@@ -15,8 +15,17 @@ export function ScrollReveals() {
     const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
     const active = new Map<HTMLElement, Animation>();
     const supplemental = new Set<Animation>();
+    const persistent = new Map<HTMLElement, Animation>();
     const compact = window.matchMedia("(max-width: 640px)");
     let stopped = false;
+    const persistentObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const animation = persistent.get(entry.target as HTMLElement);
+        if (!animation) continue;
+        if (entry.isIntersecting && !document.hidden && !preference.matches) animation.play();
+        else animation.pause();
+      }
+    }, { threshold: 0 });
     const observer = new IntersectionObserver((entries) => {
       if (stopped) return;
       for (const entry of entries) {
@@ -28,8 +37,8 @@ export function ScrollReveals() {
 
         if (element.dataset.reveal === "type") {
           const characters = Array.from(element.querySelectorAll<HTMLElement>("[data-contact-type-char]"));
-          const characterDuration = compact.matches ? 190 : 230;
-          const stagger = compact.matches ? 19 : 24;
+          const characterDuration = compact.matches ? 200 : 220;
+          const stagger = compact.matches ? 44 : 48;
 
           characters.forEach((character, index) => {
             const animation = character.animate(
@@ -56,12 +65,11 @@ export function ScrollReveals() {
             const caretAnimation = caret.animate(
               [
                 { opacity: 0 },
-                { opacity: 1, offset: 0.05 },
-                { opacity: 1, offset: 0.78 },
-                { opacity: 0 },
+                { opacity: 1 },
               ],
               {
-                duration: Math.max(900, characters.length * stagger + characterDuration + 240),
+                delay: Math.max(0, (characters.length - 1) * stagger + characterDuration) + 90,
+                duration: 320,
                 easing: "linear",
                 fill: "both",
               },
@@ -70,6 +78,24 @@ export function ScrollReveals() {
             caretAnimation.onfinish = () => {
               supplemental.delete(caretAnimation);
               caretAnimation.cancel();
+              if (stopped || preference.matches) return;
+              const loop = caret.animate(
+                [
+                  { opacity: 1 },
+                  { opacity: 1, offset: 0.42 },
+                  { opacity: 0.12, offset: 0.58 },
+                  { opacity: 0.12, offset: 0.92 },
+                  { opacity: 1 },
+                ],
+                {
+                  duration: 1120,
+                  easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+                  iterations: Infinity,
+                },
+              );
+              persistent.set(caret, loop);
+              persistentObserver.observe(caret);
+              if (document.hidden) loop.pause();
             };
           }
           continue;
@@ -98,10 +124,25 @@ export function ScrollReveals() {
       active.clear();
       supplemental.forEach((animation) => animation.cancel());
       supplemental.clear();
+      persistentObserver.disconnect();
+      persistent.forEach((animation) => animation.cancel());
+      persistent.clear();
       elements.forEach((element) => { element.dataset.revealed = "true"; });
     };
     const onPreferenceChange = () => {
       if (preference.matches) finishAll();
+    };
+    const onVisibilityChange = () => {
+      persistent.forEach((animation, target) => {
+        if (document.hidden) {
+          animation.pause();
+          return;
+        }
+        const bounds = target.getBoundingClientRect();
+        const visible = bounds.bottom > 0 && bounds.top < window.innerHeight;
+        if (visible) animation.play();
+        else animation.pause();
+      });
     };
     const onFocus = (event: FocusEvent) => {
       if (!(event.target instanceof Element) || !event.target.matches(":focus-visible")) return;
@@ -114,14 +155,18 @@ export function ScrollReveals() {
     };
 
     preference.addEventListener("change", onPreferenceChange);
+    document.addEventListener("visibilitychange", onVisibilityChange);
     document.addEventListener("focusin", onFocus);
     window.addEventListener("beforeprint", finishAll);
     return () => {
       stopped = true;
       observer.disconnect();
+      persistentObserver.disconnect();
       active.forEach((animation) => animation.cancel());
       supplemental.forEach((animation) => animation.cancel());
+      persistent.forEach((animation) => animation.cancel());
       preference.removeEventListener("change", onPreferenceChange);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       document.removeEventListener("focusin", onFocus);
       window.removeEventListener("beforeprint", finishAll);
     };
