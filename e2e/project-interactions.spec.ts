@@ -137,7 +137,9 @@ test("testimonial carousel shows one compact entry and supports manual navigatio
   await expect(section.getByText(/not client-submitted/i)).toHaveCount(0);
   if (isMobile) {
     await expect.poll(() => section.locator("h2").evaluate((element) => getComputedStyle(element).textAlign)).toBe("left");
-    await expect.poll(() => section.locator("[class*='headingRow']").evaluate((element) => getComputedStyle(element).alignItems)).toBe("flex-start");
+    await expect.poll(() => section.locator("[class*='headingRow']").evaluate((element) => getComputedStyle(element).alignItems)).toBe("center");
+    await expect.poll(() => section.locator("[class*='headingRow']").evaluate((element) => getComputedStyle(element).justifyContent)).toBe("space-between");
+    await expect.poll(() => section.locator("[class*='controls']").evaluate((element) => getComputedStyle(element).marginLeft)).not.toBe("0px");
     await expect.poll(() => activeTestimonial.evaluate((element) => getComputedStyle(element).textAlign)).toBe("left");
     await expect.poll(() => activeTestimonial.locator("[class*='brand']").evaluate((element) => getComputedStyle(element).justifyContent)).toBe("flex-start");
   }

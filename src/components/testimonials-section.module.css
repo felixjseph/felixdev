@@ -223,9 +223,10 @@
     width: min(calc(100% - 1.25rem), 34rem);
   }
   .headingRow {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.8rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
     text-align: left;
   }
   .heading {
@@ -247,6 +248,8 @@
   }
   .controls {
     justify-content: flex-start;
+    flex-shrink: 0;
+    margin-left: auto;
   }
   .controls > span {
     display: none;
