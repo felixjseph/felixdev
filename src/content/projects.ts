@@ -1,5 +1,6 @@
 import type { CaseStudyProject } from "@/types/project";
 import { softpointProject } from "./softpoint";
+import { solaraProject } from "./solara";
 
 export const requiredChapterTitles = {
   "softpoint-enterprise": softpointProject.sections.map((section) => section.title),
@@ -11,13 +12,7 @@ export const requiredChapterTitles = {
     "Rule-based drink builder",
     "Future smart suggestions",
   ],
-  solara: [
-    "Service context and quotation needs",
-    "Application architecture",
-    "Document-first answerability check",
-    "Lightweight Gemini quotation assistance",
-    "Deployment, domain, DNS, and analytics",
-  ],
+  solara: solaraProject.sections.map((section) => section.title),
   "pach-drugmart": [
     "Operational context and inventory problems",
     "Information structure and core workflows",
@@ -35,6 +30,8 @@ export const projects: CaseStudyProject[] = [
       "Responsive product discovery, café operations, and rule-based product logic.",
     summary:
       "A café web presence that connects product discovery with practical daily operations.",
+    homepageDescription:
+      "Created a responsive café experience that pairs accessible product discovery with practical operational tools, including daily audit reporting, inventory awareness, and an explicit rule-based drink builder.",
     technologies: ["Next.js", "TypeScript", "Responsive web"],
     sections: [
       {
@@ -102,71 +99,7 @@ export const projects: CaseStudyProject[] = [
       },
     ],
   },
-  {
-    slug: "solara",
-    title: "Solara",
-    proofAngle:
-      "Full-stack SaaS delivery with grounded quotation assistance and applied AI.",
-    summary:
-      "A quotation workflow that prioritizes approved documents before lightweight AI assistance.",
-    technologies: ["Next.js", "Supabase", "Vercel", "Gemini"],
-    sections: [
-      {
-        id: "service-context",
-        title: "Service context and quotation needs",
-        body: [
-          "Solara supports quotation and pricing questions where grounded answers and clear guardrails matter.",
-          "The service is designed to reduce repetitive administrative work without making unsupported outcome claims.",
-        ],
-        proofState: "shipped",
-      },
-      {
-        id: "application-architecture",
-        title: "Application architecture",
-        body: [
-          "The deployed application uses Next.js, Supabase, and Vercel for the documented service workflow.",
-          "Its architecture keeps approved quotation knowledge central to answering customer questions.",
-        ],
-        proofState: "shipped",
-      },
-      {
-        id: "document-first",
-        title: "Document-first answerability check",
-        body: [
-          "The document-first flow checks the approved quotation document or knowledge source before any model request.",
-          "When that source can answer the question, the grounded result is returned and Gemini is not called.",
-        ],
-        proofState: "shipped",
-      },
-      {
-        id: "gemini-assistance",
-        title: "Lightweight Gemini quotation assistance",
-        body: [
-          "A lightweight Gemini path is available only when additional quotation assistance is genuinely needed.",
-          "It operates within quotation and pricing guardrails rather than inventing, estimating, or overriding prices.",
-        ],
-        proofState: "shipped",
-      },
-      {
-        id: "deployment",
-        title: "Deployment, domain, DNS, and analytics",
-        body: [
-          "The deployed route includes custom domain and DNS configuration alongside analytics integration.",
-          "These implementation details support a maintained production service.",
-        ],
-        proofState: "shipped",
-      },
-    ],
-    media: [
-      {
-        src: "/images/projects/solara-fallback.svg",
-        alt: "Development fallback artwork for the Solara quotation workflow case study.",
-        width: 1440,
-        height: 900,
-        caption: "Development media fallback — replace with approved Solara project media before launch.",
-      },
-    ],
-  },
+  solaraProject,
   {
     slug: "pach-drugmart",
     title: "Pach Drugmart",

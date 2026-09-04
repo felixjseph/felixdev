@@ -12,6 +12,8 @@ type ProjectPreviewGalleryProps = {
   wide?: boolean;
   background?: string;
   stackSize?: number;
+  showSelectors?: boolean;
+  showCaption?: boolean;
 };
 
 type StackStyle = CSSProperties & {
@@ -19,9 +21,11 @@ type StackStyle = CSSProperties & {
   "--preview-background"?: string;
 };
 
-export function ProjectPreviewGallery({ media, title, wide = false, background, stackSize = 3 }: ProjectPreviewGalleryProps) {
+export function ProjectPreviewGallery({ media, title, wide = false, background, stackSize = 3, showSelectors = true, showCaption = true }: ProjectPreviewGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [inView, setInView] = useState(false);
+  const [centerInView, setCenterInView] = useState(false);
+  const [mobileViewport, setMobileViewport] = useState(false);
   const [motionAllowed, setMotionAllowed] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -46,18 +50,28 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
 
   useEffect(() => {
     const preference = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    const mobile = window.matchMedia?.("(max-width: 900px)");
     const sync = () => setMotionAllowed(Boolean(preference && !preference.matches && !document.hidden));
+    const syncMobile = () => setMobileViewport(Boolean(mobile?.matches));
     sync();
+    syncMobile();
     preference?.addEventListener("change", sync);
+    mobile?.addEventListener("change", syncMobile);
     document.addEventListener("visibilitychange", sync);
     const observer = "IntersectionObserver" in window ? new IntersectionObserver(([entry]) => {
       setInView(entry.isIntersecting);
     }, { threshold: 0 }) : null;
+    const centerObserver = "IntersectionObserver" in window ? new IntersectionObserver(([entry]) => {
+      setCenterInView(entry.isIntersecting);
+    }, { rootMargin: "-42% 0px -42%", threshold: 0 }) : null;
     if (galleryRef.current) observer?.observe(galleryRef.current);
+    if (galleryRef.current) centerObserver?.observe(galleryRef.current);
     if (!observer) setInView(true);
     return () => {
       observer?.disconnect();
+      centerObserver?.disconnect();
       preference?.removeEventListener("change", sync);
+      mobile?.removeEventListener("change", syncMobile);
       document.removeEventListener("visibilitychange", sync);
       cancelAnimationFrame(pointerFrame.current);
     };
@@ -109,6 +123,17 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
     selectPreview(activeIndex + offset);
   };
 
+  const togglePlayback = () => {
+    const resuming = paused;
+    setPaused(!paused);
+    if (resuming) {
+      // The resume control itself is focused/hovered at activation. Treat that
+      // click as the user's explicit playback intent until another interaction.
+      setFocused(false);
+      setHovered(false);
+    }
+  };
+
   const controls = (target: string) => (
     <div className={styles["project-preview__controls"]} role="group" aria-label="Choose a project preview">
       {media.map((item, index) => (
@@ -125,6 +150,8 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
 
   return (
     <figure className={styles["project-preview"]} aria-label={`${title} project previews`} ref={galleryRef}
+      data-mobile-centered={motionAllowed && mobileViewport && centerInView}
+      data-wide={wide}
       data-playing={playing} onPointerEnter={(event) => { if (event.pointerType === "mouse") setHovered(true); }}
       onPointerLeave={() => { setHovered(false); resetTilt(); }}
       onFocusCapture={() => setFocused(true)}
@@ -147,19 +174,29 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
           <span aria-hidden="true" className={styles["project-preview__shine"]} />
           <span aria-hidden="true" className={styles["project-preview__expand"]}><ExpandIcon /></span>
         </button>
+        {!showCaption && media.length > 1 && motionAllowed && <button
+          className={`${styles["project-preview__play"]} ${styles["project-preview__play--overlay"]}`}
+          aria-label={paused ? "Resume preview slideshow" : "Pause preview slideshow"} aria-pressed={paused}
+          type="button" onClick={togglePlayback}>{paused ? <PlayIcon /> : <PauseIcon />}</button>}
       </div>
-      <figcaption className={styles["project-preview__caption"]} aria-live={paused ? "polite" : "off"}>
+      {showCaption && <figcaption className={styles["project-preview__caption"]} aria-live={paused ? "polite" : "off"}>
         <span>{title} / {active.caption}</span>
-        <span>{String(activeIndex + 1).padStart(2, "0")} / {String(media.length).padStart(2, "0")}</span>
-      </figcaption>
-      <div className={styles["project-preview__toolbar"]}>
+        <span className={styles["project-preview__caption-status"]}>
+          <span>{String(activeIndex + 1).padStart(2, "0")} / {String(media.length).padStart(2, "0")}</span>
+          {!showSelectors && media.length > 1 && motionAllowed && <button
+            className={`${styles["project-preview__play"]} ${styles["project-preview__play--inline"]}`}
+            aria-label={paused ? "Resume preview slideshow" : "Pause preview slideshow"} aria-pressed={paused}
+            type="button" onClick={togglePlayback}>{paused ? <PlayIcon /> : <PauseIcon />}</button>}
+        </span>
+      </figcaption>}
+      {showSelectors && <div className={styles["project-preview__toolbar"]}>
         {controls(previewId)}
         {media.length > 1 && motionAllowed && <button className={styles["project-preview__play"]}
           aria-label={paused ? "Resume preview slideshow" : "Pause preview slideshow"} aria-pressed={paused}
-          type="button" onClick={() => setPaused((value) => !value)}>
+          type="button" onClick={togglePlayback}>
           {paused ? <PlayIcon /> : <PauseIcon />}
         </button>}
-      </div>
+      </div>}
       <dialog className={styles["preview-dialog"]} ref={dialogRef} aria-label={`${title} expanded previews`}
         onKeyDown={(event) => {
           if (event.key === "ArrowLeft") { event.preventDefault(); stepPreview(-1); return; }

@@ -12,6 +12,16 @@ export function CaseStudyHero({ project }: { project: CaseStudyProject }) {
           <p className="font-mono text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">Case study</p>
         </div>
         <h1 className="mt-4 max-w-4xl text-5xl font-semibold tracking-[-0.05em] sm:text-6xl">{project.title}</h1>
+        {(project.role || project.website) && (
+          <div className="mt-4 flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-[0.1em]">
+            {project.role && <span>{project.role}</span>}
+            {project.website && (
+              <a className="underline decoration-1 underline-offset-4" href={project.website} rel="noopener noreferrer" target="_blank">
+                Visit live website <span aria-hidden="true">↗</span>
+              </a>
+            )}
+          </div>
+        )}
         <p className="mt-5 max-w-3xl text-xl font-medium">{project.proofAngle}</p>
         <p className="mt-4 max-w-3xl text-[color-mix(in_srgb,var(--color-text)_78%,transparent)]">{project.summary}</p>
         <ul aria-label={`${project.title} technologies`} className="mt-7 flex flex-wrap gap-2">

@@ -23,19 +23,19 @@ export default function SoftpointEnterprisePage() {
   return (
     <>
       <SiteHeader linkToHomepage />
-      <main className={styles["softpoint-case"]}>
-        <header className={styles["softpoint-case__intro"]}>
+      <main className={styles["project-case"]}>
+        <header className={styles["project-case__intro"]}>
           <Link className={styles["work-back"]} href="/#projects">← Selected work</Link>
-          <p className={styles["softpoint-case__meta"]}><time dateTime={project.date}>{project.dateLabel}</time> / {project.role}</p>
+          <p className={styles["project-case__meta"]}><time dateTime={project.date}>{project.dateLabel}</time> / {project.role}</p>
           <h1>{project.title}</h1>
-          <p className={styles["softpoint-case__lead"]}>{project.proofAngle}</p>
-          <p className={styles["softpoint-case__summary"]}>{project.summary}</p>
+          <p className={styles["project-case__lead"]}>{project.proofAngle}</p>
+          <p className={styles["project-case__summary"]}>{project.summary}</p>
           <div className={styles["work-actions"]}>
             <a href={project.website} target="_blank" rel="noopener noreferrer">Visit live website <ArrowUpRightIcon /></a>
           </div>
         </header>
         <ProjectPreviewGallery media={project.media} title={project.title} wide />
-        <div className={styles["softpoint-case__facts"]}>
+        <div className={styles["project-case__facts"]}>
           <p className={styles["featured-work__outcome"]}>
             <strong>{project.outcome.value}</strong><span>{project.outcome.label}<small>through workflow automation</small></span>
           </p>
@@ -43,7 +43,7 @@ export default function SoftpointEnterprisePage() {
             {project.technologies.map((technology) => <li key={technology}>{technology}</li>)}
           </ul>
         </div>
-        <div className={styles["softpoint-case__chapters"]}>
+        <div className={styles["project-case__chapters"]}>
           {project.sections.map((section, index) => (
             <section key={section.id} id={section.id} aria-labelledby={`${section.id}-heading`}>
               <span className="system-label">0{index + 1}</span>

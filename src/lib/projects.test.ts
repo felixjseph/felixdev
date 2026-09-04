@@ -15,11 +15,11 @@ const approvedChapterTitles = {
     "Future smart suggestions",
   ],
   solara: [
-    "Service context and quotation needs",
-    "Application architecture",
-    "Document-first answerability check",
-    "Lightweight Gemini quotation assistance",
-    "Deployment, domain, DNS, and analytics",
+    "Client context and service discovery",
+    "Residential and commercial solutions",
+    "Reusable responsive architecture",
+    "A clear path from interest to inquiry",
+    "Production delivery on Vercel",
   ],
   "pach-drugmart": [
     "Operational context and inventory problems",
@@ -69,7 +69,8 @@ describe("project content", () => {
     expect(text).not.toMatch(/ordering/i);
     expect(text).not.toMatch(/record management/i);
     expect(text).not.toMatch(/40%/i);
-    expect(text).toMatch(/document-first/i);
+    expect(text).toMatch(/residential and commercial solar/i);
+    expect(text).not.toMatch(/document-first|Gemini quotation/i);
   });
 
   it("keeps every project chapter list exact and ordered", () => {
@@ -82,22 +83,15 @@ describe("project content", () => {
     }
   });
 
-  it("preserves the approved proof states for Sayu and Solara flows", () => {
+  it("preserves the approved proof states for Sayu and the shipped Solara project", () => {
     const sayu = getProjectBySlug("sayu-cafe");
     const solara = getProjectBySlug("solara");
 
     expect(sayu?.sections.find((section) => section.title === "Rule-based drink builder")?.proofState).toBe("prototype");
     expect(sayu?.sections.find((section) => section.title === "Future smart suggestions")?.proofState).toBe("planned");
-    expect(
-      solara?.sections.find(
-        (section) => section.title === "Document-first answerability check",
-      )?.proofState,
-    ).toBe("shipped");
-    expect(
-      solara?.sections.find(
-        (section) => section.title === "Lightweight Gemini quotation assistance",
-      )?.proofState,
-    ).toBe("shipped");
+    expect(solara?.sections.every((section) => section.proofState === "shipped")).toBe(true);
+    expect(solara?.role).toBe("Web Developer");
+    expect(solara?.website).toBe("https://solaraservices.vercel.app/");
   });
 
   it("uses informative development fallback media with reserved dimensions", () => {
@@ -108,6 +102,9 @@ describe("project content", () => {
         expect(media.alt.trim().length).toBeGreaterThan(10);
         if (project.slug === "softpoint-enterprise") {
           expect(media.src).toMatch(/^\/images\/projects\/softpoint\/.+\.webp$/);
+          expect(readFileSync(resolve(process.cwd(), "public", media.src.slice(1))).length).toBeGreaterThan(0);
+        } else if (project.slug === "solara") {
+          expect(media.src).toMatch(/^\/images\/projects\/solara\/.+\.png$/);
           expect(readFileSync(resolve(process.cwd(), "public", media.src.slice(1))).length).toBeGreaterThan(0);
         } else {
           expect(media.src).toMatch(/^\/images\/projects\/.*-fallback\.svg$/);
@@ -120,7 +117,6 @@ describe("project content", () => {
   it("keeps fallback SVGs visibly labelled and limited to the P2 palette", () => {
     const fallbackAssets = [
       ["sayu-fallback.svg", "Sayu Café"],
-      ["solara-fallback.svg", "Solara"],
       ["pach-fallback.svg", "Pach Drugmart"],
     ] as const;
 
