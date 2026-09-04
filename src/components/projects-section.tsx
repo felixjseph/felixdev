@@ -43,7 +43,7 @@ export function ProjectsSection() {
       <article className={styles["featured-work"]} aria-labelledby="sayu-title">
         <div className={styles["featured-work__preview"]} data-reveal="card">
           <ProjectPreviewGallery title={sayu.title} background="#354fa3" media={[{
-            src: "/images/brands/sayu.jpg", alt: "Sayu Café brand identity — project screenshots to follow.",
+            src: "/images/brands/sayu.jpg", alt: "Sayu Café brand identity preview.",
             width: 2048, height: 2030, caption: "Brand preview",
           }]} showCaption={false} showSelectors={false} stackSize={3} />
         </div>
@@ -59,7 +59,6 @@ export function ProjectsSection() {
             {sayu.technologies.map((technology) => <li key={technology}>{technology}</li>)}
           </ul>
           <div className={styles["work-actions"]} data-reveal><Link href={`/work/${sayu.slug}`}>Explore project study <ArrowUpRightIcon /></Link></div>
-          <p className={styles["featured-work__note"]}>Brand identity shown. Project screenshots to follow.</p>
         </div>
       </article>
       <article className={styles["featured-work"]} aria-labelledby="solara-title">

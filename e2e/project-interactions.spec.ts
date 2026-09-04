@@ -167,6 +167,13 @@ test("project rows alternate on desktop and stack without overflow on mobile", a
     else if (side === "left") expect(preview!.x).toBeLessThan(title!.x);
     else expect(preview!.x).toBeGreaterThan(title!.x);
   }
+  if (isMobile) {
+    const descriptions = page.locator("#projects [class*='featured-work__description'] p");
+    await expect(descriptions).toHaveCount(3);
+    for (const description of await descriptions.all()) {
+      await expect.poll(() => description.evaluate((element) => getComputedStyle(element).textAlign)).toBe("left");
+    }
+  }
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await second.scrollIntoViewIfNeeded();
   const brand = second.getByRole("img");

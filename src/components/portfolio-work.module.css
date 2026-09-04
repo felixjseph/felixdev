@@ -60,13 +60,6 @@
   grid-row: 1;
 }
 
-.featured-work__note {
-  margin: 0.9rem 0 0;
-  color: var(--color-muted);
-  font-size: 0.72rem;
-  line-height: 1.5;
-}
-
 .featured-work__preview {
   min-width: 0;
   align-self: center;
@@ -742,6 +735,11 @@
   }
   .featured-list {
     gap: 5.5rem;
+  }
+  .featured-work__description p {
+    margin-inline: 0;
+    text-align: left;
+    text-wrap: pretty;
   }
   .project-preview__caption {
     font-size: 0.51rem;

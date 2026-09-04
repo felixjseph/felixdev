@@ -33,6 +33,7 @@ describe("endgame portfolio sections", () => {
     expect(screen.getByText(/reduce administrative workload by 30%/i)).toBeInTheDocument();
     expect(screen.getByRole("img", { name: "Softpoint Enterprise logo" })).toBeInTheDocument();
     expect(screen.getAllByAltText("Sayu Café logo").length).toBeGreaterThanOrEqual(1);
+    expect(screen.queryByText(/Project screenshots to follow/i)).not.toBeInTheDocument();
     const solaraProject = screen.getByRole("heading", { name: "Solara" }).closest("article")!;
     expect(within(solaraProject).getByText("Web Developer")).toBeInTheDocument();
     expect(within(solaraProject).getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://solaraservices.vercel.app/");
