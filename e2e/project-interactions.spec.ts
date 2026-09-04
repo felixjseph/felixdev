@@ -185,3 +185,33 @@ test("mobile project decks fan open as they enter the center viewing band", asyn
   expect(front!.x - leftRear!.x).toBeGreaterThan(front!.width * 0.05);
   expect(rightRear!.x + rightRear!.width - (front!.x + front!.width)).toBeGreaterThan(front!.width * 0.05);
 });
+
+test("experience timeline follows viewport progress and keeps competencies divider-free", async ({ page, isMobile }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const timeline = page.locator("#experience .experience-list");
+  await timeline.scrollIntoViewIfNeeded();
+  await expect.poll(() => timeline.evaluate((element) =>
+    Number.parseFloat(getComputedStyle(element).getPropertyValue("--experience-progress")) || 0,
+  )).toBeGreaterThan(0);
+
+  if (!isMobile) {
+    const beforePointer = await timeline.evaluate((element) =>
+      Number.parseFloat(getComputedStyle(element).getPropertyValue("--experience-progress")) || 0,
+    );
+    const bounds = await timeline.boundingBox();
+    const viewport = page.viewportSize()!;
+    const visibleLowerPoint = Math.min(viewport.height - 12, bounds!.y + bounds!.height - 12);
+    await page.mouse.move(bounds!.x + bounds!.width * 0.5, visibleLowerPoint);
+    await expect.poll(() => timeline.evaluate((element) =>
+      Number.parseFloat(getComputedStyle(element).getPropertyValue("--experience-progress")) || 0,
+    )).toBeGreaterThan(beforePointer + 0.04);
+  }
+
+  const competencies = page.locator("#experience .experience-competencies > div");
+  await expect(competencies).toHaveCSS("border-top-width", "0px");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect.poll(() => timeline.evaluate((element) =>
+    Number.parseFloat(getComputedStyle(element).getPropertyValue("--experience-progress")) || 0,
+  )).toBe(1);
+});

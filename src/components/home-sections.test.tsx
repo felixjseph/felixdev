@@ -46,6 +46,8 @@ describe("endgame portfolio sections", () => {
     expect(screen.getByRole("heading", { name: "Web Development Intern" })).toBeInTheDocument();
     expect(screen.getByText("Softpoint Solutions")).toBeInTheDocument();
     expect(screen.getByText("Knowles Corporation")).toBeInTheDocument();
+    expect(screen.getByText(/more than 500 WordPress training-course sites/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/development responsibilities/i)).toHaveLength(1);
     expect(screen.getByLabelText("Core competencies")).toBeInTheDocument();
     expect(container.innerHTML.toLowerCase()).not.toContain("github");
     expect(container.innerHTML.toLowerCase()).not.toContain("linkedin");
