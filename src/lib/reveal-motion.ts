@@ -1,11 +1,11 @@
 // Small, composited gestures: section authors choose direction, not new engines.
 const presets = {
-  rise: { x: 0, y: 18, scale: 1, duration: 600 },
-  title: { x: 0, y: 26, scale: 1, duration: 740 },
-  left: { x: -30, y: 0, scale: 1, duration: 740 },
-  right: { x: 30, y: 0, scale: 1, duration: 740 },
-  card: { x: 0, y: 18, scale: 0.965, duration: 780 },
-  fade: { x: 0, y: 0, scale: 1, duration: 620 },
+  rise: { x: 0, y: 18, scale: 1, duration: 760 },
+  title: { x: 0, y: 26, scale: 1, duration: 900 },
+  left: { x: -30, y: 0, scale: 1, duration: 900 },
+  right: { x: 30, y: 0, scale: 1, duration: 900 },
+  card: { x: 0, y: 18, scale: 0.965, duration: 940 },
+  fade: { x: 0, y: 0, scale: 1, duration: 760 },
 } as const;
 
 export function revealMotion(variant: string | undefined, delay: string | undefined, compact: boolean) {

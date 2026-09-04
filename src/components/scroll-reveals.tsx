@@ -37,8 +37,8 @@ export function ScrollReveals() {
 
         if (element.dataset.reveal === "type") {
           const characters = Array.from(element.querySelectorAll<HTMLElement>("[data-contact-type-char]"));
-          const characterDuration = compact.matches ? 190 : 230;
-          const stagger = compact.matches ? 19 : 24;
+          const characterDuration = compact.matches ? 200 : 220;
+          const stagger = compact.matches ? 44 : 48;
 
           characters.forEach((character, index) => {
             const animation = character.animate(
@@ -62,16 +62,14 @@ export function ScrollReveals() {
 
           const caret = element.querySelector<HTMLElement>("[data-contact-type-caret]");
           if (caret) {
-            const revealDuration = Math.max(900, characters.length * stagger + characterDuration + 240);
             const caretAnimation = caret.animate(
               [
                 { opacity: 0 },
-                { opacity: 1, offset: 0.05 },
-                { opacity: 1, offset: 0.78 },
-                { opacity: 0 },
+                { opacity: 1 },
               ],
               {
-                duration: revealDuration,
+                delay: Math.max(0, (characters.length - 1) * stagger + characterDuration) + 90,
+                duration: 320,
                 easing: "linear",
                 fill: "both",
               },
