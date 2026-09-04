@@ -21,6 +21,8 @@ export type CaseStudyProject = {
   proofAngle: string;
   summary: string;
   technologies: string[];
+  role?: string;
+  website?: string;
   sections: ProjectSection[];
   media: ProjectMedia[];
 };

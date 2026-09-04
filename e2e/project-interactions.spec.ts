@@ -152,7 +152,8 @@ test("project rows alternate on desktop and stack without overflow on mobile", a
   await page.goto("/");
   const first = page.locator("#projects article").nth(0);
   const second = page.locator("#projects article").nth(1);
-  for (const [row, side] of [[first, "left"], [second, "right"]] as const) {
+  const third = page.locator("#projects article").nth(2);
+  for (const [row, side] of [[first, "left"], [second, "right"], [third, "left"]] as const) {
     const preview = await row.locator("figure").boundingBox();
     const title = await row.locator("h3").boundingBox();
     if (isMobile) expect(preview!.y).toBeLessThan(title!.y);
@@ -163,4 +164,6 @@ test("project rows alternate on desktop and stack without overflow on mobile", a
   await second.scrollIntoViewIfNeeded();
   const brand = second.getByRole("img");
   await expect.poll(() => brand.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
+  await third.scrollIntoViewIfNeeded();
+  await expect(third.getByRole("button", { name: "Expand Solara previews" }).locator("[data-stack-position]")).toHaveCount(3);
 });

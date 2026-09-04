@@ -2854,7 +2854,7 @@ summary {
 .hero-motion-toggle {
   position: absolute;
   right: max(1rem, calc((100% - 90rem) / 2));
-  bottom: 0.2rem;
+  bottom: clamp(1rem, 2.4vh, 1.6rem);
   display: inline-flex;
   min-height: 44px;
   align-items: center;

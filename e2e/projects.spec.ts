@@ -42,8 +42,11 @@ test("Sayu builder produces a drink summary", async ({ page }) => {
   await expect(page.getByRole("status")).toContainText("matcha");
 });
 
-test("Solara explains the document-first branch", async ({ page }) => {
+test("Solara presents the shipped client website and approved project gallery", async ({ page }) => {
   await page.goto("/work/solara");
 
-  await expect(page.getByText("Answer from the document without calling Gemini")).toBeVisible();
+  await expect(page.getByText("Web Developer")).toBeVisible();
+  await expect(page.getByRole("region", { name: "Solara project gallery" }).getByRole("img")).toHaveCount(3);
+  await expect(page.getByRole("heading", { name: "A clear path from interest to inquiry" })).toBeVisible();
+  await expect(page.getByText(/Gemini quotation/i)).toHaveCount(0);
 });

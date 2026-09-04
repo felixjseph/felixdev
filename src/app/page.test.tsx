@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import HomePage from "./page";
 
@@ -62,11 +62,13 @@ describe("HomePage", () => {
     expect(screen.getByText("San Fernando, Cebu, PH")).toBeInTheDocument();
   });
 
-  it("features the delivered project and retains two labeled concepts", () => {
+  it("features the delivered client projects and retains two labeled concepts", () => {
     render(<HomePage />);
-    expect(screen.getByRole("heading", { name: "Softpoint Enterprise" })).toBeInTheDocument();
+    const softpoint = screen.getByRole("heading", { name: "Softpoint Enterprise" }).closest("article")!;
+    const solara = screen.getByRole("heading", { name: "Solara" }).closest("article")!;
     expect(screen.getByText("AI Document Intelligence")).toBeInTheDocument();
     expect(screen.getByText("Agentic Workflow Command Center")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "View case study" })).toHaveAttribute("href", "/work/softpoint-enterprise");
+    expect(within(softpoint).getByRole("link", { name: "View case study" })).toHaveAttribute("href", "/work/softpoint-enterprise");
+    expect(within(solara).getByRole("link", { name: "View case study" })).toHaveAttribute("href", "/work/solara");
   });
 });

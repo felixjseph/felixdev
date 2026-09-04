@@ -24,13 +24,35 @@ test("the official CV is downloadable from the responsive navigation", async ({ 
   const desktopDownload = page.getByRole("link", { name: "Resume", exact: true });
   const showDesktop = await desktopDownload.isVisible();
   if (!showDesktop) await page.getByRole("button", { name: "Open navigation menu" }).click();
-  const downloadLink = showDesktop ? desktopDownload : page.getByRole("link", { name: "Download résumé" });
+  const downloadLink = showDesktop ? desktopDownload : page.getByRole("link", { name: "Download CV" });
   const pendingDownload = page.waitForEvent("download");
   await downloadLink.click();
   expect((await pendingDownload).suggestedFilename()).toBe("felix-dev-cv.pdf");
   const response = await request.get("/downloads/felix-dev-cv.pdf");
   expect(response.ok()).toBe(true);
   expect((await response.body()).subarray(0, 5).toString()).toBe("%PDF-");
+});
+
+test("Solara publishes three supplied previews and links to the live client project", async ({ page }) => {
+  await page.goto("/");
+  const project = page.locator("#projects article").filter({ has: page.getByRole("heading", { name: "Solara" }) });
+  await project.scrollIntoViewIfNeeded();
+  await expect(project.getByText("Web Developer")).toBeVisible();
+  await expect(project.getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://solaraservices.vercel.app/");
+  await expect(project.getByRole("button", { name: "Service discovery", exact: true })).toBeVisible();
+  await expect(project.getByRole("button", { name: "System starting points", exact: true })).toBeVisible();
+  await expect(project.getByRole("button", { name: "Assessment inquiry", exact: true })).toBeVisible();
+});
+
+test("the mobile hero motion control clears the lower viewport edge", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  await page.locator(".site-loader").waitFor({ state: "detached" });
+  const control = await page.getByRole("button", { name: "Pause hero animation" }).boundingBox();
+  const lowerClearance = 844 - (control!.y + control!.height);
+  expect(lowerClearance).toBeGreaterThanOrEqual(10);
+  expect(lowerClearance).toBeLessThanOrEqual(32);
 });
 
 test("compact sections fit narrow viewports and follow the active theme", async ({ page }) => {

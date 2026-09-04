@@ -124,7 +124,7 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
             </a>
           ))}
           {siteConfig.resumeUrl ? (
-            <a download href={siteConfig.resumeUrl} onClick={closeMenu}>Download résumé</a>
+            <a download href={siteConfig.resumeUrl} onClick={closeMenu}>Download CV</a>
           ) : (
             <span aria-disabled="true" className="mobile-nav__disabled">Résumé unavailable</span>
           )}

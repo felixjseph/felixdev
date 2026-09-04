@@ -48,6 +48,7 @@ describe("SiteHeader", () => {
     const menuButton = screen.getByRole("button", { name: "Open navigation menu" });
     await user.click(menuButton);
     expect(screen.getByRole("navigation", { name: "Mobile" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Download CV" })).toHaveAttribute("href", "/downloads/felix-dev-cv.pdf");
     await user.keyboard("{Escape}");
     expect(screen.queryByRole("navigation", { name: "Mobile" })).not.toBeInTheDocument();
 

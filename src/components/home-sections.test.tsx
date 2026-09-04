@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { AboutSection } from "./about-section";
 import { ContactSection } from "./contact-section";
@@ -25,11 +25,15 @@ describe("endgame portfolio sections", () => {
     expect(screen.getByRole("heading", { name: /Technology should move work forward/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /A broad stack/i })).toBeInTheDocument();
     expect(screen.getAllByText(/Placeholder target/i)).toHaveLength(2);
-    expect(screen.getByRole("heading", { name: "Softpoint Enterprise" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://www.softpointenterprise.com/");
+    const softpointProject = screen.getByRole("heading", { name: "Softpoint Enterprise" }).closest("article")!;
+    expect(within(softpointProject).getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://www.softpointenterprise.com/");
     expect(screen.getByText("30%")).toBeInTheDocument();
     expect(screen.getByRole("img", { name: "Softpoint Enterprise logo" })).toBeInTheDocument();
     expect(screen.getAllByAltText("Sayu Café logo").length).toBeGreaterThanOrEqual(1);
+    const solaraProject = screen.getByRole("heading", { name: "Solara" }).closest("article")!;
+    expect(within(solaraProject).getByText("Web Developer")).toBeInTheDocument();
+    expect(within(solaraProject).getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://solaraservices.vercel.app/");
+    expect(screen.getAllByAltText(/Solara (homepage|system starting points|solar assessment)/i)).toHaveLength(3);
     expect(screen.queryByText(/Attribution pending approval/i)).not.toBeInTheDocument();
     expect(screen.getAllByLabelText("5 out of 5 stars")).toHaveLength(2);
     expect(screen.getAllByText("Client testimonial")).toHaveLength(2);
