@@ -173,6 +173,11 @@ test("project rows alternate on desktop and stack without overflow on mobile", a
     for (const description of await descriptions.all()) {
       await expect.poll(() => description.evaluate((element) => getComputedStyle(element).textAlign)).toBe("left");
     }
+    const content = first.locator("[class*='featured-work__content']");
+    await expect.poll(() => content.evaluate((element) => getComputedStyle(element).textAlign)).toBe("left");
+    await expect.poll(() => first.locator("[class*='featured-work__eyebrow']").evaluate((element) => getComputedStyle(element).justifyContent)).toBe("flex-start");
+    await expect.poll(() => first.locator("[class*='work-technologies']").evaluate((element) => getComputedStyle(element).justifyContent)).toBe("flex-start");
+    await expect.poll(() => first.locator("[class*='work-actions']").evaluate((element) => getComputedStyle(element).justifyContent)).toBe("flex-start");
   }
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await second.scrollIntoViewIfNeeded();

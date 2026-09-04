@@ -683,7 +683,7 @@
     width: min(100%, 34rem);
     margin-inline: auto;
     padding: 0.25rem;
-    text-align: center;
+    text-align: left;
   }
   .project-preview {
     width: min(100%, 40rem);
@@ -692,13 +692,13 @@
   .featured-work__eyebrow,
   .work-technologies,
   .work-actions {
-    justify-content: center;
+    justify-content: flex-start;
   }
   .featured-work__identity {
-    justify-items: center;
+    justify-items: start;
   }
   .featured-work__description p {
-    margin-inline: auto;
+    margin-inline: 0;
   }
   .project-preview[data-mobile-centered="true"] .project-preview__stage {
     transform: perspective(1000px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateY(-0.2rem);
