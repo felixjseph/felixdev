@@ -4,6 +4,8 @@ import type { CaseStudyProject } from "@/types/project";
 export const solaraProject = {
   slug: "solara",
   title: "Solara",
+  date: "2026-06",
+  dateLabel: "Jun 2026",
   role: "Web Developer",
   website: "https://solaraservices.vercel.app/",
   proofAngle: "Responsive solar service discovery with a clear path to inquiry.",
@@ -80,4 +82,4 @@ export const solaraProject = {
       caption: "Assessment inquiry",
     },
   ],
-} satisfies CaseStudyProject;
+} satisfies CaseStudyProject & { date: string; dateLabel: string };

@@ -1031,7 +1031,7 @@ summary {
 
 .text-tech-list span,
 .project-tags li,
-.experience-list ul li {
+.experience-skills li {
   padding: 0.45rem 0.65rem;
   border: 1px solid var(--color-line);
   border-radius: 999px;
@@ -1313,12 +1313,22 @@ summary {
 .experience-intro h2 { max-width: 11ch; }
 .experience-intro > p { max-width:30rem; margin-top:2rem; color:var(--color-muted); line-height:1.65; }
 .experience-list { margin:0; padding:0; list-style:none; border-top:1px solid var(--color-line); }
-.experience-list > li { display:grid; gap:2rem; min-height:17rem; padding:1.5rem 0; border-bottom:1px solid var(--color-line); grid-template-columns:6rem 1fr; }
+.experience-list > li { display:grid; gap:clamp(1.25rem,3vw,2rem); padding:clamp(1.6rem,3vw,2.7rem) 0; border-bottom:1px solid var(--color-line); grid-template-columns:4.5rem 1fr; }
 .experience-marker { display:flex; flex-direction:column; justify-content:space-between; }
-.experience-marker strong { color:var(--color-text); }
-.experience-list h3 { max-width:14ch; margin:0 0 1rem; font-size:clamp(1.8rem,3.2vw,3.5rem); font-weight:540; letter-spacing:-.035em; line-height:1; }
-.experience-list > li > div:last-child > p { max-width:37rem; color:var(--color-muted); line-height:1.65; }
-.experience-list ul { display:flex; flex-wrap:wrap; gap:.45rem; margin:2rem 0 0; padding:0; list-style:none; }
+.experience-marker strong { color:var(--color-text); font-size:.62rem; }
+.experience-entry header { display:flex; align-items:flex-start; justify-content:space-between; gap:1.5rem; }
+.experience-company { margin:0 0 .45rem; color:var(--color-text); font-size:.9rem; font-weight:650; }
+.experience-list h3 { max-width:19ch; margin:0; font-size:clamp(1.45rem,2.5vw,2.45rem); font-weight:540; letter-spacing:-.035em; line-height:1.05; }
+.experience-meta { display:flex; flex:0 0 auto; flex-direction:column; gap:.3rem; margin:0; color:var(--color-muted); font:.58rem/1.5 var(--font-mono); text-align:right; text-transform:uppercase; }
+.experience-summary { max-width:38rem; margin:1.1rem 0 0; color:var(--color-muted); line-height:1.6; }
+.experience-highlights { display:grid; gap:.55rem; margin:1rem 0 0; padding:0; color:var(--color-muted); font-size:.87rem; line-height:1.55; list-style:none; }
+.experience-highlights li { position:relative; padding-left:1rem; }
+.experience-highlights li::before { position:absolute; top:.68em; left:0; width:.3rem; height:1px; background:currentColor; content:""; }
+.experience-skills { display:flex; flex-wrap:wrap; gap:.45rem; margin:1.35rem 0 0; padding:0; list-style:none; }
+.experience-competencies { display:grid; gap:clamp(4rem,8vw,8rem); margin-top:2.5rem; grid-template-columns:minmax(20rem,.75fr) minmax(0,1fr); }
+.experience-competencies > div { grid-column:2; padding-top:1.3rem; border-top:1px solid var(--color-line); }
+.experience-competencies ul { display:flex; flex-wrap:wrap; gap:.5rem; margin:.9rem 0 0; padding:0; list-style:none; }
+.experience-competencies li { padding:.55rem .75rem; border:1px solid var(--color-line); border-radius:999px; color:var(--color-muted); font-size:.72rem; }
 
 /* Contact */
 .contact-section {
@@ -1415,6 +1425,8 @@ summary {
   .skill-lane { grid-template-columns:1fr; }
   .skill-lane__label { padding:.75rem 0; border-right:0; border-bottom:1px solid var(--color-line); }
   .experience-intro { position:static; }
+  .experience-competencies { grid-template-columns:1fr; }
+  .experience-competencies > div { grid-column:auto; }
   .site-footer { padding-block:2rem; grid-template-columns:1fr; }
   .site-footer nav { justify-content:flex-start; }
 }
@@ -1456,6 +1468,8 @@ summary {
   .project-ui--documents,.project-ui--agents { padding:1rem; gap:.75rem; grid-template-columns:1fr; }
   .json-panel,.agent-log { position:absolute; right:1rem; bottom:1rem; width:58%; }
   .experience-list > li { grid-template-columns:4rem 1fr; }
+  .experience-entry header { display:block; }
+  .experience-meta { align-items:flex-start; margin-top:.85rem; text-align:left; }
   .contact-heading h2 { font-size:clamp(3.25rem,16vw,5.5rem); }
   .contact-channels > a,.contact-channels > div { min-height:7rem; grid-template-columns:1fr 2rem; }
   .contact-channels strong { grid-column:1 / -1; order:2; }

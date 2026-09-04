@@ -24,7 +24,8 @@ describe("endgame portfolio sections", () => {
 
     expect(screen.getByRole("heading", { name: /Technology should move work forward/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /A broad stack/i })).toBeInTheDocument();
-    expect(screen.getAllByText(/Placeholder target/i)).toHaveLength(2);
+    expect(screen.queryByText("AI Document Intelligence")).not.toBeInTheDocument();
+    expect(screen.queryByText("Agentic Workflow Command Center")).not.toBeInTheDocument();
     const softpointProject = screen.getByRole("heading", { name: "Softpoint Enterprise" }).closest("article")!;
     expect(within(softpointProject).getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://www.softpointenterprise.com/");
     expect(screen.getByText("30%")).toBeInTheDocument();
@@ -41,7 +42,11 @@ describe("endgame portfolio sections", () => {
     expect(container.querySelectorAll(".contact-detail-icon")).toHaveLength(3);
     expect(screen.getByText("felixjosephcastaneda@gmail.com")).toBeInTheDocument();
     expect(screen.getByText("San Fernando, Cebu, PH")).toBeInTheDocument();
-    expect(screen.getByText(/Verified employers and role dates/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Full-Stack Web & AI Developer" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Web Development Intern" })).toBeInTheDocument();
+    expect(screen.getByText("Softpoint Solutions")).toBeInTheDocument();
+    expect(screen.getByText("Knowles Corporation")).toBeInTheDocument();
+    expect(screen.getByLabelText("Core competencies")).toBeInTheDocument();
     expect(container.innerHTML.toLowerCase()).not.toContain("github");
     expect(container.innerHTML.toLowerCase()).not.toContain("linkedin");
   });

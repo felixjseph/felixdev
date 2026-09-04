@@ -22,6 +22,8 @@ type StackStyle = CSSProperties & {
 export function ProjectPreviewGallery({ media, title, wide = false, background, stackSize = 3 }: ProjectPreviewGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [inView, setInView] = useState(false);
+  const [centerInView, setCenterInView] = useState(false);
+  const [mobileViewport, setMobileViewport] = useState(false);
   const [motionAllowed, setMotionAllowed] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -46,18 +48,28 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
 
   useEffect(() => {
     const preference = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    const mobile = window.matchMedia?.("(max-width: 900px)");
     const sync = () => setMotionAllowed(Boolean(preference && !preference.matches && !document.hidden));
+    const syncMobile = () => setMobileViewport(Boolean(mobile?.matches));
     sync();
+    syncMobile();
     preference?.addEventListener("change", sync);
+    mobile?.addEventListener("change", syncMobile);
     document.addEventListener("visibilitychange", sync);
     const observer = "IntersectionObserver" in window ? new IntersectionObserver(([entry]) => {
       setInView(entry.isIntersecting);
     }, { threshold: 0 }) : null;
+    const centerObserver = "IntersectionObserver" in window ? new IntersectionObserver(([entry]) => {
+      setCenterInView(entry.isIntersecting);
+    }, { rootMargin: "-42% 0px -42%", threshold: 0 }) : null;
     if (galleryRef.current) observer?.observe(galleryRef.current);
+    if (galleryRef.current) centerObserver?.observe(galleryRef.current);
     if (!observer) setInView(true);
     return () => {
       observer?.disconnect();
+      centerObserver?.disconnect();
       preference?.removeEventListener("change", sync);
+      mobile?.removeEventListener("change", syncMobile);
       document.removeEventListener("visibilitychange", sync);
       cancelAnimationFrame(pointerFrame.current);
     };
@@ -109,6 +121,17 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
     selectPreview(activeIndex + offset);
   };
 
+  const togglePlayback = () => {
+    const resuming = paused;
+    setPaused(!paused);
+    if (resuming) {
+      // The resume control itself is focused/hovered at activation. Treat that
+      // click as the user's explicit playback intent until another interaction.
+      setFocused(false);
+      setHovered(false);
+    }
+  };
+
   const controls = (target: string) => (
     <div className={styles["project-preview__controls"]} role="group" aria-label="Choose a project preview">
       {media.map((item, index) => (
@@ -125,6 +148,8 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
 
   return (
     <figure className={styles["project-preview"]} aria-label={`${title} project previews`} ref={galleryRef}
+      data-mobile-centered={motionAllowed && mobileViewport && centerInView}
+      data-wide={wide}
       data-playing={playing} onPointerEnter={(event) => { if (event.pointerType === "mouse") setHovered(true); }}
       onPointerLeave={() => { setHovered(false); resetTilt(); }}
       onFocusCapture={() => setFocused(true)}
@@ -156,7 +181,7 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
         {controls(previewId)}
         {media.length > 1 && motionAllowed && <button className={styles["project-preview__play"]}
           aria-label={paused ? "Resume preview slideshow" : "Pause preview slideshow"} aria-pressed={paused}
-          type="button" onClick={() => setPaused((value) => !value)}>
+          type="button" onClick={togglePlayback}>
           {paused ? <PlayIcon /> : <PauseIcon />}
         </button>}
       </div>

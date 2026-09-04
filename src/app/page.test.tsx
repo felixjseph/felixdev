@@ -62,12 +62,12 @@ describe("HomePage", () => {
     expect(screen.getByText("San Fernando, Cebu, PH")).toBeInTheDocument();
   });
 
-  it("features the delivered client projects and retains two labeled concepts", () => {
+  it("features the three approved projects without unfinished concept rows", () => {
     render(<HomePage />);
     const softpoint = screen.getByRole("heading", { name: "Softpoint Enterprise" }).closest("article")!;
     const solara = screen.getByRole("heading", { name: "Solara" }).closest("article")!;
-    expect(screen.getByText("AI Document Intelligence")).toBeInTheDocument();
-    expect(screen.getByText("Agentic Workflow Command Center")).toBeInTheDocument();
+    expect(screen.queryByText("AI Document Intelligence")).not.toBeInTheDocument();
+    expect(screen.queryByText("Agentic Workflow Command Center")).not.toBeInTheDocument();
     expect(within(softpoint).getByRole("link", { name: "View case study" })).toHaveAttribute("href", "/work/softpoint-enterprise");
     expect(within(solara).getByRole("link", { name: "View case study" })).toHaveAttribute("href", "/work/solara");
   });

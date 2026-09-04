@@ -45,6 +45,7 @@ test("slideshow advances only while visible and idle, with explicit and reduced-
   await gallery.getByRole("button", { name: "Resume preview slideshow" }).click();
   await page.mouse.move(0, 0);
   await page.evaluate(() => (document.activeElement as HTMLElement)?.blur());
+  await gallery.scrollIntoViewIfNeeded();
   await expect(gallery).toHaveAttribute("data-playing", "true");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(gallery).toHaveAttribute("data-playing", "false");
@@ -166,4 +167,21 @@ test("project rows alternate on desktop and stack without overflow on mobile", a
   await expect.poll(() => brand.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
   await third.scrollIntoViewIfNeeded();
   await expect(third.getByRole("button", { name: "Expand Solara previews" }).locator("[data-stack-position]")).toHaveCount(3);
+});
+
+test("mobile project decks fan open as they enter the center viewing band", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "The centered fan replaces hover only on mobile layouts.");
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const preview = page.locator("#projects article").first().getByRole("figure", { name: "Softpoint Enterprise project previews" });
+  await preview.evaluate((element) => element.scrollIntoView({ block: "center" }));
+  await expect(preview).toHaveAttribute("data-mobile-centered", "true");
+  const stage = preview.getByRole("button", { name: "Expand Softpoint Enterprise previews" });
+  const [front, leftRear, rightRear] = await Promise.all([
+    stage.locator("[data-stack-position='0']").boundingBox(),
+    stage.locator("[data-stack-position='1']").boundingBox(),
+    stage.locator("[data-stack-position='2']").boundingBox(),
+  ]);
+  expect(front!.x - leftRear!.x).toBeGreaterThan(front!.width * 0.05);
+  expect(rightRear!.x + rightRear!.width - (front!.x + front!.width)).toBeGreaterThan(front!.width * 0.05);
 });

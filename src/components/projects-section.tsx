@@ -1,6 +1,5 @@
 import styles from "./portfolio-work.module.css";
 import Link from "next/link";
-import { portfolioProjects } from "@/content/portfolio";
 import { softpointProject as project } from "@/content/softpoint";
 import { solaraProject as solara } from "@/content/solara";
 import { projects } from "@/content/projects";
@@ -66,7 +65,7 @@ export function ProjectsSection() {
         <div className={styles["featured-work__content"]}>
           <div className={styles["featured-work__eyebrow"]} data-reveal="fade">
             <span>03 / Client project</span>
-            <span>Solar energy</span>
+            <time dateTime={solara.date}>{solara.dateLabel}</time>
           </div>
           <h3 id="solara-title" data-reveal="right">{solara.title}</h3>
           <p className={styles["featured-work__role"]} data-reveal>{solara.role}</p>
@@ -80,22 +79,6 @@ export function ProjectsSection() {
           </div>
         </div>
       </article>
-      </div>
-      <div className={styles["work-explorations"]} aria-label="Concept explorations">
-        {portfolioProjects.map((concept) => (
-          <details className={styles["work-exploration"]} key={concept.number} data-reveal="rise">
-            <summary>
-              <span className={styles["work-exploration__label"]}>Concept / {concept.number}</span>
-              <span className={styles["work-exploration__title"]}>{concept.title}</span>
-              <span className={styles["work-exploration__toggle"]} aria-hidden="true">+</span>
-            </summary>
-            <p>{concept.solution}</p>
-            <ul className={styles["work-technologies"]} aria-label={`${concept.title} technologies`}>
-              {concept.technologies.map((technology) => <li key={technology}>{technology}</li>)}
-            </ul>
-            <small>{concept.target}</small>
-          </details>
-        ))}
       </div>
     </section>
   );

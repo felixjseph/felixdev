@@ -2,7 +2,6 @@ import { expect, test } from "@playwright/test";
 
 for (const [slug, title] of [
   ["sayu-cafe", "Sayu Café"],
-  ["solara", "Solara"],
   ["pach-drugmart", "Pach Drugmart"],
 ] as const) {
   test(`${title} has a dedicated case study`, async ({ page }) => {
@@ -45,8 +44,10 @@ test("Sayu builder produces a drink summary", async ({ page }) => {
 test("Solara presents the shipped client website and approved project gallery", async ({ page }) => {
   await page.goto("/work/solara");
 
-  await expect(page.getByText("Web Developer")).toBeVisible();
-  await expect(page.getByRole("region", { name: "Solara project gallery" }).getByRole("img")).toHaveCount(3);
+  await expect(page.getByRole("heading", { level: 1, name: "Solara" })).toBeVisible();
+  await expect(page.getByText("Web Developer").first()).toBeVisible();
+  await expect(page.getByRole("figure", { name: "Solara project previews" }).locator("img")).toHaveCount(3);
+  await expect(page.getByRole("link", { name: "Visit live website" })).toHaveAttribute("href", "https://solaraservices.vercel.app/");
   await expect(page.getByRole("heading", { name: "A clear path from interest to inquiry" })).toBeVisible();
   await expect(page.getByText(/Gemini quotation/i)).toHaveCount(0);
 });
