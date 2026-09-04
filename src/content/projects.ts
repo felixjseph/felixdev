@@ -30,10 +30,8 @@ export const projects: CaseStudyProject[] = [
       "Responsive product discovery, café operations, and rule-based product logic.",
     summary:
       "A café web presence that connects product discovery with practical daily operations.",
-    homepageDescription: [
-      "A café web presence that connects clear product discovery with practical daily operations.",
-      "The responsive experience supports accessible product browsing, while the broader project covers daily audit reporting, inventory awareness, and an explicit rule-based drink builder.",
-    ],
+    homepageDescription:
+      "Created a responsive café experience that pairs accessible product discovery with practical operational tools, including daily audit reporting, inventory awareness, and an explicit rule-based drink builder.",
     technologies: ["Next.js", "TypeScript", "Responsive web"],
     sections: [
       {

@@ -10,10 +10,8 @@ export const softpointProject = {
   website: "https://www.softpointenterprise.com/",
   proofAngle: "A better front door. A simpler working day.",
   summary: "A full-stack SaaS platform connecting a professional web presence, customer access, and everyday business operations.",
-  homepageDescription: [
-    "A full-stack SaaS platform connecting a professional web presence, customer access, and everyday business operations.",
-    "The work brings customer-facing services and repair administration into one connected system. Workflow automation reduced administrative workload by 30%, while production delivery included the custom domain, DNS, analytics, and Gemini API integration.",
-  ],
+  homepageDescription:
+    "Designed and deployed a full-stack SaaS platform that unifies Softpoint’s public web presence, customer access, and repair administration, using workflow automation to reduce administrative workload by 30% while delivering the custom domain, DNS, analytics, and Gemini API integration.",
   outcome: { value: "30%", label: "less administrative work" },
   technologies: ["Next.js", "Supabase", "Vercel", "Gemini API"],
   sections: [

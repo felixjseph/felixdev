@@ -30,7 +30,7 @@ describe("endgame portfolio sections", () => {
     expect(within(softpointProject).getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://www.softpointenterprise.com/");
     expect(within(softpointProject).queryByRole("button", { name: "Website" })).not.toBeInTheDocument();
     expect(container.querySelectorAll("#projects figcaption")).toHaveLength(0);
-    expect(screen.getByText(/reduced administrative workload by 30%/i)).toBeInTheDocument();
+    expect(screen.getByText(/reduce administrative workload by 30%/i)).toBeInTheDocument();
     expect(screen.getByRole("img", { name: "Softpoint Enterprise logo" })).toBeInTheDocument();
     expect(screen.getAllByAltText("Sayu Café logo").length).toBeGreaterThanOrEqual(1);
     const solaraProject = screen.getByRole("heading", { name: "Solara" }).closest("article")!;
@@ -38,6 +38,7 @@ describe("endgame portfolio sections", () => {
     expect(within(solaraProject).getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://solaraservices.vercel.app/");
     expect(within(solaraProject).queryByRole("button", { name: "Service discovery" })).not.toBeInTheDocument();
     expect(screen.getAllByAltText(/Solara (homepage|system starting points|solar assessment)/i)).toHaveLength(3);
+    expect(container.querySelectorAll("#projects article [class*='featured-work__description'] > p")).toHaveLength(3);
     expect(screen.queryByText(/Attribution pending approval/i)).not.toBeInTheDocument();
     expect(screen.getAllByLabelText("5 out of 5 stars")).toHaveLength(2);
     expect(screen.getAllByText("Client testimonial")).toHaveLength(2);

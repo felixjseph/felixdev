@@ -11,10 +11,8 @@ export const solaraProject = {
   proofAngle: "Responsive solar service discovery with a clear path to inquiry.",
   summary:
     "A responsive solar energy platform presenting residential and commercial solutions through a clear journey from service discovery to customer inquiry.",
-  homepageDescription: [
-    "A responsive solar energy platform presenting residential and commercial solutions through a clear journey from service discovery to customer inquiry.",
-    "Reusable Next.js, React, and TypeScript components keep service information consistent across screen sizes, while focused calls to action guide prospective customers toward a solar assessment.",
-  ],
+  homepageDescription:
+    "Developed a responsive solar energy platform with reusable Next.js, React, and TypeScript components, presenting residential and commercial services clearly and guiding prospective customers from discovery to a solar assessment.",
   technologies: ["Next.js", "React", "TypeScript", "Vercel"],
   sections: [
     {

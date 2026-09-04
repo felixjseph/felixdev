@@ -29,7 +29,7 @@ export function ProjectsSection() {
             <p className={styles["featured-work__role"]} data-reveal>{project.role}</p>
           </div>
           <div className={styles["featured-work__description"]} data-reveal>
-            {project.homepageDescription.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            <p>{project.homepageDescription}</p>
           </div>
           <ul aria-label={`${project.title} technologies`} className={styles["work-technologies"]} data-reveal>
             {project.technologies.map((technology) => <li key={technology}>{technology}</li>)}
@@ -53,7 +53,7 @@ export function ProjectsSection() {
             <h3 id="sayu-title" data-reveal="left">{sayu.title}</h3>
           </div>
           <div className={styles["featured-work__description"]} data-reveal>
-            {(sayu.homepageDescription ?? [sayu.summary]).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            <p>{sayu.homepageDescription ?? sayu.summary}</p>
           </div>
           <ul className={styles["work-technologies"]} aria-label={`${sayu.title} technologies`} data-reveal>
             {sayu.technologies.map((technology) => <li key={technology}>{technology}</li>)}
@@ -76,7 +76,7 @@ export function ProjectsSection() {
             <p className={styles["featured-work__role"]} data-reveal>{solara.role}</p>
           </div>
           <div className={styles["featured-work__description"]} data-reveal>
-            {solara.homepageDescription.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            <p>{solara.homepageDescription}</p>
           </div>
           <ul className={styles["work-technologies"]} aria-label={`${solara.title} technologies`} data-reveal>
             {solara.technologies.map((technology) => <li key={technology}>{technology}</li>)}
