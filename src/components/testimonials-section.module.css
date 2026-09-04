@@ -224,9 +224,9 @@
   }
   .headingRow {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.8rem;
-    text-align: center;
+    text-align: left;
   }
   .heading {
     max-width: 12ch;
@@ -237,16 +237,16 @@
     min-height: 12rem;
     gap: 0.8rem;
     padding-inline: 0.4rem;
-    text-align: center;
+    text-align: left;
   }
   .brand {
-    justify-content: center;
+    justify-content: flex-start;
   }
   .content blockquote {
-    margin-inline: auto;
+    margin-inline: 0;
   }
   .controls {
-    justify-content: center;
+    justify-content: flex-start;
   }
   .controls > span {
     display: none;
