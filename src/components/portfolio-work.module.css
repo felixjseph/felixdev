@@ -243,8 +243,10 @@
 }
 
 .project-preview__deck {
+  --preview-deck-inline: clamp(2.75rem, 5vw, 4.5rem);
+  --preview-deck-bottom: 1rem;
   position: relative;
-  padding: 2rem clamp(2.75rem, 5vw, 4.5rem) 1rem;
+  padding: 2rem var(--preview-deck-inline) var(--preview-deck-bottom);
   isolation: isolate;
 }
 
@@ -404,15 +406,28 @@
   height: 0.9rem;
 }
 
-.project-preview__play--inline {
+.project-preview__play--inline,
+.project-preview__play--overlay {
   flex-basis: 2rem;
   width: 2rem;
   height: 2rem;
 }
 
-.project-preview__play--inline svg {
+.project-preview__play--inline svg,
+.project-preview__play--overlay svg {
   width: 0.72rem;
   height: 0.72rem;
+}
+
+.project-preview__play--overlay {
+  position: absolute;
+  z-index: 7;
+  left: calc(var(--preview-deck-inline) + 0.7rem);
+  bottom: calc(var(--preview-deck-bottom) + 0.7rem);
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(10, 10, 10, 0.76);
+  color: #fff;
+  backdrop-filter: blur(8px);
 }
 
 .project-preview__control {
@@ -734,7 +749,9 @@
     font-size: 0.51rem;
   }
   .project-preview__deck {
-    padding: 1.7rem 1.85rem 0.75rem;
+    --preview-deck-inline: 1.85rem;
+    --preview-deck-bottom: 0.75rem;
+    padding-top: 1.7rem;
   }
   .project-preview__deck:hover .project-preview__image[data-stack-position="1"],
   .project-preview__stage:focus-visible .project-preview__image[data-stack-position="1"] {

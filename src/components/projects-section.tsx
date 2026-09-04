@@ -17,7 +17,7 @@ export function ProjectsSection() {
       <div className={styles["featured-list"]}>
       <article className={styles["featured-work"]} aria-labelledby="softpoint-title">
         <div className={styles["featured-work__preview"]} data-reveal="card">
-          <ProjectPreviewGallery title={project.title} media={project.media} showSelectors={false} />
+          <ProjectPreviewGallery title={project.title} media={project.media} showCaption={false} showSelectors={false} />
         </div>
         <div className={styles["featured-work__content"]}>
           <div className={styles["featured-work__eyebrow"]} data-reveal="fade">
@@ -45,7 +45,7 @@ export function ProjectsSection() {
           <ProjectPreviewGallery title={sayu.title} background="#354fa3" media={[{
             src: "/images/brands/sayu.jpg", alt: "Sayu Café brand identity — project screenshots to follow.",
             width: 2048, height: 2030, caption: "Brand preview",
-          }]} showSelectors={false} stackSize={3} />
+          }]} showCaption={false} showSelectors={false} stackSize={3} />
         </div>
         <div className={styles["featured-work__content"]}>
           <div className={styles["featured-work__eyebrow"]} data-reveal="fade"><span>02 / Project study</span><span>Café & hospitality</span></div>
@@ -64,7 +64,7 @@ export function ProjectsSection() {
       </article>
       <article className={styles["featured-work"]} aria-labelledby="solara-title">
         <div className={styles["featured-work__preview"]} data-reveal="card">
-          <ProjectPreviewGallery title={solara.title} background="#fff7ec" media={solara.media} showSelectors={false} />
+          <ProjectPreviewGallery title={solara.title} background="#fff7ec" media={solara.media} showCaption={false} showSelectors={false} />
         </div>
         <div className={styles["featured-work__content"]}>
           <div className={styles["featured-work__eyebrow"]} data-reveal="fade">

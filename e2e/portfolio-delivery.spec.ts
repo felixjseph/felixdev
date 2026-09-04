@@ -11,6 +11,7 @@ test("Softpoint previews switch accessibly and link to the live project", async 
     const control = gallery.getByRole("button", { name: caption });
     await control.click();
     await expect(control).toHaveAttribute("aria-pressed", "true");
+    await expect(gallery.locator("figcaption")).toContainText(caption);
     const image = gallery.getByRole("img", { name: alt });
     await expect(image).toBeVisible();
     await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.complete && node.naturalWidth > 0)).toBe(true);
@@ -43,6 +44,7 @@ test("Solara publishes three supplied previews and links to the live client proj
   await expect(project.getByRole("button", { name: "System starting points", exact: true })).toHaveCount(0);
   await expect(project.getByRole("button", { name: "Assessment inquiry", exact: true })).toHaveCount(0);
   await expect(project.getByRole("button", { name: "Pause preview slideshow" })).toBeVisible();
+  await expect(page.locator("#projects figcaption")).toHaveCount(0);
   await expect(page.locator("#projects [class*='project-preview__toolbar']")).toHaveCount(0);
 });
 

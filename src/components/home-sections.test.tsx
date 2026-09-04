@@ -29,6 +29,7 @@ describe("endgame portfolio sections", () => {
     const softpointProject = screen.getByRole("heading", { name: "Softpoint Enterprise" }).closest("article")!;
     expect(within(softpointProject).getByRole("link", { name: "Visit website" })).toHaveAttribute("href", "https://www.softpointenterprise.com/");
     expect(within(softpointProject).queryByRole("button", { name: "Website" })).not.toBeInTheDocument();
+    expect(container.querySelectorAll("#projects figcaption")).toHaveLength(0);
     expect(screen.getByText(/reduced administrative workload by 30%/i)).toBeInTheDocument();
     expect(screen.getByRole("img", { name: "Softpoint Enterprise logo" })).toBeInTheDocument();
     expect(screen.getAllByAltText("Sayu Café logo").length).toBeGreaterThanOrEqual(1);

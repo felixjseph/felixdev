@@ -13,6 +13,7 @@ type ProjectPreviewGalleryProps = {
   background?: string;
   stackSize?: number;
   showSelectors?: boolean;
+  showCaption?: boolean;
 };
 
 type StackStyle = CSSProperties & {
@@ -20,7 +21,7 @@ type StackStyle = CSSProperties & {
   "--preview-background"?: string;
 };
 
-export function ProjectPreviewGallery({ media, title, wide = false, background, stackSize = 3, showSelectors = true }: ProjectPreviewGalleryProps) {
+export function ProjectPreviewGallery({ media, title, wide = false, background, stackSize = 3, showSelectors = true, showCaption = true }: ProjectPreviewGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [inView, setInView] = useState(false);
   const [centerInView, setCenterInView] = useState(false);
@@ -173,8 +174,12 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
           <span aria-hidden="true" className={styles["project-preview__shine"]} />
           <span aria-hidden="true" className={styles["project-preview__expand"]}><ExpandIcon /></span>
         </button>
+        {!showCaption && media.length > 1 && motionAllowed && <button
+          className={`${styles["project-preview__play"]} ${styles["project-preview__play--overlay"]}`}
+          aria-label={paused ? "Resume preview slideshow" : "Pause preview slideshow"} aria-pressed={paused}
+          type="button" onClick={togglePlayback}>{paused ? <PlayIcon /> : <PauseIcon />}</button>}
       </div>
-      <figcaption className={styles["project-preview__caption"]} aria-live={paused ? "polite" : "off"}>
+      {showCaption && <figcaption className={styles["project-preview__caption"]} aria-live={paused ? "polite" : "off"}>
         <span>{title} / {active.caption}</span>
         <span className={styles["project-preview__caption-status"]}>
           <span>{String(activeIndex + 1).padStart(2, "0")} / {String(media.length).padStart(2, "0")}</span>
@@ -183,7 +188,7 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
             aria-label={paused ? "Resume preview slideshow" : "Pause preview slideshow"} aria-pressed={paused}
             type="button" onClick={togglePlayback}>{paused ? <PlayIcon /> : <PauseIcon />}</button>}
         </span>
-      </figcaption>
+      </figcaption>}
       {showSelectors && <div className={styles["project-preview__toolbar"]}>
         {controls(previewId)}
         {media.length > 1 && motionAllowed && <button className={styles["project-preview__play"]}
