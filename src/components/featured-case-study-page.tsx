@@ -18,11 +18,12 @@ type FeaturedCaseStudyProject = CaseStudyProject & {
 type FeaturedCaseStudyPageProps = {
   project: FeaturedCaseStudyProject;
   background?: string;
+  imageFit?: "contain" | "cover";
   children?: ReactNode;
 };
 
 /** Shared editorial shell used by every selected-work case study. */
-export function FeaturedCaseStudyPage({ project, background, children }: FeaturedCaseStudyPageProps) {
+export function FeaturedCaseStudyPage({ project, background, imageFit, children }: FeaturedCaseStudyPageProps) {
   return (
     <>
       <SiteHeader linkToHomepage />
@@ -45,7 +46,7 @@ export function FeaturedCaseStudyPage({ project, background, children }: Feature
           )}
         </header>
 
-        <ProjectPreviewGallery background={background} media={project.media} title={project.title} wide />
+        <ProjectPreviewGallery background={background} imageFit={imageFit} media={project.media} title={project.title} wide />
 
         <div className={styles["project-case__facts"]}>
           {project.outcome ? (

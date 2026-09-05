@@ -17,5 +17,5 @@ export const metadata: Metadata = {
 };
 
 export default function SayuCafePage() {
-  return <FeaturedCaseStudyPage project={project} />;
+  return <FeaturedCaseStudyPage imageFit="cover" project={project} />;
 }

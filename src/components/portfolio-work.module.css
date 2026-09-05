@@ -326,6 +326,10 @@
   object-fit: contain;
 }
 
+.project-preview[data-image-fit="cover"] .project-preview__image img {
+  object-fit: cover;
+}
+
 .project-preview__shine {
   position: absolute;
   z-index: 5;
