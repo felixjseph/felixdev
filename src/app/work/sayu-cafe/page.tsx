@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { FeaturedCaseStudyPage } from "@/components/featured-case-study-page";
-import { sayuCatalog } from "@/content/sayu-builder-data";
-import { SayuBuilder } from "@/features/sayu-builder/sayu-builder";
 import { getProjectBySlug } from "@/lib/projects";
 
 const project = getProjectBySlug("sayu-cafe")!;
@@ -19,9 +17,5 @@ export const metadata: Metadata = {
 };
 
 export default function SayuCafePage() {
-  return (
-    <FeaturedCaseStudyPage background="#354fa3" project={project}>
-      <SayuBuilder catalog={sayuCatalog} />
-    </FeaturedCaseStudyPage>
-  );
+  return <FeaturedCaseStudyPage project={project} />;
 }

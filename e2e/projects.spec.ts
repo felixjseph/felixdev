@@ -33,12 +33,11 @@ for (const [slug, title] of [
   });
 }
 
-test("Sayu builder produces a drink summary", async ({ page }) => {
+test("Sayu uses its approved gallery without the prototype builder", async ({ page }) => {
   await page.goto("/work/sayu-cafe");
-  await page.getByRole("radio", { name: "Matcha" }).check();
-  await page.getByRole("radio", { name: "Iced" }).check();
 
-  await expect(page.getByRole("status")).toContainText("matcha");
+  await expect(page.getByRole("figure", { name: "Sayu Café project previews" }).locator("img")).toHaveCount(3);
+  await expect(page.getByText("Build a Sayu drink")).toHaveCount(0);
 });
 
 test("Solara presents the shipped client website and approved project gallery", async ({ page }) => {
