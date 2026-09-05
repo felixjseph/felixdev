@@ -26,6 +26,7 @@ export const projects: CaseStudyProject[] = [
   {
     slug: "sayu-cafe",
     title: "Sayu Café",
+    role: "Web Developer",
     proofAngle:
       "Responsive product discovery, café operations, and rule-based product logic.",
     summary:
@@ -91,11 +92,11 @@ export const projects: CaseStudyProject[] = [
     ],
     media: [
       {
-        src: "/images/projects/sayu-fallback.svg",
-        alt: "Development fallback artwork for the Sayu Café case study.",
-        width: 1440,
-        height: 900,
-        caption: "Development media fallback — replace with approved Sayu Café project media before launch.",
+        src: "/images/projects/sayu/website.webp",
+        alt: "Sayu Café website hero with its specialty coffee and matcha offering.",
+        width: 1898,
+        height: 952,
+        caption: "Website",
       },
     ],
   },
