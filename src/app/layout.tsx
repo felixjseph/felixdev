@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import { siteUrl } from "@/lib/site-url";
 import { SiteLoader } from "@/components/site-loader";
 import { ScrollReveals } from "@/components/scroll-reveals";
+import { ScrollReset } from "@/components/scroll-reset";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/600.css";
 import "./globals.css";
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <SiteLoader />
         <noscript><style>{`.site-loader { display: none !important; } .site-nav, .hero-enter, .hero-light-drift span, .hero-copy h1 .hero-keyword, .hero-keyword::after, .hero-floating-signals span, .availability > span { animation: none !important; opacity: 1 !important; transform: none !important; } .hero-keyword::after { display: none; }`}</style></noscript>
         {children}
+        <ScrollReset />
         <ScrollReveals />
         <Analytics />
       </body>

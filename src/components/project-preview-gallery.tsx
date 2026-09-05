@@ -11,6 +11,7 @@ type ProjectPreviewGalleryProps = {
   title: string;
   wide?: boolean;
   background?: string;
+  imageFit?: "contain" | "cover";
   stackSize?: number;
   showSelectors?: boolean;
   showCaption?: boolean;
@@ -21,7 +22,7 @@ type StackStyle = CSSProperties & {
   "--preview-background"?: string;
 };
 
-export function ProjectPreviewGallery({ media, title, wide = false, background, stackSize = 3, showSelectors = true, showCaption = true }: ProjectPreviewGalleryProps) {
+export function ProjectPreviewGallery({ media, title, wide = false, background, imageFit = "contain", stackSize = 3, showSelectors = true, showCaption = true }: ProjectPreviewGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [inView, setInView] = useState(false);
   const [centerInView, setCenterInView] = useState(false);
@@ -150,6 +151,7 @@ export function ProjectPreviewGallery({ media, title, wide = false, background, 
 
   return (
     <figure className={styles["project-preview"]} aria-label={`${title} project previews`} ref={galleryRef}
+      data-image-fit={imageFit}
       data-mobile-centered={motionAllowed && mobileViewport && centerInView}
       data-wide={wide}
       data-playing={playing} onPointerEnter={(event) => { if (event.pointerType === "mouse") setHovered(true); }}

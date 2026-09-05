@@ -5,8 +5,8 @@ export function CaseStudyHero({ project }: { project: CaseStudyProject }) {
   return (
     <header className="border-b-2 border-[var(--color-text)] bg-[var(--color-surface)]">
       <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16 lg:px-8">
-        <Link className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-accent)] underline decoration-2 underline-offset-4" href="/#work">
-          Back to portfolio
+        <Link className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-accent)] underline decoration-2 underline-offset-4" href="/#projects">
+          ← Back to selected work
         </Link>
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">Case study</p>
