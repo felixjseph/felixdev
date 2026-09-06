@@ -6,6 +6,7 @@ import { siteUrl } from "@/lib/site-url";
 import { SiteLoader } from "@/components/site-loader";
 import { ScrollReveals } from "@/components/scroll-reveals";
 import { ScrollReset } from "@/components/scroll-reset";
+import { CleanHashLinks } from "@/components/clean-hash-links";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/600.css";
 import "./globals.css";
@@ -34,7 +35,7 @@ document.documentElement.style.colorScheme = theme;
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
-  title: "Felix Joseph Castañeda — Full-Stack Web & AI Developer",
+  title: "Felix Joseph • Portfolio",
   description: "Full-stack applications, agentic AI, and automation built around real business problems.",
   alternates: { canonical: "/" },
   icons: {
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Felix Joseph Castañeda — Full-Stack Web & AI Developer",
+    title: "Felix Joseph • Portfolio",
     description: "Full-stack applications, agentic AI, and automation built around real business problems.",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Felix Joseph Castañeda — Full-Stack Web & AI Developer" }],
   },
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <noscript><style>{`.site-loader { display: none !important; } .site-nav, .hero-enter, .hero-light-drift span, .hero-copy h1 .hero-keyword, .hero-keyword::after, .hero-floating-signals span, .availability > span { animation: none !important; opacity: 1 !important; transform: none !important; } .hero-keyword::after { display: none; }`}</style></noscript>
         {children}
         <ScrollReset />
+        <CleanHashLinks />
         <ScrollReveals />
         <Analytics />
       </body>
