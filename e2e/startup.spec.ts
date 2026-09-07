@@ -16,10 +16,16 @@ for (const theme of ["light", "dark"]) {
     await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
     await expect(page.locator(".skill-track")).toHaveCSS("animation-play-state", "running");
     await expect(page.locator(".site-loader__step")).toHaveCount(3);
+    const shine = page.locator(".site-loader__statement em");
+    expect(await shine.evaluate((element) => getComputedStyle(element, "::after").animationName)).toBe("loader-forward-shine");
+    expect(await shine.evaluate((element) => getComputedStyle(element, "::after").backgroundClip)).toBe("text");
     await loader.evaluate((element) => {
       for (const animation of element.getAnimations({ subtree: true })) {
         animation.pause();
         animation.currentTime = 1000;
+        if ("animationName" in animation && animation.animationName === "loader-forward-shine") {
+          animation.currentTime = 700;
+        }
       }
     });
     const content = await page.locator(".site-loader__content").boundingBox();

@@ -1973,6 +1973,7 @@ summary {
 
 /* The startup overlay never hides the page scrollbar or changes its width. */
 .site-loader {
+  --loader-shine: #ffffff;
   position: fixed;
   z-index: 600;
   inset: 0;
@@ -2063,20 +2064,31 @@ summary {
   color: var(--color-muted);
   font-family: var(--font-editorial);
   font-weight: 400;
-  animation: loader-forward-in 650ms 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: left center;
+  animation: loader-forward-in 720ms 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .site-loader__statement em::after {
   content: attr(data-text);
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  width: 24%;
-  color: var(--color-text);
-  clip-path: inset(0 100% 0 0);
-  filter: brightness(1.15);
-  transform: translateX(-20%);
-  animation: loader-forward-shine 520ms 470ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  color: transparent;
+  background-image: linear-gradient(
+    110deg,
+    transparent 33%,
+    color-mix(in srgb, var(--loader-shine) 48%, transparent) 43%,
+    var(--loader-shine) 50%,
+    color-mix(in srgb, var(--loader-shine) 48%, transparent) 57%,
+    transparent 67%
+  );
+  background-position: 135% 0;
+  background-size: 250% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 0.18rem color-mix(in srgb, var(--loader-shine) 24%, transparent));
+  opacity: 0;
+  animation: loader-forward-shine 560ms 430ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .site-loader__workflow {
@@ -2176,14 +2188,15 @@ summary {
 }
 
 @keyframes loader-forward-in {
-  from { opacity: 0; filter: blur(5px); transform: translateY(0.55rem) scale(0.96); }
-  to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+  from { opacity: 0; filter: blur(5px); transform: translate3d(-0.6rem, 0.4rem, 0) skewX(-2deg) scale(0.97); }
+  to { opacity: 1; filter: blur(0); transform: translate3d(0, 0, 0) skewX(0) scale(1); }
 }
 
 @keyframes loader-forward-shine {
-  0% { clip-path: inset(0 100% 0 0); transform: translateX(-20%); }
-  45% { clip-path: inset(0 0 0 0); }
-  100% { clip-path: inset(0 0 0 100%); transform: translateX(420%); }
+  0% { opacity: 0; background-position: 135% 0; }
+  16% { opacity: 0.92; }
+  82% { opacity: 0.92; }
+  100% { opacity: 0; background-position: -35% 0; }
 }
 
 @keyframes loader-connect {
