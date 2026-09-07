@@ -106,6 +106,10 @@ describe("project content", () => {
         } else if (project.slug === "solara") {
           expect(media.src).toMatch(/^\/images\/projects\/solara\/.+\.png$/);
           expect(readFileSync(resolve(process.cwd(), "public", media.src.slice(1))).length).toBeGreaterThan(0);
+        } else if (project.slug === "sayu-cafe") {
+          expect(media.src).toMatch(/^\/images\/projects\/sayu\/.+\.webp$/);
+          expect(readFileSync(resolve(process.cwd(), "public", media.src.slice(1))).length).toBeGreaterThan(0);
+          expect(media.caption.trim().length).toBeGreaterThan(0);
         } else {
           expect(media.src).toMatch(/^\/images\/projects\/.*-fallback\.svg$/);
           expect(media.caption).toMatch(/development media fallback/i);

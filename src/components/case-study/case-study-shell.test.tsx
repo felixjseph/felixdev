@@ -51,11 +51,11 @@ describe("case study shell", () => {
 
     const gallery = screen.getByRole("region", { name: "Sayu Café project gallery" });
     const image = within(gallery).getByRole("img", {
-      name: "Development fallback artwork for the Sayu Café case study.",
+      name: "Sayu Café website hero with its specialty coffee and matcha offering.",
     });
-    expect(image).toHaveAttribute("width", "1440");
-    expect(image).toHaveAttribute("height", "900");
-    expect(within(gallery).getByText(/Development media fallback/i)).toBeVisible();
+    expect(image).toHaveAttribute("width", "1898");
+    expect(image).toHaveAttribute("height", "952");
+    expect(within(gallery).getByText("Website")).toBeVisible();
     expect(screen.getAllByText(/Shipped|Prototype|Planned/)).toHaveLength(6);
   });
 });

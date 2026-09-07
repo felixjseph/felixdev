@@ -1,4 +1,4 @@
-import { act, render } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { SiteLoader } from "./site-loader";
 
@@ -24,6 +24,17 @@ afterEach(() => {
 });
 
 describe("SiteLoader", () => {
+  it.each(["Tab", "Escape"])("dismisses immediately on %s and clears pending timers", (key) => {
+    vi.useFakeTimers();
+    stubMatchMedia();
+    render(<SiteLoader />);
+
+    fireEvent.keyDown(document, { key });
+
+    expect(document.querySelector(".site-loader")).not.toBeInTheDocument();
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
   it.each([false, true])("keeps scrolling available throughout startup (reduced motion: %s)", async (reducedMotion) => {
     vi.useFakeTimers();
     stubMatchMedia(reducedMotion);
