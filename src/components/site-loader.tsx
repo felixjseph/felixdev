@@ -13,7 +13,7 @@ export function SiteLoader() {
     if (!mounted) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const minimumDuration = reducedMotion ? 120 : 980;
+    const minimumDuration = reducedMotion ? 120 : 1080;
     const exitDuration = reducedMotion ? 140 : 420;
     const startedAt = performance.now();
     let settled = false;
@@ -64,12 +64,16 @@ export function SiteLoader() {
 
   return (
     <div aria-hidden="true" className="site-loader" data-phase={phase}>
+      <div className="site-loader__field" />
       <div className="site-loader__content">
         <div className="site-loader__identity">
           <BrandMark className="site-loader__mark" />
-          <span>Felix Joseph</span>
+          <span className="site-loader__name">Felix Joseph</span>
         </div>
-        <p className="site-loader__statement">Ideas into<br /><em>forward motion.</em></p>
+        <p className="site-loader__statement">
+          <span className="site-loader__statement-main">Ideas into</span>
+          <em data-text="forward motion.">forward motion.</em>
+        </p>
         <div className="site-loader__workflow">
           <div className="site-loader__step">
             <span className="site-loader__node">
