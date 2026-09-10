@@ -80,6 +80,11 @@ export function SiteLoader() {
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="10" cy="10" r="2.5" /><path d="M3 7V3h4m6 0h4v4M3 13v4h4m6 0h4v-4" />
               </svg>
+              <span className="site-loader__node-check">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m3 6.2 1.8 1.8L9 3.8" />
+                </svg>
+              </span>
             </span>
             <span className="site-loader__step-label">Understand</span>
           </div>
@@ -88,6 +93,11 @@ export function SiteLoader() {
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m6 6-4 4 4 4m8-8 4 4-4 4M11.5 4l-3 12" />
               </svg>
+              <span className="site-loader__node-check">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m3 6.2 1.8 1.8L9 3.8" />
+                </svg>
+              </span>
             </span>
             <span className="site-loader__step-label">Build</span>
           </div>
@@ -96,6 +106,11 @@ export function SiteLoader() {
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2.5 10h3l2-4 3.5 8 2-4h4.5" />
               </svg>
+              <span className="site-loader__node-check">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m3 6.2 1.8 1.8L9 3.8" />
+                </svg>
+              </span>
             </span>
             <span className="site-loader__step-label">Test</span>
           </div>

@@ -23,6 +23,7 @@ for (const theme of ["light", "dark"]) {
       "Test",
       "Simplify",
     ]);
+    await expect(page.locator(".site-loader__node-check")).toHaveCount(3);
     const shine = page.locator(".site-loader__statement em");
     expect(await shine.evaluate((element) => getComputedStyle(element, "::after").animationName)).toBe("loader-forward-shine");
     expect(await shine.evaluate((element) => getComputedStyle(element, "::after").backgroundClip)).toBe("text");
@@ -31,7 +32,7 @@ for (const theme of ["light", "dark"]) {
         animation.pause();
         animation.currentTime = 1650;
         if ("animationName" in animation && animation.animationName === "loader-forward-shine") {
-          animation.currentTime = 1020;
+          animation.currentTime = 1080;
         }
       }
     });
