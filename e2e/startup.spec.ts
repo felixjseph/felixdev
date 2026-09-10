@@ -15,16 +15,24 @@ for (const theme of ["light", "dark"]) {
     await expect(loader).toHaveCSS("pointer-events", "none");
     await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
     await expect(page.locator(".skill-track")).toHaveCSS("animation-play-state", "running");
-    await expect(page.locator(".site-loader__step")).toHaveCount(3);
+    const workflowSteps = page.locator(".site-loader__step");
+    await expect(workflowSteps).toHaveCount(4);
+    await expect(page.locator(".site-loader__step-label")).toHaveText([
+      "Understand",
+      "Build",
+      "Test",
+      "Simplify",
+    ]);
+    await expect(page.locator(".site-loader__node-check")).toHaveCount(3);
     const shine = page.locator(".site-loader__statement em");
     expect(await shine.evaluate((element) => getComputedStyle(element, "::after").animationName)).toBe("loader-forward-shine");
     expect(await shine.evaluate((element) => getComputedStyle(element, "::after").backgroundClip)).toBe("text");
     await loader.evaluate((element) => {
       for (const animation of element.getAnimations({ subtree: true })) {
         animation.pause();
-        animation.currentTime = 1000;
+        animation.currentTime = 1650;
         if ("animationName" in animation && animation.animationName === "loader-forward-shine") {
-          animation.currentTime = 700;
+          animation.currentTime = 1080;
         }
       }
     });
@@ -35,7 +43,7 @@ for (const theme of ["light", "dark"]) {
     expect(content!.x + content!.width).toBeLessThanOrEqual(viewport.width);
     expect(content!.y + content!.height).toBeLessThanOrEqual(viewport.height);
     await page.screenshot({ path: testInfo.outputPath(`startup-${theme}.png`) });
-    await page.clock.runFor(1600);
+    await page.clock.runFor(2300);
     await expect(loader).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     expect(errors).toEqual([]);

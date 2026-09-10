@@ -45,7 +45,7 @@ describe("SiteLoader", () => {
     expect(document.body.style.overflow).not.toBe("hidden");
 
     await act(async () => {
-      vi.advanceTimersByTime(1_600);
+      vi.advanceTimersByTime(2_300);
     });
 
     expect(document.body).not.toHaveClass("is-loading");

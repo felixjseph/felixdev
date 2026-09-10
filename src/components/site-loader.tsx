@@ -13,8 +13,8 @@ export function SiteLoader() {
     if (!mounted) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const minimumDuration = reducedMotion ? 120 : 1080;
-    const exitDuration = reducedMotion ? 140 : 420;
+    const minimumDuration = reducedMotion ? 120 : 1700;
+    const exitDuration = reducedMotion ? 140 : 500;
     const startedAt = performance.now();
     let settled = false;
     let disposed = false;
@@ -34,7 +34,7 @@ export function SiteLoader() {
       }, remaining);
     };
 
-    const fallbackTimer = window.setTimeout(beginExit, reducedMotion ? 260 : 1080);
+    const fallbackTimer = window.setTimeout(beginExit, reducedMotion ? 260 : 1700);
     const fontsReady = document.fonts?.ready;
 
     if (fontsReady) {
@@ -80,6 +80,11 @@ export function SiteLoader() {
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="10" cy="10" r="2.5" /><path d="M3 7V3h4m6 0h4v4M3 13v4h4m6 0h4v-4" />
               </svg>
+              <span className="site-loader__node-check">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m3 6.2 1.8 1.8L9 3.8" />
+                </svg>
+              </span>
             </span>
             <span className="site-loader__step-label">Understand</span>
           </div>
@@ -88,8 +93,26 @@ export function SiteLoader() {
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m6 6-4 4 4 4m8-8 4 4-4 4M11.5 4l-3 12" />
               </svg>
+              <span className="site-loader__node-check">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m3 6.2 1.8 1.8L9 3.8" />
+                </svg>
+              </span>
             </span>
             <span className="site-loader__step-label">Build</span>
+          </div>
+          <div className="site-loader__step">
+            <span className="site-loader__node">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2.5 10h3l2-4 3.5 8 2-4h4.5" />
+              </svg>
+              <span className="site-loader__node-check">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m3 6.2 1.8 1.8L9 3.8" />
+                </svg>
+              </span>
+            </span>
+            <span className="site-loader__step-label">Test</span>
           </div>
           <div className="site-loader__step">
             <span className="site-loader__node site-loader__node--result">
