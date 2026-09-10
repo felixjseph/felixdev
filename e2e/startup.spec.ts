@@ -15,7 +15,14 @@ for (const theme of ["light", "dark"]) {
     await expect(loader).toHaveCSS("pointer-events", "none");
     await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
     await expect(page.locator(".skill-track")).toHaveCSS("animation-play-state", "running");
-    await expect(page.locator(".site-loader__step")).toHaveCount(3);
+    const workflowSteps = page.locator(".site-loader__step");
+    await expect(workflowSteps).toHaveCount(4);
+    await expect(page.locator(".site-loader__step-label")).toHaveText([
+      "Understand",
+      "Build",
+      "Test",
+      "Simplify",
+    ]);
     const shine = page.locator(".site-loader__statement em");
     expect(await shine.evaluate((element) => getComputedStyle(element, "::after").animationName)).toBe("loader-forward-shine");
     expect(await shine.evaluate((element) => getComputedStyle(element, "::after").backgroundClip)).toBe("text");

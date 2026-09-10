@@ -2094,8 +2094,8 @@ summary {
 .site-loader__workflow {
   --node-size: clamp(2.6rem, 8vw, 3.1rem);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  width: min(100%, 24rem);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: min(100%, 27rem);
   margin-top: clamp(2rem, 6vh, 3rem);
 }
 
@@ -2107,8 +2107,9 @@ summary {
   gap: 0.8rem;
 }
 
-.site-loader__step:nth-child(2) { --step-delay: 550ms; }
-.site-loader__step:nth-child(3) { --step-delay: 760ms; }
+.site-loader__step:nth-child(2) { --step-delay: 490ms; }
+.site-loader__step:nth-child(3) { --step-delay: 640ms; }
+.site-loader__step:nth-child(4) { --step-delay: 790ms; }
 
 /* Each connector ends at the next node; its fill carries the signal forward. */
 .site-loader__step:not(:last-child)::before,

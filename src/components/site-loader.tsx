@@ -92,6 +92,14 @@ export function SiteLoader() {
             <span className="site-loader__step-label">Build</span>
           </div>
           <div className="site-loader__step">
+            <span className="site-loader__node">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2.5 10h3l2-4 3.5 8 2-4h4.5" />
+              </svg>
+            </span>
+            <span className="site-loader__step-label">Test</span>
+          </div>
+          <div className="site-loader__step">
             <span className="site-loader__node site-loader__node--result">
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m5 10 3.5 3.5L15 7" />
