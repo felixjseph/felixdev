@@ -29,9 +29,9 @@ for (const theme of ["light", "dark"]) {
     await loader.evaluate((element) => {
       for (const animation of element.getAnimations({ subtree: true })) {
         animation.pause();
-        animation.currentTime = 1000;
+        animation.currentTime = 1650;
         if ("animationName" in animation && animation.animationName === "loader-forward-shine") {
-          animation.currentTime = 700;
+          animation.currentTime = 1020;
         }
       }
     });
@@ -42,7 +42,7 @@ for (const theme of ["light", "dark"]) {
     expect(content!.x + content!.width).toBeLessThanOrEqual(viewport.width);
     expect(content!.y + content!.height).toBeLessThanOrEqual(viewport.height);
     await page.screenshot({ path: testInfo.outputPath(`startup-${theme}.png`) });
-    await page.clock.runFor(1600);
+    await page.clock.runFor(2300);
     await expect(loader).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     expect(errors).toEqual([]);

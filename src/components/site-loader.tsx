@@ -13,8 +13,8 @@ export function SiteLoader() {
     if (!mounted) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const minimumDuration = reducedMotion ? 120 : 1080;
-    const exitDuration = reducedMotion ? 140 : 420;
+    const minimumDuration = reducedMotion ? 120 : 1700;
+    const exitDuration = reducedMotion ? 140 : 500;
     const startedAt = performance.now();
     let settled = false;
     let disposed = false;
@@ -34,7 +34,7 @@ export function SiteLoader() {
       }, remaining);
     };
 
-    const fallbackTimer = window.setTimeout(beginExit, reducedMotion ? 260 : 1080);
+    const fallbackTimer = window.setTimeout(beginExit, reducedMotion ? 260 : 1700);
     const fontsReady = document.fonts?.ready;
 
     if (fontsReady) {
