@@ -35,6 +35,8 @@ describe("SiteHeader", () => {
     );
     expect(screen.getByRole("link", { name: "Resume" })).toHaveAttribute("href", "/downloads/felix-dev-cv.pdf");
     expect(screen.getByRole("link", { name: "Resume" })).toHaveAttribute("download");
+    expect(container.querySelector(".site-nav__links")).toHaveAttribute("data-active-index", "0");
+    expect(container.querySelectorAll(".site-nav__spectrum i")).toHaveLength(3);
     expect(screen.getByRole("button", { name: "Open navigation menu" })).toHaveAttribute(
       "aria-expanded",
       "false",
@@ -43,7 +45,7 @@ describe("SiteHeader", () => {
 
   it("labels the mobile disclosure as navigation and closes it on links and Escape", async () => {
     const user = userEvent.setup();
-    render(<SiteHeader />);
+    const { container } = render(<SiteHeader />);
 
     const menuButton = screen.getByRole("button", { name: "Open navigation menu" });
     await user.click(menuButton);
@@ -55,5 +57,6 @@ describe("SiteHeader", () => {
     await user.click(screen.getByRole("button", { name: "Open navigation menu" }));
     await user.click(screen.getAllByRole("link", { name: "Projects" }).at(-1)!);
     expect(screen.queryByRole("navigation", { name: "Mobile" })).not.toBeInTheDocument();
+    expect(container.querySelector(".site-nav__links")).toHaveAttribute("data-active-index", "2");
   });
 });

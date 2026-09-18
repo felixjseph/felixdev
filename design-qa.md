@@ -1,43 +1,49 @@
-# Design QA
+# Design QA — Compact Command Dock
 
-## Scope
+## Comparison target
 
-- Target A: `C:/Users/Castaneda/.codex/generated_images/01a0b41e-07fb-7a12-8ed0-c14e56e41416/exec-b1ed002e-b1a6-4e1a-a5ea-23323e5a5344.png` (1122 × 1402)
-- Target B: `C:/Users/Castaneda/.codex/generated_images/01a0b41e-07fb-7a12-8ed0-c14e56e41416/exec-b7c6677e-99d1-4a49-b95a-c592c9c5bc6a.png` (1122 × 1402)
-- Supporting reference: the user-provided workflow screenshot.
-- Implementation: homepage sections `#about` and `#skills`, immediately before `#projects`.
+- Source visual truth: `C:/Users/Castaneda/.codex/generated_images/01a0b41e-07fb-7a12-8ed0-c14e56e41416/exec-3341e300-3fa5-4f05-a076-af95d4e5ce6a.png`
+- Browser-rendered implementation: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/navbar-command-dock-final.png`
+- Combined comparison evidence: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/navbar-command-dock-comparison.png`
+- Viewport and normalization: source and implementation are both 2103 × 748 pixels, captured at the same desktop crop and compared at equal density. The implementation browser viewport was 2103 × 748 CSS pixels at device scale factor 1.
+- State: light theme, homepage at scroll position zero, About active, entrance animation settled.
 
-## Evidence
+## Additional evidence
 
-- Full desktop page: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/desktop-full.png` (1440 × 7355)
-- Focused desktop friction section: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/desktop-about.png` (1430 × 1554)
-- Focused desktop signal section: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/desktop-signal.png` (1430 × 890)
-- Focused mobile friction section: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/mobile-about.png` (380 × 2355)
-- Focused mobile signal section: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/mobile-signal.png` (380 × 1400)
-- Side-by-side comparison: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/comparison-board.png`
+- Scrolled Projects-active state: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/navbar-command-dock-scrolled.png`
+- Dark theme at 1440 × 500: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/navbar-command-dock-dark.png`
+- Pixel 7 mobile menu open: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/navbar-command-dock-mobile-open.png`
 
-State captured: light theme, motion enabled after entrance animations settled. Reduced-motion behavior was verified separately in automated browser coverage.
+The full desktop crop is sufficient for overall composition and hierarchy. The equal-size comparison board is the focused navbar comparison because the component, its icons, labels, spacing, and controls remain readable at that scale.
 
-## Fidelity review
+## Fidelity surfaces
 
 | Surface | Result |
 | --- | --- |
-| Composition | Passed. The light evidence-led ledger, four-step method, statement, technology proof, dark signal map, and selected-work handoff preserve the target narrative order. |
-| Typography | Passed. Display sans, editorial italic, and restrained mono labels reproduce the target hierarchy without introducing unverified content. |
-| Color and surface | Passed. Warm white and near-black foundations use the requested cyan `#65e7f4`, lilac `#a9a5ff`, apricot `#ffbd87`, and soft white `#f6f6f1` accents. |
-| Assets and graphic language | Passed. The route, nodes, ledger rules, grid, and verified technology marks match the target vocabulary while remaining original to this portfolio. |
-| Responsive behavior | Passed. Desktop uses the horizontal system map; mobile becomes a legible vertical sequence with no horizontal overflow. |
+| Fonts and typography | Passed. The existing IBM Plex Mono navigation labels and editorial Felix wordmark preserve the source’s mono/italic pairing. Weight, uppercase tracking, and active-state contrast are aligned with the target. |
+| Spacing and layout rhythm | Passed. The brand, centered dock, and detached utilities occupy the same horizontal zones as the source. Dock height, active capsule, generous top offset, sticky compact-on-scroll behavior, and spectrum spacing are intentionally matched. |
+| Colors and visual tokens | Passed. The dock uses near-black graphite with warm-white active and utility surfaces. Cyan `#65e7f4`, lilac `#a9a5ff`, and apricot `#ffbd87` remain limited to the status signal. Dark mode retains contrast without changing the dock hierarchy. |
+| Image quality and asset fidelity | Passed. The supplied Nested System image asset is preserved at the correct square proportion. Existing icon components supply the sun/moon and download symbols; no visible raster placeholder or approximate logo was introduced. |
+| Copy and content | Passed. Felix, About, Skills, Projects, Experience, Contact, Resume, and Download CV retain the approved wording and destinations. |
+| Responsiveness and accessibility | Passed. The dock collapses at 1100px and below into the standalone lockup, circular theme control, and accessible Menu/Close capsule. The dark command panel keeps large touch targets, visible active state, keyboard semantics, and reduced-motion fallbacks. |
 
-## Interaction review
+## Interaction verification
 
-- Route draw and node arrivals run once on reveal and remain static with `prefers-reduced-motion: reduce`.
-- Theme switching, project navigation, project galleries, contact reveal, testimonial controls, and mobile center-band interactions remain functional.
-- Browser console inspection found no application error. The only failed request was the expected sandbox block for Vercel Analytics (`va.vercel-scripts.com`).
+- Clicking Projects moved the shared active capsule and set `data-active-index="2"`.
+- Theme switching persisted `dark` through the existing theme storage key.
+- The Pixel 7 Menu control opened the labeled mobile navigation successfully.
+- Navigation links, Resume download, Escape dismissal, focus behavior, and reduced-motion behavior remain covered by automated component and browser tests.
+- Final verification passed 63 unit tests and 68 Playwright desktop/mobile scenarios; 2 browser scenarios were intentionally skipped by their existing project conditions.
+- Browser console inspection found no application error. The only failed request was the expected sandbox denial for Vercel Analytics at `va.vercel-scripts.com`.
 
 ## Comparison history
 
-1. Pass 1 found a P1 collision with a legacy `.signal-map` selector, producing an oversized pale panel and hiding the mobile stages. Scoped reset rules resolved it.
-2. Pass 2 found P2 vertical rhythm in the light section was looser than the target. Section and ledger spacing were tightened.
-3. Pass 3 found no actionable P0, P1, or P2 visual discrepancies.
+1. Pass 1 found a P1 composition mismatch: the first implementation retained excessive dock width and insufficient page-edge spacing. The header was rebuilt as a full-width three-part grid with source-matched brand, dock, and utility coordinates.
+2. Pass 2 found a P2 responsive collision at 1440px between the command dock and theme control. A dedicated intermediate breakpoint reduced the dock and utility footprint while preserving target proportions.
+3. Pass 3 found no actionable P0, P1, or P2 differences. The hero’s existing typography and content continue below the focused navbar and are intentionally not replaced by rasterized mock content.
 
-Final result: passed.
+## Follow-up polish
+
+- P3: Browser font rasterization makes some small mono labels slightly lighter than the generated reference; the implemented weight preserves better legibility in both themes.
+
+Final result: passed

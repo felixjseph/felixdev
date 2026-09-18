@@ -20,7 +20,7 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeAnchor, setActiveAnchor] = useState<string | null>(null);
+  const [activeAnchor, setActiveAnchor] = useState<string>("about");
   const menuId = useId();
 
   useEffect(() => {
@@ -69,18 +69,30 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
           <span aria-hidden="true" className="site-mark__symbol"><BrandMark /></span>
           <span>Felix</span>
         </a>
-        <div className="site-nav__links">
-          {navigationLinks.map((link) => (
-            <a
-              aria-current={activeAnchor === link.anchor ? "page" : undefined}
-              className={activeAnchor === link.anchor ? "is-active" : undefined}
-              href={anchorHref(link.anchor)}
-              key={link.anchor}
-              onClick={closeMenu}
-            >
-              {link.label}
-            </a>
-          ))}
+        <div className="site-nav__dock">
+          <div
+            className="site-nav__links"
+            data-active-index={Math.max(0, navigationLinks.findIndex((link) => link.anchor === activeAnchor))}
+          >
+            {navigationLinks.map((link) => (
+              <a
+                aria-current={activeAnchor === link.anchor ? "page" : undefined}
+                className={activeAnchor === link.anchor ? "is-active" : undefined}
+                href={anchorHref(link.anchor)}
+                key={link.anchor}
+                onClick={() => {
+                  setActiveAnchor(link.anchor);
+                  closeMenu();
+                }}
+              >
+                <span aria-hidden="true" className="site-nav__active-dot" />
+                <span>{link.label}</span>
+              </a>
+            ))}
+          </div>
+          <span aria-hidden="true" className="site-nav__spectrum">
+            <i /><i /><i />
+          </span>
         </div>
         <div className="site-nav__actions">
           <ThemeToggle />
@@ -119,7 +131,15 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
           id={menuId}
         >
           {navigationLinks.map((link) => (
-            <a href={anchorHref(link.anchor)} key={link.anchor} onClick={closeMenu}>
+            <a
+              aria-current={activeAnchor === link.anchor ? "page" : undefined}
+              href={anchorHref(link.anchor)}
+              key={link.anchor}
+              onClick={() => {
+                setActiveAnchor(link.anchor);
+                closeMenu();
+              }}
+            >
               {link.label}
             </a>
           ))}
