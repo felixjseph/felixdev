@@ -34,12 +34,13 @@ test("uses the dark system theme on a first visit", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 });
 
-test("keeps marquee content usable when reduced motion is requested", async ({ page }) => {
+test("keeps the signal map readable when reduced motion is requested", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
 
-  await expect(page.locator(".skill-set[aria-hidden='true']").first()).toBeHidden();
-  const animation = await page.locator(".skill-track").first().evaluate((element) => getComputedStyle(element).animationName);
+  await expect(page.locator(".signal-map__stages > li")).toHaveCount(4);
+  await expect(page.getByText("Workflows that keep moving while you sleep.")).toBeVisible();
+  const animation = await page.locator(".signal-map__route-line").evaluate((element) => getComputedStyle(element).animationName);
   expect(animation).toBe("none");
 });
 
