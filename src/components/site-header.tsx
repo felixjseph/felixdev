@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { type MouseEvent, useEffect, useId, useState } from "react";
 import { siteConfig } from "@/content/site";
 import { BrandMark } from "./brand-mark";
 import { ThemeToggle } from "./theme-toggle";
@@ -13,6 +13,19 @@ const navigationLinks = [
   { anchor: "experience", label: "Experience" },
   { anchor: "contact", label: "Contact" },
 ] as const;
+
+function startResumeDownload(event: MouseEvent<HTMLAnchorElement>, resumeUrl: string, closeMenu: () => void) {
+  event.preventDefault();
+
+  const download = document.createElement("a");
+  download.href = resumeUrl;
+  download.download = resumeUrl.split("/").pop() || "felix-dev-cv.pdf";
+  download.hidden = true;
+  document.body.appendChild(download);
+  download.click();
+  download.remove();
+  closeMenu();
+}
 
 type SiteHeaderProps = {
   linkToHomepage?: boolean;
@@ -94,7 +107,13 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
         <div className="site-nav__actions">
           <ThemeToggle />
           {siteConfig.resumeUrl ? (
-            <a className="nav-contact" data-resume-state="available" download href={siteConfig.resumeUrl} onClick={closeMenu}>
+            <a
+              className="nav-contact"
+              data-resume-state="available"
+              download
+              href={siteConfig.resumeUrl}
+              onClick={(event) => startResumeDownload(event, siteConfig.resumeUrl, closeMenu)}
+            >
               Resume <DownloadIcon />
             </a>
           ) : (
@@ -141,7 +160,13 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
             </a>
           ))}
           {siteConfig.resumeUrl ? (
-            <a download href={siteConfig.resumeUrl} onClick={closeMenu}>Download CV</a>
+            <a
+              download
+              href={siteConfig.resumeUrl}
+              onClick={(event) => startResumeDownload(event, siteConfig.resumeUrl, closeMenu)}
+            >
+              Download CV
+            </a>
           ) : (
             <span aria-disabled="true" className="mobile-nav__disabled">Résumé unavailable</span>
           )}

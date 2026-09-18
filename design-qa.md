@@ -29,6 +29,7 @@ The desktop crops show the full navbar in both themes; the mobile crop verifies 
 
 - Clicking Projects moved the shared active capsule and set `data-active-index="2"`.
 - Theme switching persisted `dark` through the existing theme storage key. The thumb uses a 520ms transform transition between two simultaneously rendered icons; reduced motion resolves to 0.01ms.
+- Resume activation fired the expected `felix-dev-cv.pdf` download while preserving the homepage pathname; the download icon is right-aligned with no trailing flex gap.
 - The Pixel 7 Menu control opened the labeled mobile navigation successfully.
 - Navigation links, Resume download, Escape dismissal, focus behavior, and reduced-motion behavior remain covered by automated component and browser tests.
 - Final verification passed 63 unit tests. Across the desktop and mobile runs, all 68 applicable Playwright scenarios passed and 2 were conditionally skipped; after the final viewport-boundary adjustment, the complete mobile project and the affected desktop scenario were rerun successfully.

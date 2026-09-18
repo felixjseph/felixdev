@@ -29,6 +29,7 @@ test("the official CV is downloadable from the responsive navigation", async ({ 
   const pendingDownload = page.waitForEvent("download");
   await downloadLink.click();
   expect((await pendingDownload).suggestedFilename()).toBe("felix-dev-cv.pdf");
+  expect(new URL(page.url()).pathname).toBe("/");
   const response = await request.get("/downloads/felix-dev-cv.pdf");
   expect(response.ok()).toBe(true);
   expect((await response.body()).subarray(0, 5).toString()).toBe("%PDF-");
