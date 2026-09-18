@@ -113,12 +113,12 @@ export function SignalHero() {
           </p>
 
           <h1
-            aria-label="I build systems that turn busywork into forward motion."
+            aria-label="I build systems that turn repetitive work into forward motion."
             className="hero-enter hero-enter--two"
             id="hero-heading"
           >
             <span>I build systems</span>
-            <span>that turn <em className="hero-keyword">busywork</em></span>
+            <span>that turn <em className="hero-keyword">repetitive work</em></span>
             <span>into forward motion.</span>
           </h1>
 
