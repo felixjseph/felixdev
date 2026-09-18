@@ -59,4 +59,13 @@ describe("SiteHeader", () => {
     expect(screen.queryByRole("navigation", { name: "Mobile" })).not.toBeInTheDocument();
     expect(container.querySelector(".site-nav__links")).toHaveAttribute("data-active-index", "2");
   });
+
+  it("sets the clicked navigation intent immediately", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<SiteHeader />);
+
+    await user.click(screen.getByRole("link", { name: "Skills" }));
+
+    expect(container.querySelector(".site-nav__links")).toHaveAttribute("data-active-index", "1");
+  });
 });

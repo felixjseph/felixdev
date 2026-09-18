@@ -44,6 +44,29 @@ test("keeps the signal map readable when reduced motion is requested", async ({ 
   expect(animation).toBe("none");
 });
 
+test("keeps the clicked navigation target active while smooth scrolling", async ({ page, isMobile }) => {
+  await page.goto("/");
+  const primary = page.getByRole("navigation", { name: "Primary" });
+  if (isMobile) await page.getByRole("button", { name: "Open navigation menu" }).click();
+
+  const skillsLink = (isMobile ? page.getByRole("navigation", { name: "Mobile" }) : primary)
+    .getByRole("link", { name: "Skills", exact: true });
+  await skillsLink.click();
+
+  await expect(page.locator(".site-nav__links")).toHaveAttribute("data-active-index", "1");
+  await page.waitForTimeout(180);
+  await expect(page.locator(".site-nav__links")).toHaveAttribute("data-active-index", "1");
+});
+
+test("keeps the brand mark legible across theme surfaces", async ({ page }) => {
+  await page.goto("/");
+  const mark = page.locator(".site-mark__symbol img");
+
+  await expect.poll(() => mark.evaluate((element) => getComputedStyle(element).filter)).toContain("brightness(0)");
+  await page.getByRole("button", { name: "Switch to dark theme" }).click();
+  await expect.poll(() => mark.evaluate((element) => getComputedStyle(element).filter)).toContain("invert(1)");
+});
+
 test("publishes approved contact details without GitHub or LinkedIn", async ({ page }) => {
   await page.goto("/");
 

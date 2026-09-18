@@ -1,6 +1,6 @@
 "use client";
 
-import { type MouseEvent, useEffect, useId, useState } from "react";
+import { type MouseEvent, useEffect, useId, useRef, useState } from "react";
 import { siteConfig } from "@/content/site";
 import { BrandMark } from "./brand-mark";
 import { ThemeToggle } from "./theme-toggle";
@@ -34,6 +34,8 @@ type SiteHeaderProps = {
 export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeAnchor, setActiveAnchor] = useState<string>("about");
+  const navigationIntentRef = useRef<string | null>(null);
+  const navigationIntentTimeoutRef = useRef<number | null>(null);
   const menuId = useId();
 
   useEffect(() => {
@@ -56,6 +58,20 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        const navigationIntent = navigationIntentRef.current;
+        if (navigationIntent) {
+          const intendedEntry = entries.find((entry) => entry.target.id === navigationIntent);
+          if (!intendedEntry?.isIntersecting) return;
+
+          navigationIntentRef.current = null;
+          if (navigationIntentTimeoutRef.current !== null) {
+            window.clearTimeout(navigationIntentTimeoutRef.current);
+            navigationIntentTimeoutRef.current = null;
+          }
+          setActiveAnchor(navigationIntent);
+          return;
+        }
+
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
@@ -66,10 +82,27 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
     );
 
     sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (navigationIntentTimeoutRef.current !== null) {
+        window.clearTimeout(navigationIntentTimeoutRef.current);
+      }
+    };
   }, []);
 
   const closeMenu = () => setIsMenuOpen(false);
+  const selectNavigation = (anchor: string) => {
+    navigationIntentRef.current = anchor;
+    if (navigationIntentTimeoutRef.current !== null) {
+      window.clearTimeout(navigationIntentTimeoutRef.current);
+    }
+    navigationIntentTimeoutRef.current = window.setTimeout(() => {
+      navigationIntentRef.current = null;
+      navigationIntentTimeoutRef.current = null;
+    }, 1600);
+    setActiveAnchor(anchor);
+    closeMenu();
+  };
   const anchorHref = (anchor: string) => `${linkToHomepage ? "/" : ""}#${anchor}`;
 
   return (
@@ -93,10 +126,7 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
                 className={activeAnchor === link.anchor ? "is-active" : undefined}
                 href={anchorHref(link.anchor)}
                 key={link.anchor}
-                onClick={() => {
-                  setActiveAnchor(link.anchor);
-                  closeMenu();
-                }}
+                onClick={() => selectNavigation(link.anchor)}
               >
                 <span aria-hidden="true" className="site-nav__active-dot" />
                 <span>{link.label}</span>
@@ -151,10 +181,7 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
               aria-current={activeAnchor === link.anchor ? "page" : undefined}
               href={anchorHref(link.anchor)}
               key={link.anchor}
-              onClick={() => {
-                setActiveAnchor(link.anchor);
-                closeMenu();
-              }}
+              onClick={() => selectNavigation(link.anchor)}
             >
               {link.label}
             </a>

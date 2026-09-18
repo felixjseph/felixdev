@@ -1951,10 +1951,16 @@ summary {
   object-fit: contain;
 }
 
+.site-mark__symbol img,
+.site-footer__mark img {
+  filter: brightness(0);
+  transition: filter 260ms ease;
+}
+
 :root[data-theme="dark"] .site-mark__symbol img,
 :root[data-theme="dark"] .site-footer__mark img,
 :root[data-theme="dark"] .site-loader__mark {
-  filter: invert(1);
+  filter: brightness(0) invert(1);
 }
 
 .site-mark:hover .site-mark__symbol {
