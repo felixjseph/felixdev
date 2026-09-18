@@ -90,9 +90,6 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
               </a>
             ))}
           </div>
-          <span aria-hidden="true" className="site-nav__spectrum">
-            <i /><i /><i />
-          </span>
         </div>
         <div className="site-nav__actions">
           <ThemeToggle />

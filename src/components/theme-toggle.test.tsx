@@ -36,8 +36,10 @@ describe("ThemeToggle", () => {
     expect(
       screen.getByRole("button", { name: "Switch to dark theme" }),
     ).toBeInTheDocument();
+    expect(document.querySelectorAll(".theme-toggle__icon")).toHaveLength(2);
     await user.click(screen.getByRole("button", { name: "Switch to dark theme" }));
     expect(document.documentElement.dataset.theme).toBe("dark");
     expect(localStorage.getItem("felixdev-theme")).toBe("dark");
+    expect(screen.getByRole("button", { name: "Switch to light theme" })).toBeInTheDocument();
   });
 });

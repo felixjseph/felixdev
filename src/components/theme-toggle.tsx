@@ -42,7 +42,9 @@ export function ThemeToggle() {
       type="button"
     >
       <span aria-hidden="true" className="theme-toggle__track">
-        <span className="theme-toggle__thumb">{theme === "dark" ? <MoonIcon /> : <SunIcon />}</span>
+        <span className="theme-toggle__thumb" />
+        <span className="theme-toggle__icon theme-toggle__icon--sun"><SunIcon /></span>
+        <span className="theme-toggle__icon theme-toggle__icon--moon"><MoonIcon /></span>
       </span>
       <span className="sr-only">Current theme: {theme}</span>
     </button>

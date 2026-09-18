@@ -36,7 +36,7 @@ describe("SiteHeader", () => {
     expect(screen.getByRole("link", { name: "Resume" })).toHaveAttribute("href", "/downloads/felix-dev-cv.pdf");
     expect(screen.getByRole("link", { name: "Resume" })).toHaveAttribute("download");
     expect(container.querySelector(".site-nav__links")).toHaveAttribute("data-active-index", "0");
-    expect(container.querySelectorAll(".site-nav__spectrum i")).toHaveLength(3);
+    expect(container.querySelector(".site-nav__spectrum")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Open navigation menu" })).toHaveAttribute(
       "aria-expanded",
       "false",
