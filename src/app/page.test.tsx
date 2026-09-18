@@ -27,7 +27,7 @@ describe("HomePage", () => {
     render(<HomePage />);
     expect(
       screen.getByRole("heading", {
-        name: /I build systems that turn busywork into forward motion/i,
+        name: /I build systems that turn repetitive work into forward motion/i,
       }),
     ).toBeInTheDocument();
     expect(screen.getAllByText(/Full-Stack Web & AI Developer/i).length).toBeGreaterThanOrEqual(1);

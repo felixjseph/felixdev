@@ -91,7 +91,7 @@ test("the first viewport contains the complete hero and no following section", a
     await page.evaluate(() => window.scrollTo(0, 0));
     const about = await page.locator("#about").boundingBox();
     expect(about!.y).toBeGreaterThanOrEqual(viewport.height - 1);
-    await expect(page.getByRole("heading", { name: /I build systems that turn busywork/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /I build systems that turn repetitive work/i })).toBeVisible();
     await expect(page.getByRole("link", { name: "View my work" })).toBeVisible();
   }
 });

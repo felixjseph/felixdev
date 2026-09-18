@@ -54,7 +54,7 @@ export default function OpenGraphImage() {
               Felix Joseph Castañeda
             </div>
             <div style={{ color: "#A8A8A2", display: "flex", fontSize: 34, marginTop: 30 }}>
-              Systems that turn busywork into forward motion.
+              Systems that turn repetitive work into forward motion.
             </div>
           </div>
           <div style={{ alignItems: "center", borderTop: "1px solid #454545", display: "flex", fontSize: 20, justifyContent: "space-between", letterSpacing: 2, paddingTop: 22 }}>

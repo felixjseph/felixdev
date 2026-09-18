@@ -8,7 +8,7 @@ test("follows the requested homepage story and opens project details", async ({ 
   );
   expect(sectionIds).toEqual(["hero", "about", "skills", "projects", "testimonial", "experience", "contact"]);
 
-  await expect(page.getByRole("heading", { name: /turn busywork into forward motion/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /turn repetitive work into forward motion/i })).toBeVisible();
   await page.getByRole("link", { name: /View my work/i }).click();
   await expect(page.locator("#projects")).toBeInViewport();
   await page.locator("#projects article").first().getByRole("link", { name: "View case study" }).click();
