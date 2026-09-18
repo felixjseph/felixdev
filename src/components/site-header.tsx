@@ -144,7 +144,8 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
               href={siteConfig.resumeUrl}
               onClick={(event) => startResumeDownload(event, siteConfig.resumeUrl, closeMenu)}
             >
-              Resume <DownloadIcon />
+              <span className="nav-contact__label">Resume</span>
+              <DownloadIcon />
             </a>
           ) : (
             <span
@@ -154,7 +155,8 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
               data-resume-state="unavailable"
               title="Add an approved resume PDF in site configuration to enable this download"
             >
-              Resume <DownloadIcon />
+              <span className="nav-contact__label">Resume</span>
+              <DownloadIcon />
             </span>
           )}
           <button

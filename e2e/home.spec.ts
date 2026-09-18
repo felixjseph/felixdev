@@ -60,9 +60,11 @@ test("keeps the clicked navigation target active while smooth scrolling", async 
 
 test("keeps the brand mark legible across theme surfaces", async ({ page }) => {
   await page.goto("/");
+  const lockup = page.locator(".site-mark");
   const mark = page.locator(".site-mark__symbol img");
 
-  await expect.poll(() => mark.evaluate((element) => getComputedStyle(element).filter)).toContain("brightness(0)");
+  await expect(lockup).toHaveCSS("mix-blend-mode", "normal");
+  await expect.poll(() => mark.evaluate((element) => getComputedStyle(element).filter)).not.toContain("invert(1)");
   await page.getByRole("button", { name: "Switch to dark theme" }).click();
   await expect.poll(() => mark.evaluate((element) => getComputedStyle(element).filter)).toContain("invert(1)");
 });

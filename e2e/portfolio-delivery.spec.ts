@@ -35,6 +35,22 @@ test("the official CV is downloadable from the responsive navigation", async ({ 
   expect((await response.body()).subarray(0, 5).toString()).toBe("%PDF-");
 });
 
+test("the desktop Resume label and icon form one compact group", async ({ page, isMobile }) => {
+  test.skip(isMobile, "The desktop Resume control is hidden in the mobile command menu.");
+  await page.goto("/");
+  const resume = page.getByRole("link", { name: "Resume", exact: true });
+  const label = resume.locator(".nav-contact__label");
+  const icon = resume.locator("svg");
+  const [resumeBox, labelBox, iconBox] = await Promise.all([
+    resume.boundingBox(),
+    label.boundingBox(),
+    icon.boundingBox(),
+  ]);
+
+  expect(iconBox!.x - (labelBox!.x + labelBox!.width)).toBeLessThanOrEqual(9);
+  expect((resumeBox!.x + resumeBox!.width) - (iconBox!.x + iconBox!.width)).toBeLessThanOrEqual(16);
+});
+
 test("Solara publishes three supplied previews and links to the live client project", async ({ page }) => {
   await page.goto("/");
   const project = page.locator("#projects article").filter({ has: page.getByRole("heading", { name: "Solara" }) });

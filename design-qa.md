@@ -31,7 +31,8 @@ The desktop crops show the full navbar in both themes; the mobile crop verifies 
 - Theme switching persisted `dark` through the existing theme storage key. The thumb uses a 520ms transform transition between two simultaneously rendered icons; reduced motion resolves to 0.01ms.
 - Resume activation fired the expected `felix-dev-cv.pdf` download while preserving the homepage pathname; the download icon is right-aligned with no trailing flex gap.
 - Clicking Skills during an About intersection kept `data-active-index="1"` through the scroll handoff in both desktop and mobile browser checks; the observer resumes after the intended section intersects.
-- Brand mark and utility icon contrast now resolve explicitly to black in light mode and white/near-white in dark mode.
+- Brand mark and utility icon contrast resolve explicitly to black in light mode and white/near-white in dark mode. A restrained translucent theme surface behind the lockup prevents it disappearing when the sticky header crosses an opposite-tone section.
+- Final 1329px evidence: `navbar-final-dark.png` and `navbar-final-light-over-dark.png`. The Resume control measured 94px wide with a 6.7px label-to-icon gap and no flexible spacer.
 - The Pixel 7 Menu control opened the labeled mobile navigation successfully.
 - Navigation links, Resume download, Escape dismissal, focus behavior, and reduced-motion behavior remain covered by automated component and browser tests.
 - Final verification passed 64 unit tests. Focused desktop/mobile Playwright checks passed for the Resume download, clicked navigation handoff, and theme-aware brand contrast; the complete mobile project and affected desktop viewport scenario were also rerun successfully.
