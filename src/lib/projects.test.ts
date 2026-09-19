@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { projects, requiredChapterTitles } from "@/content/projects";
-import { getNextProject, getProjectBySlug, getProjectSlugs } from "./projects";
+import { getNextProject, getProjectBySlug } from "./projects";
 
 const approvedChapterTitles = {
   "softpoint-enterprise": ["A clearer customer experience", "Less repetition behind the scenes", "Built, connected, and deployed"],
@@ -44,7 +44,7 @@ const approvedP2HexTokens = new Set([
 
 describe("project content", () => {
   it("leads with Softpoint and retains the existing case studies", () => {
-    expect(getProjectSlugs()).toEqual([
+    expect(projects.map((project) => project.slug)).toEqual([
       "softpoint-enterprise",
       "sayu-cafe",
       "solara",
@@ -119,10 +119,7 @@ describe("project content", () => {
   });
 
   it("keeps fallback SVGs visibly labelled and limited to the P2 palette", () => {
-    const fallbackAssets = [
-      ["sayu-fallback.svg", "Sayu Café"],
-      ["pach-fallback.svg", "Pach Drugmart"],
-    ] as const;
+    const fallbackAssets = [["pach-fallback.svg", "Pach Drugmart"]] as const;
 
     for (const [filename, projectName] of fallbackAssets) {
       const asset = readFileSync(

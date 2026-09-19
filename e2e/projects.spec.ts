@@ -12,7 +12,7 @@ for (const [slug, title] of [
     await expect(page.locator("main")).toHaveCount(1);
     const primaryNavigation = page.getByRole("navigation", { name: "Primary" });
     await expect(primaryNavigation).toBeVisible();
-    const desktopProjectsLink = primaryNavigation.getByRole("link", { name: "Projects" });
+    const desktopProjectsLink = primaryNavigation.getByRole("link", { name: "Work" });
     if (await desktopProjectsLink.count()) {
       await expect(desktopProjectsLink).toHaveAttribute("href", "/#projects");
       await expect(primaryNavigation.getByRole("link", { name: "Contact" })).toHaveAttribute(
@@ -22,7 +22,7 @@ for (const [slug, title] of [
     } else {
       await page.getByRole("button", { name: "Open navigation menu" }).click();
       const mobileNavigation = page.getByRole("navigation", { name: "Mobile" });
-      await expect(mobileNavigation.getByRole("link", { name: "Projects" }))
+      await expect(mobileNavigation.getByRole("link", { name: "Work" }))
         .toHaveAttribute("href", "/#projects");
       await expect(mobileNavigation.getByRole("link", { name: "Contact" }))
         .toHaveAttribute("href", "/#contact");

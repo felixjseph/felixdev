@@ -58,8 +58,9 @@ test("the desktop Resume control uses a restrained fill inversion and scale", as
   await page.goto("/");
   const resume = page.getByRole("link", { name: "Resume", exact: true });
 
-  await expect(resume).toHaveCSS("background-color", "rgb(245, 245, 241)");
   await page.locator(".site-loader").waitFor({ state: "detached" });
+  await expect(page.locator(".site-header")).toHaveAttribute("data-contrast-tone", "light");
+  await expect(resume).toHaveCSS("background-color", "rgb(247, 246, 241)");
   await expect.poll(() => page.locator(".site-nav").evaluate((element) =>
     element.getAnimations().every((animation) => animation.playState === "finished"),
   )).toBe(true);
@@ -87,7 +88,8 @@ test("the desktop utility controls adapt to the page surface", async ({ page, is
   await expect(resume).toHaveCSS("background-color", "rgb(10, 10, 10)");
   const lightSurfaceToggle = await themeToggle.evaluate((element) => getComputedStyle(element).backgroundColor);
 
-  await page.locator("#skills").evaluate((section) => {
+  await page.setViewportSize({ width: 1280, height: 480 });
+  await page.locator("#contact").evaluate((section) => {
     window.scrollTo({ top: (section as HTMLElement).offsetTop + 96, behavior: "instant" });
   });
   await expect(header).toHaveAttribute("data-contrast-tone", "light");
@@ -124,6 +126,7 @@ test("the mobile hero motion control clears the lower viewport edge", async ({ p
 test("compact sections fit narrow viewports and follow the active theme", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
+  await expect(page.locator(".site-loader")).toBeHidden();
   for (const width of [320, 390, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     for (const theme of ["light", "dark"]) {

@@ -14,8 +14,6 @@ for (const theme of ["light", "dark"]) {
     await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
     await expect(loader).toHaveCSS("pointer-events", "none");
     await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
-    await expect(page.locator(".signal-map__route-line")).toHaveCount(1);
-    await expect(page.locator(".signal-map__stages > li")).toHaveCount(4);
     const workflowSteps = page.locator(".site-loader__step");
     await expect(workflowSteps).toHaveCount(4);
     await expect(page.locator(".site-loader__step-label")).toHaveText([

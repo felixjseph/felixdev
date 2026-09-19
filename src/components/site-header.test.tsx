@@ -27,7 +27,7 @@ describe("SiteHeader", () => {
     expect(container.querySelector(".site-mark__symbol img[src='/images/nested-system-mark.png']")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "About" })).toHaveAttribute("href", "#about");
     expect(screen.getByRole("link", { name: "Skills" })).toHaveAttribute("href", "#skills");
-    expect(screen.getByRole("link", { name: "Projects" })).toHaveAttribute("href", "#projects");
+    expect(screen.getByRole("link", { name: "Work" })).toHaveAttribute("href", "#projects");
     expect(screen.getByRole("link", { name: "Experience" })).toHaveAttribute("href", "#experience");
     expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute(
       "href",
@@ -55,7 +55,7 @@ describe("SiteHeader", () => {
     expect(screen.queryByRole("navigation", { name: "Mobile" })).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Open navigation menu" }));
-    await user.click(screen.getAllByRole("link", { name: "Projects" }).at(-1)!);
+    await user.click(screen.getAllByRole("link", { name: "Work" }).at(-1)!);
     expect(screen.queryByRole("navigation", { name: "Mobile" })).not.toBeInTheDocument();
     expect(container.querySelector(".site-nav__links")).toHaveAttribute("data-active-index", "2");
   });

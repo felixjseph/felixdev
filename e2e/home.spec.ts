@@ -2,11 +2,15 @@ import { expect, test } from "@playwright/test";
 
 test("follows the requested homepage story and opens project details", async ({ page }) => {
   await page.goto("/");
+  await page.locator(".site-loader").waitFor({ state: "detached", timeout: 10_000 });
 
   const sectionIds = await page.locator("main > section").evaluateAll((sections) =>
     sections.map((section) => section.id),
   );
-  expect(sectionIds).toEqual(["hero", "about", "skills", "projects", "testimonial", "experience", "contact"]);
+  expect(sectionIds).toEqual(["hero", "about", "skills", "projects", "testimonial", "experience", "about-felix", "contact"]);
+
+  await expect(page.getByRole("heading", { name: "Hi, I’m Felix." })).toBeAttached();
+  await expect(page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Hi, I’m Felix." })).toHaveCount(0);
 
   await expect(page.getByRole("heading", { name: /turn repetitive work into forward motion/i })).toBeVisible();
   await page.getByRole("link", { name: /View my work/i }).click();
@@ -34,13 +38,13 @@ test("uses the dark system theme on a first visit", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 });
 
-test("keeps the signal map readable when reduced motion is requested", async ({ page }) => {
+test("keeps the skills carousel readable when reduced motion is requested", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
 
-  await expect(page.locator(".signal-map__stages > li")).toHaveCount(4);
-  await expect(page.getByText("Workflows that keep moving while you sleep.")).toBeVisible();
-  const animation = await page.locator(".signal-map__route-line").evaluate((element) => getComputedStyle(element).animationName);
+  await expect(page.locator("#skills .skill-lane")).toHaveCount(1);
+  await expect(page.getByRole("heading", { name: /A broad stack. One clear standard./i })).toBeVisible();
+  const animation = await page.locator("#skills .skill-track").evaluate((element) => getComputedStyle(element).animationName);
   expect(animation).toBe("none");
 });
 
@@ -109,12 +113,15 @@ test("keeps the responsive Menu control surface-aware and layout-stable", async 
     await page.locator("#skills").evaluate((section) => {
       window.scrollTo({ top: (section as HTMLElement).offsetTop + 96, behavior: "instant" });
     });
-    await expect(header).toHaveAttribute("data-contrast-tone", "light");
-    await expect(menu).toHaveCSS("background-color", "rgb(247, 246, 241)");
+    await expect.poll(() => page.locator("#skills").evaluate((section) =>
+      Math.abs(section.getBoundingClientRect().top + 96),
+    )).toBeLessThan(2);
+    await expect(header).toHaveAttribute("data-contrast-tone", "dark");
+    await expect(menu).toHaveCSS("background-color", "rgb(10, 10, 10)");
   }
 });
 
-test("adapts the brand mark to the surface underneath it without a backplate", async ({ page }) => {
+test("keeps the brand mark clear on light surfaces without a backplate", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
   await page.addInitScript(() => localStorage.setItem("felixdev-theme", "light"));
   await page.goto("/");
@@ -131,9 +138,11 @@ test("adapts the brand mark to the surface underneath it without a backplate", a
   await page.locator("#skills").evaluate((section) => {
     window.scrollTo({ top: (section as HTMLElement).offsetTop + 96, behavior: "instant" });
   });
-  await expect(header).toHaveAttribute("data-contrast-tone", "light");
-  await expect(lockup).toHaveAttribute("data-contrast-tone", "light");
-  await expect.poll(() => mark.evaluate((element) => getComputedStyle(element).filter)).toContain("invert(1)");
+  await expect.poll(() => page.locator("#skills").evaluate((section) =>
+    Math.abs(section.getBoundingClientRect().top + 96),
+  )).toBeLessThan(2);
+  await expect(header).toHaveAttribute("data-contrast-tone", "dark");
+  await expect(lockup).toHaveAttribute("data-contrast-tone", "dark");
 });
 
 test("publishes approved contact details without GitHub or LinkedIn", async ({ page }) => {

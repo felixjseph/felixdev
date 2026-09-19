@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import Link from "next/link";
 import styles from "@/components/portfolio-work.module.css";
 import type { CaseStudyProject } from "@/types/project";
@@ -19,11 +18,10 @@ type FeaturedCaseStudyPageProps = {
   project: FeaturedCaseStudyProject;
   background?: string;
   imageFit?: "contain" | "cover";
-  children?: ReactNode;
 };
 
 /** Shared editorial shell used by every selected-work case study. */
-export function FeaturedCaseStudyPage({ project, background, imageFit, children }: FeaturedCaseStudyPageProps) {
+export function FeaturedCaseStudyPage({ project, background, imageFit }: FeaturedCaseStudyPageProps) {
   return (
     <>
       <SiteHeader linkToHomepage />
@@ -85,7 +83,6 @@ export function FeaturedCaseStudyPage({ project, background, imageFit, children 
           ))}
         </div>
 
-        {children}
         <Link className={styles["work-back"]} href="/#projects">← Back to selected work</Link>
       </main>
       <SiteFooter />

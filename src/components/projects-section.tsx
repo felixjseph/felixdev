@@ -11,7 +11,7 @@ export function ProjectsSection() {
   return (
     <section aria-labelledby="projects-heading" className={`section-shell ${styles["projects-section"]}`} id="projects">
       <div className={styles["selected-work-heading"]}>
-        <h2 data-reveal="left" id="projects-heading">Selected work. <em>Proof, not promises.</em></h2>
+        <h2 data-reveal="left" id="projects-heading">Selected work. <em>Useful by design.</em></h2>
         <p data-reveal="right">Real problems. Useful systems.</p>
       </div>
       <div className={styles["featured-list"]}>
