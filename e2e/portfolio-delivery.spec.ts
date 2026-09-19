@@ -61,7 +61,8 @@ test("the desktop Resume control uses a restrained fill inversion and scale", as
   await expect(resume).toHaveCSS("background-color", "rgb(245, 245, 241)");
   await resume.hover();
   await expect(resume).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-  await expect.poll(() => resume.evaluate((element) => getComputedStyle(element).transform)).toContain("1.03");
+  await expect.poll(() => resume.evaluate((element) => getComputedStyle(element).transform)).toContain("1.02");
+  await expect(resume).toHaveCSS("transition-duration", "0.28s, 0.24s, 0.2s");
 });
 
 test("Solara publishes three supplied previews and links to the live client project", async ({ page }) => {

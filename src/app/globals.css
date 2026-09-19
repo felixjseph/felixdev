@@ -4267,7 +4267,10 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
   font-weight: 600;
   box-shadow: none;
   transform: translateZ(0) scale(1);
-  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 240ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 200ms ease-out;
   will-change: transform;
 }
 
@@ -4275,11 +4278,12 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
   background: transparent;
   color: var(--color-text);
   box-shadow: none;
-  transform: translateZ(0) scale(1.03);
+  transform: translate3d(0, -1px, 0) scale(1.02);
 }
 
 .nav-contact:active {
   transform: translateZ(0) scale(0.985);
+  transition-duration: 90ms;
 }
 
 .menu-toggle {
