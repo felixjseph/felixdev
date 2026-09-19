@@ -3,6 +3,8 @@ import { expect, test } from "@playwright/test";
 test("previews expand, trap focus, close, and preserve document scrolling", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
+  await expect(page.locator(".site-loader")).toBeHidden();
+  await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
   const trigger = page.getByRole("button", { name: "Expand Softpoint Enterprise previews" });
   await trigger.scrollIntoViewIfNeeded();
   const originalOverflow = await page.evaluate(() => [document.body.style.overflow, document.documentElement.style.overflow]);
@@ -54,6 +56,8 @@ test("slideshow advances only while visible and idle, with explicit and reduced-
 
 test("contact remains direct and footer controls share one visual size", async ({ page }) => {
   await page.goto("/");
+  await expect(page.locator(".site-loader")).toBeHidden();
+  await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
   const contactHeading = page.getByRole("heading", { name: "Let’s build something useful." });
   await contactHeading.scrollIntoViewIfNeeded();
   await expect(contactHeading).toHaveAttribute("data-revealed", "true");
@@ -99,6 +103,8 @@ test("the first viewport contains the complete hero and no following section", a
 test("featured work floats without outer cards and uses three responsive visual layers", async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
+  await expect(page.locator(".site-loader")).toBeHidden();
+  await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
   const first = page.locator("#projects article").first();
   await first.scrollIntoViewIfNeeded();
   const shell = await first.evaluate((element) => {
@@ -153,6 +159,8 @@ test("testimonial autoplay advances only while visible and idle", async ({ page,
   test.skip(Boolean(isMobile), "Desktop coverage is sufficient for the shared carousel timer.");
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
+  await expect(page.locator(".site-loader")).toBeHidden();
+  await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
   const section = page.locator("#testimonial");
   await section.scrollIntoViewIfNeeded();
   await page.mouse.move(0, 0);
@@ -233,17 +241,23 @@ test("mobile project decks fan open as they enter the center viewing band", asyn
   test.skip(!isMobile, "The centered fan replaces hover only on mobile layouts.");
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
+  await expect(page.locator(".site-loader")).toBeHidden();
+  await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
   const preview = page.locator("#projects article").first().getByRole("figure", { name: "Softpoint Enterprise project previews" });
   await preview.evaluate((element) => element.scrollIntoView({ block: "center" }));
   await expect(preview).toHaveAttribute("data-mobile-centered", "true");
   const stage = preview.getByRole("button", { name: "Expand Softpoint Enterprise previews" });
-  const [front, leftRear, rightRear] = await Promise.all([
-    stage.locator("[data-stack-position='0']").boundingBox(),
-    stage.locator("[data-stack-position='1']").boundingBox(),
-    stage.locator("[data-stack-position='2']").boundingBox(),
-  ]);
-  expect(front!.x - leftRear!.x).toBeGreaterThan(front!.width * 0.05);
-  expect(rightRear!.x + rightRear!.width - (front!.x + front!.width)).toBeGreaterThan(front!.width * 0.05);
+  await expect.poll(async () => {
+    const [front, leftRear, rightRear] = await Promise.all([
+      stage.locator("[data-stack-position='0']").boundingBox(),
+      stage.locator("[data-stack-position='1']").boundingBox(),
+      stage.locator("[data-stack-position='2']").boundingBox(),
+    ]);
+    if (!front || !leftRear || !rightRear) return 0;
+    const leftSpread = (front.x - leftRear.x) / front.width;
+    const rightSpread = (rightRear.x + rightRear.width - (front.x + front.width)) / front.width;
+    return Math.min(leftSpread, rightSpread);
+  }).toBeGreaterThan(0.05);
 });
 
 test("experience timeline follows viewport progress and keeps competencies divider-free", async ({ page, isMobile }) => {

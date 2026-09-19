@@ -26,7 +26,7 @@ test("reveals section titles and copy once and keeps focused controls readable",
   await page.locator("#about-heading").scrollIntoViewIfNeeded();
   expect(await page.locator("#about-heading").evaluate((node) => node.getAnimations().length)).toBe(0);
   expect(await page.locator("body").evaluate((element) => element.getBoundingClientRect().width)).toBe(bodyWidth);
-  await expect(page.locator(".skill-track")).toHaveCSS("animation-play-state", "running");
+  await expect(page.locator(".signal-map__route-line")).toHaveCount(1);
 });
 
 test("honors motion preference changes without hiding any section", async ({ page }) => {
@@ -35,7 +35,7 @@ test("honors motion preference changes without hiding any section", async ({ pag
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.locator("#experience-heading").scrollIntoViewIfNeeded();
   await expect(page.locator(".site-nav")).toHaveCSS("animation-name", "none");
-  await expect(page.locator(".skill-track")).toHaveCSS("animation-name", "none");
+  await expect(page.locator(".signal-map__route-line")).toHaveCSS("animation-name", "none");
   await expect.poll(() => page.locator("[data-reveal]").evaluateAll((nodes) =>
     nodes.every((node) => node.getAnimations().length === 0 && getComputedStyle(node).opacity === "1"),
   )).toBe(true);
@@ -93,7 +93,7 @@ test("hero loop is continuous, controllable, and suspended outside the viewport"
   await page.getByRole("button", { name: "Pause hero animation" }).click();
   await expect(keyword).toHaveCSS("animation-play-state", "paused");
   await expect(light).toHaveCSS("animation-play-state", "paused");
-  await expect(page.locator(".skill-track")).toHaveCSS("animation-play-state", "running");
+  await expect(page.locator(".signal-map__route-line")).toHaveCount(1);
   const pausedTime = await keyword.evaluate((element) => Number(element.getAnimations()[0].currentTime));
   await page.getByRole("button", { name: "Resume hero animation" }).click();
   await expect(keyword).toHaveCSS("animation-play-state", "running");

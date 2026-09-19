@@ -11,7 +11,12 @@ function scrollToHashTarget() {
   if (!target) return;
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+  const behavior = reducedMotion ? "auto" : "smooth";
+  if (target.id === "hero") {
+    window.scrollTo({ top: 0, left: 0, behavior });
+  } else {
+    target.scrollIntoView({ behavior, block: "start" });
+  }
   window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
 }
 
@@ -36,7 +41,12 @@ export function CleanHashLinks() {
 
       event.preventDefault();
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+      const behavior = reducedMotion ? "auto" : "smooth";
+      if (target.id === "hero") {
+        window.scrollTo({ top: 0, left: 0, behavior });
+      } else {
+        target.scrollIntoView({ behavior, block: "start" });
+      }
       window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
     };
 

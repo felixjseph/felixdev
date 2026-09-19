@@ -22,8 +22,9 @@ describe("endgame portfolio sections", () => {
       </>,
     );
 
-    expect(screen.getByRole("heading", { name: /Technology should move work forward/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /A broad stack/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Where work slows down/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /From scattered steps to one working system/i })).toBeInTheDocument();
+    expect(screen.getByText("Workflows that keep moving while you sleep.")).toBeInTheDocument();
     expect(screen.queryByText("AI Document Intelligence")).not.toBeInTheDocument();
     expect(screen.queryByText("Agentic Workflow Command Center")).not.toBeInTheDocument();
     const softpointProject = screen.getByRole("heading", { name: "Softpoint Enterprise" }).closest("article")!;
@@ -61,23 +62,23 @@ describe("endgame portfolio sections", () => {
     expect(container.innerHTML.toLowerCase()).not.toContain("linkedin");
   });
 
-  it("renders official technology marks in one continuous duplicated lane", () => {
+  it("renders curated technology evidence without the old marquee", () => {
     const { container } = render(<SkillsSection />);
 
-    expect(container.querySelectorAll(".skill-lane")).toHaveLength(1);
-    expect(container.querySelectorAll(".skill-set")).toHaveLength(2);
-    expect(screen.getAllByLabelText("TypeScript").length).toBeGreaterThanOrEqual(2);
-    expect(screen.getAllByLabelText("Google Gemini").length).toBeGreaterThanOrEqual(2);
-    expect(screen.getAllByLabelText("Zapier").length).toBeGreaterThanOrEqual(2);
-    expect(container.querySelectorAll(".skill-logo").length).toBeGreaterThan(20);
+    expect(container.querySelectorAll(".signal-map__stages > li")).toHaveLength(4);
+    expect(screen.getByText("Understand")).toBeInTheDocument();
+    expect(screen.getByText("Shape")).toBeInTheDocument();
+    expect(screen.getByText("Connect")).toBeInTheDocument();
+    expect(screen.getByText("Deliver")).toBeInTheDocument();
+    expect(container.querySelector(".skill-track")).not.toBeInTheDocument();
   });
 
-  it("provides a reduced-motion alternative for marquee and project effects", () => {
+  it("provides a reduced-motion alternative for signal and project effects", () => {
     const styles = readFileSync(path.resolve(process.cwd(), "src/app/globals.css"), "utf8");
-    const reducedMotion = styles.indexOf("@media (prefers-reduced-motion: reduce)");
+    const reducedMotion = styles.lastIndexOf("@media (prefers-reduced-motion: reduce), print");
 
     expect(reducedMotion).toBeGreaterThanOrEqual(0);
-    expect(styles.indexOf(".skill-track,.skill-lane[data-direction=\"right\"] .skill-track", reducedMotion)).toBeGreaterThan(reducedMotion);
-    expect(styles.indexOf(".project-ui,.project-feature:hover .project-ui", reducedMotion)).toBeGreaterThan(reducedMotion);
+    expect(styles.indexOf(".signal-map__route-line", reducedMotion)).toBeGreaterThan(reducedMotion);
+    expect(styles.indexOf("animation: none !important", reducedMotion)).toBeGreaterThan(reducedMotion);
   });
 });

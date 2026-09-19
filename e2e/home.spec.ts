@@ -34,13 +34,106 @@ test("uses the dark system theme on a first visit", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 });
 
-test("keeps marquee content usable when reduced motion is requested", async ({ page }) => {
+test("keeps the signal map readable when reduced motion is requested", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
 
-  await expect(page.locator(".skill-set[aria-hidden='true']").first()).toBeHidden();
-  const animation = await page.locator(".skill-track").first().evaluate((element) => getComputedStyle(element).animationName);
+  await expect(page.locator(".signal-map__stages > li")).toHaveCount(4);
+  await expect(page.getByText("Workflows that keep moving while you sleep.")).toBeVisible();
+  const animation = await page.locator(".signal-map__route-line").evaluate((element) => getComputedStyle(element).animationName);
   expect(animation).toBe("none");
+});
+
+test("keeps the clicked navigation target active while smooth scrolling", async ({ page, isMobile }) => {
+  await page.goto("/");
+  const primary = page.getByRole("navigation", { name: "Primary" });
+  if (isMobile) await page.getByRole("button", { name: "Open navigation menu" }).click();
+
+  const skillsLink = (isMobile ? page.getByRole("navigation", { name: "Mobile" }) : primary)
+    .getByRole("link", { name: "Skills", exact: true });
+  await skillsLink.click();
+
+  await expect(page.locator(".site-nav__links")).toHaveAttribute("data-active-index", "1");
+  await page.waitForTimeout(180);
+  await expect(page.locator(".site-nav__links")).toHaveAttribute("data-active-index", "1");
+});
+
+test("uses a refined responsive type hierarchy in the dropdown navigation", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Open navigation menu" }).click();
+  const mobileNav = page.getByRole("navigation", { name: "Mobile" });
+  const about = mobileNav.getByRole("link", { name: "About", exact: true });
+  const typography = await about.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      family: style.fontFamily,
+      size: Number.parseFloat(style.fontSize),
+      transform: style.textTransform,
+    };
+  });
+
+  expect(typography.family.toLowerCase()).toContain("nohemi");
+  expect(typography.size).toBeGreaterThanOrEqual(16);
+  expect(typography.transform).toBe("none");
+  await expect(mobileNav.locator(".mobile-nav__index")).toHaveCount(6);
+  await expect(mobileNav.getByRole("link", { name: "Download CV", exact: true })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
+
+test("keeps the responsive Menu control surface-aware and layout-stable", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.addInitScript(() => localStorage.setItem("felixdev-theme", "light"));
+
+  for (const width of [390, 900, 1090]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    const header = page.locator(".site-header");
+    const menu = page.getByRole("button", { name: "Open navigation menu" });
+    const toggle = page.getByRole("button", { name: "Switch to dark theme" });
+
+    await expect(menu).toBeVisible();
+    await expect(header).toHaveAttribute("data-contrast-tone", "dark");
+    await expect(menu).toHaveCSS("background-color", "rgb(10, 10, 10)");
+    await page.locator(".site-loader").waitFor({ state: "detached" });
+    await expect.poll(() => page.locator(".site-nav").evaluate((element) =>
+      element.getAnimations().every((animation) => animation.playState === "finished"),
+    )).toBe(true);
+    const toggleBefore = await toggle.boundingBox();
+    await menu.hover();
+    const toggleAfter = await toggle.boundingBox();
+    expect(Math.abs(toggleAfter!.x - toggleBefore!.x)).toBeLessThan(0.25);
+    expect(Math.abs(toggleAfter!.y - toggleBefore!.y)).toBeLessThan(0.25);
+
+    await page.mouse.move(width / 2, 500);
+    await page.locator("#skills").evaluate((section) => {
+      window.scrollTo({ top: (section as HTMLElement).offsetTop + 96, behavior: "instant" });
+    });
+    await expect(header).toHaveAttribute("data-contrast-tone", "light");
+    await expect(menu).toHaveCSS("background-color", "rgb(247, 246, 241)");
+  }
+});
+
+test("adapts the brand mark to the surface underneath it without a backplate", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.addInitScript(() => localStorage.setItem("felixdev-theme", "light"));
+  await page.goto("/");
+  const lockup = page.locator(".site-mark");
+  const header = page.locator(".site-header");
+  const mark = page.locator(".site-mark__symbol img");
+
+  await expect(header).toHaveAttribute("data-contrast-tone", "dark");
+  await expect(lockup).toHaveAttribute("data-contrast-tone", "dark");
+  await expect(lockup).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(lockup).toHaveCSS("mix-blend-mode", "normal");
+  await expect.poll(() => mark.evaluate((element) => getComputedStyle(element).filter)).not.toContain("invert(1)");
+
+  await page.locator("#skills").evaluate((section) => {
+    window.scrollTo({ top: (section as HTMLElement).offsetTop + 96, behavior: "instant" });
+  });
+  await expect(header).toHaveAttribute("data-contrast-tone", "light");
+  await expect(lockup).toHaveAttribute("data-contrast-tone", "light");
+  await expect.poll(() => mark.evaluate((element) => getComputedStyle(element).filter)).toContain("invert(1)");
 });
 
 test("publishes approved contact details without GitHub or LinkedIn", async ({ page }) => {
