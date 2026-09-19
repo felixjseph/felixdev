@@ -58,6 +58,29 @@ test("keeps the clicked navigation target active while smooth scrolling", async 
   await expect(page.locator(".site-nav__links")).toHaveAttribute("data-active-index", "1");
 });
 
+test("uses a refined responsive type hierarchy in the dropdown navigation", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Open navigation menu" }).click();
+  const mobileNav = page.getByRole("navigation", { name: "Mobile" });
+  const about = mobileNav.getByRole("link", { name: "About", exact: true });
+  const typography = await about.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      family: style.fontFamily,
+      size: Number.parseFloat(style.fontSize),
+      transform: style.textTransform,
+    };
+  });
+
+  expect(typography.family.toLowerCase()).toContain("nohemi");
+  expect(typography.size).toBeGreaterThanOrEqual(16);
+  expect(typography.transform).toBe("none");
+  await expect(mobileNav.locator(".mobile-nav__index")).toHaveCount(6);
+  await expect(mobileNav.getByRole("link", { name: "Download CV", exact: true })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
+
 test("adapts the brand mark to the surface underneath it without a backplate", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
   await page.addInitScript(() => localStorage.setItem("felixdev-theme", "light"));

@@ -4397,25 +4397,93 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
 
   .mobile-nav a,
   .mobile-nav__disabled {
+    display: grid;
     min-height: 3.65rem;
+    grid-template-columns: 1.85rem minmax(0, 1fr) auto;
+    gap: 0.7rem;
+    align-items: center;
     padding: 0.85rem 0.45rem;
     border-color: rgba(255, 255, 255, 0.12);
-    color: inherit;
-    font-family: var(--font-mono);
-    font-size: clamp(0.78rem, 2.8vw, 0.92rem);
+    color: rgba(247, 246, 241, 0.72);
+    font-family: var(--font-nohemi, var(--font-system));
+    font-size: clamp(1.08rem, 2.2vw, 1.34rem);
     font-style: normal;
     font-weight: 500;
-    letter-spacing: 0.08em;
+    letter-spacing: -0.028em;
+    line-height: 1;
+    text-transform: none;
+    transition: color 240ms ease, border-color 240ms ease;
+  }
+
+  .mobile-nav__index,
+  .mobile-nav__state {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0.13em;
     line-height: 1;
     text-transform: uppercase;
   }
 
+  .mobile-nav__index {
+    color: rgba(247, 246, 241, 0.32);
+  }
+
+  .mobile-nav__label {
+    transform: translateX(0);
+    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-nav__state {
+    color: #65e7f4;
+  }
+
+  .mobile-nav__download {
+    color: rgba(247, 246, 241, 0.9);
+  }
+
+  .mobile-nav__download-icon {
+    display: grid;
+    width: 0.8rem;
+    place-items: center;
+    color: rgba(247, 246, 241, 0.52);
+  }
+
+  .mobile-nav__download-icon svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .mobile-nav a:hover,
+  .mobile-nav a:focus-visible {
+    color: #ffffff;
+  }
+
+  .mobile-nav a:hover .mobile-nav__label,
+  .mobile-nav a:focus-visible .mobile-nav__label {
+    transform: translateX(0.18rem);
+  }
+
   .mobile-nav a[aria-current="page"] {
+    color: #ffffff;
+  }
+
+  .mobile-nav a[aria-current="page"] .mobile-nav__index {
     color: #65e7f4;
   }
 }
 
 @media (max-width: 600px) {
+  .mobile-nav a,
+  .mobile-nav__disabled {
+    min-height: 3.5rem;
+    grid-template-columns: 1.6rem minmax(0, 1fr) auto;
+    gap: 0.55rem;
+    padding-block: 0.78rem;
+    font-size: clamp(1.02rem, 5vw, 1.18rem);
+  }
+
   .site-mark > .site-mark__symbol,
   .site-mark > span.site-mark__symbol {
     width: 2.55rem;
@@ -4447,5 +4515,9 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
   .nav-contact:hover,
   .nav-contact:active {
     transform: none;
+  }
+
+  .mobile-nav__label {
+    transform: none !important;
   }
 }

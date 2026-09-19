@@ -237,26 +237,35 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
           className="mobile-nav"
           id={menuId}
         >
-          {navigationLinks.map((link) => (
+          {navigationLinks.map((link, index) => (
             <a
               aria-current={activeAnchor === link.anchor ? "page" : undefined}
+              className="mobile-nav__link"
               href={anchorHref(link.anchor)}
               key={link.anchor}
               onClick={() => selectNavigation(link.anchor)}
             >
-              {link.label}
+              <span aria-hidden="true" className="mobile-nav__index">{String(index + 1).padStart(2, "0")}</span>
+              <span className="mobile-nav__label">{link.label}</span>
+              {activeAnchor === link.anchor ? <span aria-hidden="true" className="mobile-nav__state">Now</span> : null}
             </a>
           ))}
           {siteConfig.resumeUrl ? (
             <a
+              className="mobile-nav__link mobile-nav__download"
               download
               href={siteConfig.resumeUrl}
               onClick={(event) => startResumeDownload(event, siteConfig.resumeUrl, closeMenu)}
             >
-              Download CV
+              <span aria-hidden="true" className="mobile-nav__index">06</span>
+              <span className="mobile-nav__label">Download CV</span>
+              <span aria-hidden="true" className="mobile-nav__download-icon"><DownloadIcon /></span>
             </a>
           ) : (
-            <span aria-disabled="true" className="mobile-nav__disabled">Résumé unavailable</span>
+            <span aria-disabled="true" className="mobile-nav__disabled">
+              <span aria-hidden="true" className="mobile-nav__index">06</span>
+              <span className="mobile-nav__label">Résumé unavailable</span>
+            </span>
           )}
         </nav>
       ) : null}
