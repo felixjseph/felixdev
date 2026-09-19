@@ -81,6 +81,39 @@ test("uses a refined responsive type hierarchy in the dropdown navigation", asyn
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
 
+test("keeps the responsive Menu control surface-aware and layout-stable", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.addInitScript(() => localStorage.setItem("felixdev-theme", "light"));
+
+  for (const width of [390, 900, 1090]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    const header = page.locator(".site-header");
+    const menu = page.getByRole("button", { name: "Open navigation menu" });
+    const toggle = page.getByRole("button", { name: "Switch to dark theme" });
+
+    await expect(menu).toBeVisible();
+    await expect(header).toHaveAttribute("data-contrast-tone", "dark");
+    await expect(menu).toHaveCSS("background-color", "rgb(10, 10, 10)");
+    await page.locator(".site-loader").waitFor({ state: "detached" });
+    await expect.poll(() => page.locator(".site-nav").evaluate((element) =>
+      element.getAnimations().every((animation) => animation.playState === "finished"),
+    )).toBe(true);
+    const toggleBefore = await toggle.boundingBox();
+    await menu.hover();
+    const toggleAfter = await toggle.boundingBox();
+    expect(Math.abs(toggleAfter!.x - toggleBefore!.x)).toBeLessThan(0.25);
+    expect(Math.abs(toggleAfter!.y - toggleBefore!.y)).toBeLessThan(0.25);
+
+    await page.mouse.move(width / 2, 500);
+    await page.locator("#skills").evaluate((section) => {
+      window.scrollTo({ top: (section as HTMLElement).offsetTop + 96, behavior: "instant" });
+    });
+    await expect(header).toHaveAttribute("data-contrast-tone", "light");
+    await expect(menu).toHaveCSS("background-color", "rgb(247, 246, 241)");
+  }
+});
+
 test("adapts the brand mark to the surface underneath it without a backplate", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
   await page.addInitScript(() => localStorage.setItem("felixdev-theme", "light"));

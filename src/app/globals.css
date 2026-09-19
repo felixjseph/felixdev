@@ -4188,7 +4188,8 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
 }
 
 .theme-toggle:focus-visible,
-.nav-contact:focus-visible {
+.nav-contact:focus-visible,
+.menu-toggle:focus-visible {
   outline: 2px solid var(--nav-control-ink);
   outline-offset: 3px;
 }
@@ -4313,9 +4314,53 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
 }
 
 .menu-toggle {
+  position: relative;
+  border-color: var(--nav-control-ink);
+  background: var(--nav-control-ink);
+  color: var(--nav-control-surface);
   min-height: 3.5rem;
   height: 3.5rem;
   padding-inline: 1.15rem;
+  box-shadow: 0 0.35rem 0.9rem color-mix(in srgb, #000 10%, transparent);
+  transform: translateZ(0);
+  transition:
+    color 220ms ease-out,
+    background-color 260ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 260ms ease,
+    box-shadow 320ms ease,
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  backface-visibility: hidden;
+}
+
+.menu-toggle__dot {
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), border-radius 240ms ease;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__dot {
+  transform: rotate(45deg) scale(1.05);
+}
+
+.menu-toggle:active {
+  transform: translateZ(0) scale(0.985);
+  transition-duration: 90ms;
+}
+
+@media (hover: hover) {
+  .menu-toggle:hover {
+    border-color: var(--nav-control-ink);
+    background: transparent;
+    color: var(--nav-control-ink);
+    box-shadow: 0 0.65rem 1.35rem color-mix(in srgb, #000 16%, transparent);
+    transform: translate3d(0, -1px, 0);
+  }
+
+  .menu-toggle:hover .menu-toggle__dot {
+    transform: scale(1.12);
+  }
+
+  .menu-toggle[aria-expanded="true"]:hover .menu-toggle__dot {
+    transform: rotate(45deg) scale(1.12);
+  }
 }
 
 @keyframes command-nav-arrive {
@@ -4400,6 +4445,7 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
   }
 
   .menu-toggle {
+    display: inline-flex;
     height: 3.25rem;
     min-height: 3.25rem;
   }
@@ -4540,8 +4586,15 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
 
   .nav-contact:hover,
   .nav-contact:active,
-  .theme-toggle:hover {
+  .theme-toggle:hover,
+  .menu-toggle:hover,
+  .menu-toggle:active {
     transform: none;
+  }
+
+  .menu-toggle,
+  .menu-toggle__dot {
+    transition-duration: 0.01ms !important;
   }
 
   .mobile-nav__label {
