@@ -1,51 +1,68 @@
-# Design QA — Refined Command Dock
+# Design QA — Signal Dock Center Navigation
 
 ## Comparison target
 
-- Source visual truth: `C:/Users/Castaneda/.codex/generated_images/01a0b41e-07fb-7a12-8ed0-c14e56e41416/exec-3341e300-3fa5-4f05-a076-af95d4e5ce6a.png`
-- Browser-rendered light implementation: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/navbar-refined-light.png`
-- Browser-rendered dark implementation: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/navbar-refined-dark.png`
-- Viewport and normalization: both desktop implementations were captured at 1440 × 520 CSS pixels at device scale factor 1 after the entrance animation settled.
-- State: light theme, homepage at scroll position zero, About active, entrance animation settled.
+- Primary source visual truth: `C:/Users/Castaneda/.codex/generated_images/01a0b41e-07fb-7a12-8ed0-c14e56e41416/exec-4c7125fb-2e18-443c-a868-d07a97d89d38.png`
+- User-supplied dock reference: `C:/Users/CASTAN~1/AppData/Local/Temp/codex-clipboard-1527321b-0e9e-40ef-8799-d72450545feb.png`
+- User-supplied current-section reference: `C:/Users/CASTAN~1/AppData/Local/Temp/codex-clipboard-85ddd34b-c24b-45ac-aa65-4746f48639fa.png`
+- Browser-rendered full navbar: `C:/Users/Castaneda/.codex/visualizations/2026/09/19/01a0b41e-07fb-7a12-8ed0-c14e56e41416/navbar-redesign/page-navbar-current.png`
+- Browser-rendered current state: `C:/Users/Castaneda/.codex/visualizations/2026/09/19/01a0b41e-07fb-7a12-8ed0-c14e56e41416/navbar-redesign/dock-current-about.png`
+- Browser-rendered hover state: `C:/Users/Castaneda/.codex/visualizations/2026/09/19/01a0b41e-07fb-7a12-8ed0-c14e56e41416/navbar-redesign/dock-hover-skills.png`
+- Browser-rendered keyboard-focus state: `C:/Users/Castaneda/.codex/visualizations/2026/09/19/01a0b41e-07fb-7a12-8ed0-c14e56e41416/navbar-redesign/dock-focus-projects.png`
+- Browser-rendered glass dock over the dark hero: `C:/Users/Castaneda/.codex/visualizations/2026/09/19/01a0b41e-07fb-7a12-8ed0-c14e56e41416/navbar-redesign/glass-navbar-dark.png`
+- Browser-rendered glass dock over the light About section: `C:/Users/Castaneda/.codex/visualizations/2026/09/19/01a0b41e-07fb-7a12-8ed0-c14e56e41416/navbar-redesign/glass-navbar-over-light-section.png`
+- Viewport: 1536 × 420 CSS pixels, device scale factor 1, dark theme, homepage at scroll position zero after startup motion settled.
+- Pixel normalization: the generated source is 1536 × 1024; its top 1536 × 420 region was compared with the 1536 × 420 implementation. The final dock crop is 593 × 51 pixels. The user dock reference is 554 × 70 pixels and was width-normalized to 593 pixels for the focused comparison.
 
-## Additional evidence
+## Comparison evidence
 
-- Pixel 7 mobile menu open: `C:/Users/Castaneda/.codex/visualizations/2026/09/18/01a0b41e-07fb-7a12-8ed0-c14e56e41416/portfolio-implementation/navbar-refined-mobile.png`
+- Full-view comparison: `C:/Users/Castaneda/.codex/visualizations/2026/09/19/01a0b41e-07fb-7a12-8ed0-c14e56e41416/navbar-redesign/comparison-full-final.png`
+- Focused hover comparison: `C:/Users/Castaneda/.codex/visualizations/2026/09/19/01a0b41e-07fb-7a12-8ed0-c14e56e41416/navbar-redesign/comparison-hover-final.png`
+- Focused current-state comparison: `C:/Users/Castaneda/.codex/visualizations/2026/09/19/01a0b41e-07fb-7a12-8ed0-c14e56e41416/navbar-redesign/comparison-active-final.png`
 
-The desktop crops show the full navbar in both themes; the mobile crop verifies the compact toggle alongside the open command panel.
+The full view confirms that the existing logo, utility controls, hero, and page background remain unchanged. The focused views verify the only requested change: the centered five-item graphite dock and its dark cyan moving lens.
+
+## Findings
+
+- No actionable P0, P1, or P2 differences remain.
+- The mock's whitish page treatment was intentionally not implemented, following the user's explicit constraint.
+- The mock's outside chevrons and bottom marker were intentionally replaced by the user-selected current-section treatment: a cyan dot inside the dark active capsule.
 
 ## Fidelity surfaces
 
 | Surface | Result |
 | --- | --- |
-| Fonts and typography | Passed. The existing IBM Plex Mono navigation labels and editorial Felix wordmark preserve the source’s mono/italic pairing. Weight, uppercase tracking, and active-state contrast are aligned with the target. |
-| Spacing and layout rhythm | Passed. The 1440px desktop dock is 592 × 57px, with a 132 × 50px Resume control and a 70 × 45px theme switch. The brand, centered dock, and detached utilities remain balanced without dominating the hero. |
-| Colors and visual tokens | Passed. The dock retains near-black graphite and a warm-white active surface. The removed cyan/lilac/apricot hairline no longer adds visual noise; cyan is now limited to the compact active indicator. |
-| Image quality and asset fidelity | Passed. The supplied Nested System image asset is preserved at the correct square proportion. Existing icon components supply the sun/moon and download symbols; no visible raster placeholder or approximate logo was introduced. |
-| Copy and content | Passed. Felix, About, Skills, Projects, Experience, Contact, Resume, and Download CV retain the approved wording and destinations. |
-| Responsiveness and accessibility | Passed. The dock collapses at 1100px and below into the standalone lockup, sliding theme toggle, and accessible Menu/Close capsule. The dark command panel keeps large touch targets, visible active state, keyboard semantics, and reduced-motion fallbacks. |
+| Fonts and typography | Passed. Existing IBM Plex Mono labels, uppercase treatment, weight, and tracking are preserved. Labels stay fixed while the lens moves beneath them. |
+| Spacing and layout rhythm | Passed. The final dock is 593 × 51px at the 1536px viewport, a controlled midpoint between the 47px slim pass and the earlier 53px rail while retaining five equal, stable columns. |
+| Colors and visual tokens | Passed. The rail now uses a restrained regular-glass material: translucent graphite, 22px backdrop blur, mild saturation, a directional specular wash, and concentric light/dark edge definition. The active/hover lens remains dark cyan with no warm-white fill. |
+| Image quality and asset fidelity | Passed. No new raster, generated, SVG, or placeholder asset was required. The approved brand mark and existing icons were not changed. |
+| Copy and content | Passed. About, Skills, Projects, Experience, and Contact remain exact and in the same order. |
+| Interaction and accessibility | Passed. A single lens follows fine-pointer hover and `:focus-visible`, returns to the observed current section, exposes a clear cyan dot, and respects the existing reduced-motion override. Keyboard focus remains visibly stronger than pointer hover. |
+| Responsive scope | Passed. The desktop dock is already hidden at 1100px and below, so the existing mobile/tablet menu remains unchanged. |
 
 ## Interaction verification
 
-- Clicking Projects moved the shared active capsule and set `data-active-index="2"`.
-- Theme switching persisted `dark` through the existing theme storage key. The thumb uses a 520ms transform transition between two simultaneously rendered icons; reduced motion resolves to 0.01ms.
-- Resume activation fired the expected `felix-dev-cv.pdf` download while preserving the homepage pathname; the download icon is right-aligned with no trailing flex gap.
-- Clicking Skills during an About intersection kept `data-active-index="1"` through the scroll handoff in both desktop and mobile browser checks; the observer resumes after the intended section intersects.
-- Brand mark and utility icon contrast resolve explicitly to black in light mode and white/near-white in dark mode. A restrained translucent theme surface behind the lockup prevents it disappearing when the sticky header crosses an opposite-tone section.
-- Final 1329px evidence: `navbar-final-dark.png` and `navbar-final-light-over-dark.png`. The Resume control measured 94px wide with a 6.7px label-to-icon gap and no flexible spacer.
-- The Pixel 7 Menu control opened the labeled mobile navigation successfully.
-- Navigation links, Resume download, Escape dismissal, focus behavior, and reduced-motion behavior remain covered by automated component and browser tests.
-- Final verification passed 64 unit tests. Focused desktop/mobile Playwright checks passed for the Resume download, clicked navigation handoff, and theme-aware brand contrast; the complete mobile project and affected desktop viewport scenario were also rerun successfully.
-- Browser console inspection found no application error. The only failed request was the expected sandbox denial for Vercel Analytics at `va.vercel-scripts.com`.
+- About rendered as the current section with a dark capsule and cyan dot.
+- Hovering Skills moved the same lens to the second fixed column without changing the active index or shifting adjacent labels.
+- Moving the pointer away returned the lens to About.
+- Keyboard-focusing Projects moved the lens and produced a strong visible focus ring.
+- The lens background remained non-white in every captured state.
+- The measured transform transition is 520ms with the established ease-out curve.
+- The glass material remained translucent over both the dark hero and light About section, while its local dimming preserved the navigation labels.
+- The glass pass uses one backdrop-filter layer and one noninteractive highlight layer; unsupported browsers receive an opaque graphite fallback.
+- Browser console inspection found no application errors.
+- The dedicated Chromium visual-interaction test passed.
 
 ## Comparison history
 
-1. The first command-dock pass established the three-part brand, navigation, and utility composition.
-2. The refinement pass removed the decorative spectrum line and reduced the dock, wordmark, theme control, Resume control, shadows, and internal spacing as one proportional system.
-3. The theme control was rebuilt as a compact sliding switch with stable sun/moon geometry, transform-only thumb movement, persisted state, and reduced-motion handling.
+1. Initial capture found the correct dark-lens interaction but a 53.33px rail that read taller than the selected Design 3 reference.
+2. The dock padding, lens inset, and link height were reduced without touching the surrounding navbar.
+3. The revised 46.63px rail was recaptured in current, hover, focus, and full-navbar states. The second comparison found no remaining P0/P1/P2 issue.
+4. The final material pass replaced the nearly opaque graphite fill with a single adaptive glass layer, then verified its current, hover, dark-background, and light-background states without changing the dock geometry or interaction model.
+5. The final proportion pass increased only the dock, link, and lens height to 51px. Current and hover captures confirmed that every other material and interaction property remained unchanged.
 
 ## Follow-up polish
 
-- P3: Browser font rasterization makes some small mono labels slightly lighter than the generated reference; the implemented weight preserves better legibility in both themes.
+- None required for this scoped implementation.
 
 Final result: passed
