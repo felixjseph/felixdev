@@ -3,6 +3,7 @@ import path from "node:path";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { AboutSection } from "./about-section";
+import { AboutMeSection } from "./about-me-section";
 import { ContactSection } from "./contact-section";
 import { ExperienceSection } from "./experience-section";
 import { ProjectsSection } from "./projects-section";
@@ -18,13 +19,14 @@ describe("endgame portfolio sections", () => {
         <ProjectsSection />
         <TestimonialsSection />
         <ExperienceSection />
+        <AboutMeSection />
         <ContactSection />
       </>,
     );
 
     expect(screen.getByRole("heading", { name: /Where work slows down/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /From scattered steps to one working system/i })).toBeInTheDocument();
-    expect(screen.getByText("Workflows that keep moving while you sleep.")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /A broad stack. One clear standard./i })).toBeInTheDocument();
+    expect(screen.getByText("A focused toolkit for useful, maintainable products.")).toBeInTheDocument();
     expect(screen.queryByText("AI Document Intelligence")).not.toBeInTheDocument();
     expect(screen.queryByText("Agentic Workflow Command Center")).not.toBeInTheDocument();
     const softpointProject = screen.getByRole("heading", { name: "Softpoint Enterprise" }).closest("article")!;
@@ -44,6 +46,7 @@ describe("endgame portfolio sections", () => {
     expect(screen.queryByText(/Attribution pending approval/i)).not.toBeInTheDocument();
     expect(screen.getAllByLabelText("5 out of 5 stars")).toHaveLength(2);
     expect(screen.getAllByText("Client testimonial")).toHaveLength(2);
+    expect(screen.getByText("Useful by design.")).toBeInTheDocument();
     expect(screen.queryByText(/not client-submitted/i)).not.toBeInTheDocument();
     expect(container.querySelectorAll(".contact-detail-icon")).toHaveLength(3);
     expect(screen.getByRole("heading", { name: "Let’s build something useful." })).toBeInTheDocument();
@@ -51,34 +54,42 @@ describe("endgame portfolio sections", () => {
     expect(container.querySelector(".contact-intro p")?.children).toHaveLength(2);
     expect(screen.getByText("felixjosephcastaneda@gmail.com")).toBeInTheDocument();
     expect(screen.getByText("San Fernando, Cebu, PH")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Full-Stack Web & AI Developer" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Web Development Intern" })).toBeInTheDocument();
-    expect(screen.getByText("Softpoint Solutions")).toBeInTheDocument();
-    expect(screen.getByText("Knowles Corporation")).toBeInTheDocument();
-    expect(screen.getByText(/more than 500 WordPress training-course sites/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/development responsibilities/i)).toHaveLength(1);
-    expect(screen.getByLabelText("Core competencies")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /How I can help/i })).toBeInTheDocument();
+    expect(screen.getByLabelText("Five-step delivery process").children).toHaveLength(5);
+    expect(screen.getByText("Discovery")).toBeInTheDocument();
+    expect(screen.getByText("Launch & support")).toBeInTheDocument();
+    expect(screen.getByLabelText("Services")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Hi, I’m Felix." })).toBeInTheDocument();
+    expect(screen.getByText(/Is there a more efficient way to do this/i)).toBeInTheDocument();
+    expect(screen.getByText("Open to work")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Felix Joseph Castañeda standing beside/i })).toHaveAttribute("src", expect.stringContaining("felix-portrait.jpg"));
     expect(container.innerHTML.toLowerCase()).not.toContain("github");
     expect(container.innerHTML.toLowerCase()).not.toContain("linkedin");
   });
 
-  it("renders curated technology evidence without the old marquee", () => {
-    const { container } = render(<SkillsSection />);
+  it("restores the single-line monochrome skills carousel", () => {
+    const { container } = render(
+      <>
+        <AboutSection />
+        <SkillsSection />
+      </>,
+    );
 
-    expect(container.querySelectorAll(".signal-map__stages > li")).toHaveLength(4);
-    expect(screen.getByText("Understand")).toBeInTheDocument();
-    expect(screen.getByText("Shape")).toBeInTheDocument();
-    expect(screen.getByText("Connect")).toBeInTheDocument();
-    expect(screen.getByText("Deliver")).toBeInTheDocument();
-    expect(container.querySelector(".skill-track")).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /A broad stack. One clear standard./i })).toBeInTheDocument();
+    expect(screen.queryByText(/Technology I work with/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/I design useful software and AI-assisted workflows/i)).not.toBeInTheDocument();
+    expect(container.querySelectorAll("#about .skill-track")).toHaveLength(0);
+    expect(container.querySelectorAll("#skills .skill-lane")).toHaveLength(1);
+    expect(container.querySelectorAll("#skills .skill-track")).toHaveLength(1);
+    expect(screen.getAllByLabelText("TypeScript").length).toBeGreaterThanOrEqual(1);
   });
 
-  it("provides a reduced-motion alternative for signal and project effects", () => {
+  it("provides a reduced-motion alternative for the skills carousel", () => {
     const styles = readFileSync(path.resolve(process.cwd(), "src/app/globals.css"), "utf8");
-    const reducedMotion = styles.lastIndexOf("@media (prefers-reduced-motion: reduce), print");
+    const reducedMotion = styles.indexOf("@media (prefers-reduced-motion: reduce)");
+    const staticTrack = styles.indexOf(".skill-track { transform:none !important; animation:none !important; }", reducedMotion);
 
     expect(reducedMotion).toBeGreaterThanOrEqual(0);
-    expect(styles.indexOf(".signal-map__route-line", reducedMotion)).toBeGreaterThan(reducedMotion);
-    expect(styles.indexOf("animation: none !important", reducedMotion)).toBeGreaterThan(reducedMotion);
+    expect(staticTrack).toBeGreaterThan(reducedMotion);
   });
 });

@@ -9,7 +9,7 @@ import { DownloadIcon } from "./ui-icons";
 const navigationLinks = [
   { anchor: "about", label: "About" },
   { anchor: "skills", label: "Skills" },
-  { anchor: "projects", label: "Projects" },
+  { anchor: "projects", label: "Work" },
   { anchor: "experience", label: "Experience" },
   { anchor: "contact", label: "Contact" },
 ] as const;

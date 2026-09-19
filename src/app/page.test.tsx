@@ -33,7 +33,7 @@ describe("HomePage", () => {
     expect(screen.getAllByText(/Full-Stack Web & AI Developer/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole("link", { name: /View my work/i })).toHaveAttribute("href", "#projects");
     expect(screen.queryByText("Full-stack systems")).not.toBeInTheDocument();
-    expect(screen.queryByText("Workflow automation")).not.toBeInTheDocument();
+    expect(screen.getByText("Workflow automation")).toBeInTheDocument();
   });
 
   it("keeps the requested portfolio section order", () => {
@@ -49,6 +49,7 @@ describe("HomePage", () => {
       "projects",
       "testimonial",
       "experience",
+      "about-felix",
       "contact",
     ]);
   });

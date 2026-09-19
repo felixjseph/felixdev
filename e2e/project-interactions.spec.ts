@@ -135,6 +135,7 @@ test("featured work floats without outer cards and uses three responsive visual 
 test("testimonial carousel shows one compact entry and supports manual navigation", async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
+  await expect(page.locator(".site-loader")).toBeHidden();
   const section = page.locator("#testimonial");
   await section.scrollIntoViewIfNeeded();
   await expect(section.getByRole("figure")).toHaveCount(1);
