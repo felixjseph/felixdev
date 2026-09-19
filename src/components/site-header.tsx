@@ -14,6 +14,23 @@ const navigationLinks = [
   { anchor: "contact", label: "Contact" },
 ] as const;
 
+type ContrastTone = "dark" | "light";
+
+function contrastToneFor(color: string): ContrastTone | null {
+  const channels = color.match(/[\d.]+/g)?.map(Number);
+  if (!channels || channels.length < 3 || (channels[3] ?? 1) < 0.35) return null;
+
+  const linear = channels.slice(0, 3).map((channel) => {
+    const normalized = channel / 255;
+    return normalized <= 0.04045
+      ? normalized / 12.92
+      : ((normalized + 0.055) / 1.055) ** 2.4;
+  });
+  const luminance = (0.2126 * linear[0]) + (0.7152 * linear[1]) + (0.0722 * linear[2]);
+
+  return luminance < 0.34 ? "light" : "dark";
+}
+
 function startResumeDownload(event: MouseEvent<HTMLAnchorElement>, resumeUrl: string, closeMenu: () => void) {
   event.preventDefault();
 
@@ -36,6 +53,7 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
   const [activeAnchor, setActiveAnchor] = useState<string>("about");
   const navigationIntentRef = useRef<string | null>(null);
   const navigationIntentTimeoutRef = useRef<number | null>(null);
+  const brandRef = useRef<HTMLAnchorElement>(null);
   const menuId = useId();
 
   useEffect(() => {
@@ -90,6 +108,47 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
     };
   }, []);
 
+  useEffect(() => {
+    const mark = brandRef.current;
+    const header = mark?.closest("header");
+    if (!mark || !header) return;
+
+    let frame = 0;
+    const updateContrast = () => {
+      frame = 0;
+      const bounds = mark.getBoundingClientRect();
+      const x = Math.min(window.innerWidth - 1, Math.max(0, bounds.left + (bounds.width / 2)));
+      const y = Math.min(window.innerHeight - 1, Math.max(0, bounds.top + (bounds.height / 2)));
+      const surfaces = typeof document.elementsFromPoint === "function"
+        ? document.elementsFromPoint(x, y).filter((element) => !header.contains(element))
+        : [document.documentElement];
+
+      let tone: ContrastTone | null = null;
+      for (const surface of surfaces) {
+        tone = contrastToneFor(getComputedStyle(surface).backgroundColor);
+        if (tone) break;
+      }
+
+      tone ??= contrastToneFor(getComputedStyle(document.documentElement).backgroundColor);
+      if (tone && mark.dataset.contrastTone !== tone) mark.dataset.contrastTone = tone;
+    };
+    const scheduleContrastUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateContrast);
+    };
+
+    scheduleContrastUpdate();
+    window.addEventListener("scroll", scheduleContrastUpdate, { passive: true });
+    window.addEventListener("resize", scheduleContrastUpdate, { passive: true });
+    window.addEventListener("felixdev-theme-change", scheduleContrastUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", scheduleContrastUpdate);
+      window.removeEventListener("resize", scheduleContrastUpdate);
+      window.removeEventListener("felixdev-theme-change", scheduleContrastUpdate);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
   const closeMenu = () => setIsMenuOpen(false);
   const selectNavigation = (anchor: string) => {
     navigationIntentRef.current = anchor;
@@ -111,7 +170,7 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
         aria-label="Primary"
         className="site-nav"
       >
-        <a aria-label="Felix Castañeda — Home" className="site-mark" href={anchorHref("hero")} onClick={closeMenu}>
+        <a aria-label="Felix Castañeda — Home" className="site-mark" href={anchorHref("hero")} onClick={closeMenu} ref={brandRef}>
           <span aria-hidden="true" className="site-mark__symbol"><BrandMark /></span>
           <span>Felix</span>
         </a>

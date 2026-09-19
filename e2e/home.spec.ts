@@ -58,14 +58,22 @@ test("keeps the clicked navigation target active while smooth scrolling", async 
   await expect(page.locator(".site-nav__links")).toHaveAttribute("data-active-index", "1");
 });
 
-test("keeps the brand mark legible across theme surfaces", async ({ page }) => {
+test("adapts the brand mark to the surface underneath it without a backplate", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.addInitScript(() => localStorage.setItem("felixdev-theme", "light"));
   await page.goto("/");
   const lockup = page.locator(".site-mark");
   const mark = page.locator(".site-mark__symbol img");
 
+  await expect(lockup).toHaveAttribute("data-contrast-tone", "dark");
+  await expect(lockup).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
   await expect(lockup).toHaveCSS("mix-blend-mode", "normal");
   await expect.poll(() => mark.evaluate((element) => getComputedStyle(element).filter)).not.toContain("invert(1)");
-  await page.getByRole("button", { name: "Switch to dark theme" }).click();
+
+  await page.locator("#skills").evaluate((section) => {
+    window.scrollTo({ top: (section as HTMLElement).offsetTop + 96, behavior: "instant" });
+  });
+  await expect(lockup).toHaveAttribute("data-contrast-tone", "light");
   await expect.poll(() => mark.evaluate((element) => getComputedStyle(element).filter)).toContain("invert(1)");
 });
 

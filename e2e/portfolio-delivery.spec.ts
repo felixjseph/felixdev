@@ -51,6 +51,19 @@ test("the desktop Resume label and icon form one compact group", async ({ page, 
   expect((resumeBox!.x + resumeBox!.width) - (iconBox!.x + iconBox!.width)).toBeLessThanOrEqual(16);
 });
 
+test("the desktop Resume control uses a restrained fill inversion and scale", async ({ page, isMobile }) => {
+  test.skip(isMobile, "The desktop Resume control is hidden in the mobile command menu.");
+  await page.emulateMedia({ colorScheme: "dark", reducedMotion: "no-preference" });
+  await page.addInitScript(() => localStorage.setItem("felixdev-theme", "dark"));
+  await page.goto("/");
+  const resume = page.getByRole("link", { name: "Resume", exact: true });
+
+  await expect(resume).toHaveCSS("background-color", "rgb(245, 245, 241)");
+  await resume.hover();
+  await expect(resume).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect.poll(() => resume.evaluate((element) => getComputedStyle(element).transform)).toContain("1.03");
+});
+
 test("Solara publishes three supplied previews and links to the live client project", async ({ page }) => {
   await page.goto("/");
   const project = page.locator("#projects article").filter({ has: page.getByRole("heading", { name: "Solara" }) });
