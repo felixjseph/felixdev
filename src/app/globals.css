@@ -1597,17 +1597,12 @@ summary {
   gap: 0.8rem;
 }
 
-.nav-contact:hover {
-  gap: 1rem;
-}
-
 .nav-contact--disabled {
   cursor: not-allowed;
   opacity: 0.58;
 }
 
 .nav-contact--disabled:hover {
-  gap: 0.8rem;
   transform: none;
 }
 
@@ -3981,6 +3976,21 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
   pointer-events: none;
 }
 
+.site-header {
+  --nav-control-ink: var(--color-text);
+  --nav-control-surface: var(--color-bg);
+}
+
+.site-header[data-contrast-tone="light"] {
+  --nav-control-ink: #f7f6f1;
+  --nav-control-surface: #090a0b;
+}
+
+.site-header[data-contrast-tone="dark"] {
+  --nav-control-ink: #0a0a0a;
+  --nav-control-surface: #f7f6f1;
+}
+
 .site-nav {
   display: grid;
   width: 100%;
@@ -4155,6 +4165,7 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
   gap: 0.8rem;
   align-self: center;
   justify-self: end;
+  isolation: isolate;
 }
 
 .theme-toggle {
@@ -4163,16 +4174,23 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
   min-height: 2.8rem;
   margin-top: 0;
   padding: 0.25rem;
-  border-color: color-mix(in srgb, var(--color-text) 20%, transparent);
-  background: color-mix(in srgb, var(--color-bg) 94%, transparent);
+  border-color: color-mix(in srgb, var(--nav-control-ink) 22%, transparent);
+  background: color-mix(in srgb, var(--nav-control-surface) 94%, transparent);
   box-shadow: 0 0.35rem 0.9rem color-mix(in srgb, #000 10%, transparent);
   transition: border-color 320ms ease, background-color 320ms ease, box-shadow 320ms ease, transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .theme-toggle:hover {
-  border-color: color-mix(in srgb, var(--color-text) 38%, transparent);
+  border-color: color-mix(in srgb, var(--nav-control-ink) 42%, transparent);
+  background: var(--nav-control-surface);
   box-shadow: 0 0.5rem 1.1rem color-mix(in srgb, #000 14%, transparent);
   transform: translateY(-1px);
+}
+
+.theme-toggle:focus-visible,
+.nav-contact:focus-visible {
+  outline: 2px solid var(--nav-control-ink);
+  outline-offset: 3px;
 }
 
 .theme-toggle__track {
@@ -4252,33 +4270,41 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
 }
 
 .nav-contact {
+  --nav-contact-gap: 0.48rem;
+  position: relative;
+  z-index: 1;
   width: auto;
   min-width: 0;
-  min-height: 3.15rem;
-  height: 3.15rem;
+  min-height: 2.8rem;
+  height: 2.8rem;
   margin-top: 0;
-  gap: 0.48rem;
+  gap: var(--nav-contact-gap);
   justify-content: center;
   padding: 0.55rem 0.9rem;
-  border: 2px solid var(--color-text);
-  background: var(--color-text);
-  color: var(--color-bg);
+  border: 2px solid var(--nav-control-ink);
+  background: var(--nav-control-ink);
+  color: var(--nav-control-surface);
   font-size: 0.72rem;
   font-weight: 600;
-  box-shadow: none;
+  box-shadow: 0 0.25rem 0.65rem color-mix(in srgb, #000 8%, transparent);
   transform: translateZ(0) scale(1);
+  transform-origin: center;
   transition:
-    transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 240ms cubic-bezier(0.4, 0, 0.2, 1),
-    color 200ms ease-out;
+    transform 360ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 260ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 220ms ease-out,
+    box-shadow 360ms ease;
+  backface-visibility: hidden;
   will-change: transform;
 }
 
 .nav-contact:hover {
+  z-index: 2;
+  gap: var(--nav-contact-gap);
   background: transparent;
-  color: var(--color-text);
-  box-shadow: none;
-  transform: translate3d(0, -1px, 0) scale(1.02);
+  color: var(--nav-control-ink);
+  box-shadow: 0 0.75rem 1.55rem color-mix(in srgb, #000 20%, transparent);
+  transform: translate3d(0, -2px, 0) scale(1.018);
 }
 
 .nav-contact:active {
@@ -4318,7 +4344,7 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
   .nav-contact {
     width: auto;
     min-width: 0;
-    gap: 0.42rem;
+    --nav-contact-gap: 0.42rem;
     padding-inline: 0.8rem;
   }
 }
@@ -4346,7 +4372,7 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
   .nav-contact {
     width: auto;
     min-width: 0;
-    gap: 0.42rem;
+    --nav-contact-gap: 0.42rem;
     padding-inline: 0.8rem;
     font-size: 0.68rem;
   }
@@ -4513,7 +4539,8 @@ body:has(.site-loader[data-phase="visible"]) .hero-enter {
   }
 
   .nav-contact:hover,
-  .nav-contact:active {
+  .nav-contact:active,
+  .theme-toggle:hover {
     transform: none;
   }
 

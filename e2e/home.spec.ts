@@ -86,8 +86,10 @@ test("adapts the brand mark to the surface underneath it without a backplate", a
   await page.addInitScript(() => localStorage.setItem("felixdev-theme", "light"));
   await page.goto("/");
   const lockup = page.locator(".site-mark");
+  const header = page.locator(".site-header");
   const mark = page.locator(".site-mark__symbol img");
 
+  await expect(header).toHaveAttribute("data-contrast-tone", "dark");
   await expect(lockup).toHaveAttribute("data-contrast-tone", "dark");
   await expect(lockup).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
   await expect(lockup).toHaveCSS("mix-blend-mode", "normal");
@@ -96,6 +98,7 @@ test("adapts the brand mark to the surface underneath it without a backplate", a
   await page.locator("#skills").evaluate((section) => {
     window.scrollTo({ top: (section as HTMLElement).offsetTop + 96, behavior: "instant" });
   });
+  await expect(header).toHaveAttribute("data-contrast-tone", "light");
   await expect(lockup).toHaveAttribute("data-contrast-tone", "light");
   await expect.poll(() => mark.evaluate((element) => getComputedStyle(element).filter)).toContain("invert(1)");
 });

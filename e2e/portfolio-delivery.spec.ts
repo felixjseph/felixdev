@@ -59,10 +59,41 @@ test("the desktop Resume control uses a restrained fill inversion and scale", as
   const resume = page.getByRole("link", { name: "Resume", exact: true });
 
   await expect(resume).toHaveCSS("background-color", "rgb(245, 245, 241)");
+  await page.locator(".site-loader").waitFor({ state: "detached" });
+  await expect.poll(() => page.locator(".site-nav").evaluate((element) =>
+    element.getAnimations().every((animation) => animation.playState === "finished"),
+  )).toBe(true);
+  const themeToggle = page.getByRole("button", { name: "Switch to light theme" });
+  const toggleBefore = await themeToggle.boundingBox();
   await resume.hover();
+  const toggleAfter = await themeToggle.boundingBox();
   await expect(resume).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-  await expect.poll(() => resume.evaluate((element) => getComputedStyle(element).transform)).toContain("1.02");
-  await expect(resume).toHaveCSS("transition-duration", "0.28s, 0.24s, 0.2s");
+  await expect.poll(() => resume.evaluate((element) => getComputedStyle(element).transform)).toContain("1.018");
+  await expect(resume).toHaveCSS("transition-duration", "0.36s, 0.26s, 0.22s, 0.36s");
+  expect(Math.abs(toggleAfter!.x - toggleBefore!.x)).toBeLessThan(0.25);
+  expect(Math.abs(toggleAfter!.y - toggleBefore!.y)).toBeLessThan(0.25);
+});
+
+test("the desktop utility controls adapt to the page surface", async ({ page, isMobile }) => {
+  test.skip(isMobile, "The desktop Resume control is hidden in the mobile command menu.");
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.addInitScript(() => localStorage.setItem("felixdev-theme", "light"));
+  await page.goto("/");
+  const header = page.locator(".site-header");
+  const resume = page.getByRole("link", { name: "Resume", exact: true });
+  const themeToggle = page.getByRole("button", { name: "Switch to dark theme" });
+
+  await expect(header).toHaveAttribute("data-contrast-tone", "dark");
+  await expect(resume).toHaveCSS("background-color", "rgb(10, 10, 10)");
+  const lightSurfaceToggle = await themeToggle.evaluate((element) => getComputedStyle(element).backgroundColor);
+
+  await page.locator("#skills").evaluate((section) => {
+    window.scrollTo({ top: (section as HTMLElement).offsetTop + 96, behavior: "instant" });
+  });
+  await expect(header).toHaveAttribute("data-contrast-tone", "light");
+  await expect(resume).toHaveCSS("background-color", "rgb(247, 246, 241)");
+  const darkSurfaceToggle = await themeToggle.evaluate((element) => getComputedStyle(element).backgroundColor);
+  expect(darkSurfaceToggle).not.toBe(lightSurfaceToggle);
 });
 
 test("Solara publishes three supplied previews and links to the live client project", async ({ page }) => {

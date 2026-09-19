@@ -110,7 +110,7 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
 
   useEffect(() => {
     const mark = brandRef.current;
-    const header = mark?.closest("header");
+    const header = mark?.closest<HTMLElement>("header");
     if (!mark || !header) return;
 
     let frame = 0;
@@ -130,7 +130,10 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
       }
 
       tone ??= contrastToneFor(getComputedStyle(document.documentElement).backgroundColor);
-      if (tone && mark.dataset.contrastTone !== tone) mark.dataset.contrastTone = tone;
+      if (tone) {
+        if (mark.dataset.contrastTone !== tone) mark.dataset.contrastTone = tone;
+        if (header.dataset.contrastTone !== tone) header.dataset.contrastTone = tone;
+      }
     };
     const scheduleContrastUpdate = () => {
       if (!frame) frame = window.requestAnimationFrame(updateContrast);
