@@ -1,59 +1,25 @@
-import {
-  siAndroid,
-  siAnthropic,
-  siC,
-  siCss,
-  siDjango,
-  siDocker,
-  siGit,
-  siGooglegemini,
-  siHtml5,
-  siJavascript,
-  siKotlin,
-  siNextdotjs,
-  siPhp,
-  siPython,
-  siReact,
-  siSpringboot,
-  siSupabase,
-  siTailwindcss,
-  siTypescript,
-  siZapier,
-  type SimpleIcon,
-} from "simple-icons";
+import { siClaudecode, siCursor, siZapier, type SimpleIcon } from "simple-icons";
 import { skillItems, type SkillItem, type SkillLogo } from "@/content/portfolio";
 
 const icons: Record<SkillLogo, SimpleIcon> = {
-  android: siAndroid,
-  anthropic: siAnthropic,
-  c: siC,
-  css: siCss,
-  django: siDjango,
-  docker: siDocker,
-  git: siGit,
-  googlegemini: siGooglegemini,
-  html5: siHtml5,
-  javascript: siJavascript,
-  kotlin: siKotlin,
-  nextdotjs: siNextdotjs,
-  php: siPhp,
-  python: siPython,
-  react: siReact,
-  springboot: siSpringboot,
-  supabase: siSupabase,
-  tailwindcss: siTailwindcss,
-  typescript: siTypescript,
+  claudecode: siClaudecode,
+  cursor: siCursor,
   zapier: siZapier,
 };
 
 function SkillMark({ item }: { item: SkillItem }) {
-  const icon = icons[item.logo];
+  const icon = item.logo ? icons[item.logo] : null;
 
   return (
     <li aria-label={item.name} className="skill-mark" title={item.name}>
-      <svg aria-hidden="true" className="skill-logo" viewBox="0 0 24 24">
-        <path d={icon.path} />
-      </svg>
+      {icon ? (
+        <svg aria-hidden="true" className="skill-logo" viewBox="0 0 24 24">
+          <path d={icon.path} />
+        </svg>
+      ) : null}
+      <span aria-hidden="true" className={icon ? "skill-name" : "skill-name skill-name--wordmark"}>
+        {item.name}
+      </span>
     </li>
   );
 }
@@ -63,12 +29,14 @@ export function SkillsSection() {
     <section aria-labelledby="skills-heading" className="skills-section" id="skills">
       <div className="skills-heading">
         <h2 data-reveal="fade" id="skills-heading">
-          A broad stack. <span>One clear standard.</span>
+          Daily drivers. <span>Built for the work.</span>
         </h2>
-        <p data-reveal data-reveal-delay="70">A focused toolkit for useful, maintainable products.</p>
+        <p data-reveal data-reveal-delay="70">
+          An AI-native toolkit for designing, building, and automating useful systems.
+        </p>
       </div>
 
-      <div aria-label="Technology skills" className="skill-lanes" data-reveal="fade">
+      <div aria-label="Daily tools" className="skill-lanes" data-reveal="fade">
         <div className="skill-lane">
           <div className="skill-lane__viewport">
             <div className="skill-track">

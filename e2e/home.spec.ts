@@ -43,7 +43,7 @@ test("keeps the skills carousel readable when reduced motion is requested", asyn
   await page.goto("/");
 
   await expect(page.locator("#skills .skill-lane")).toHaveCount(1);
-  await expect(page.getByRole("heading", { name: /A broad stack. One clear standard./i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Daily drivers. Built for the work./i })).toBeVisible();
   const animation = await page.locator("#skills .skill-track").evaluate((element) => getComputedStyle(element).animationName);
   expect(animation).toBe("none");
 });

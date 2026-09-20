@@ -25,8 +25,8 @@ describe("endgame portfolio sections", () => {
     );
 
     expect(screen.getByRole("heading", { name: /Where work slows down/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /A broad stack. One clear standard./i })).toBeInTheDocument();
-    expect(screen.getByText("A focused toolkit for useful, maintainable products.")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Daily drivers. Built for the work./i })).toBeInTheDocument();
+    expect(screen.getByText(/An AI-native toolkit for designing, building, and automating/i)).toBeInTheDocument();
     expect(screen.queryByText("AI Document Intelligence")).not.toBeInTheDocument();
     expect(screen.queryByText("Agentic Workflow Command Center")).not.toBeInTheDocument();
     const softpointProject = screen.getByRole("heading", { name: "Softpoint Enterprise" }).closest("article")!;
@@ -75,13 +75,18 @@ describe("endgame portfolio sections", () => {
       </>,
     );
 
-    expect(screen.getByRole("heading", { name: /A broad stack. One clear standard./i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Daily drivers. Built for the work./i })).toBeInTheDocument();
     expect(screen.queryByText(/Technology I work with/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/I design useful software and AI-assisted workflows/i)).not.toBeInTheDocument();
     expect(container.querySelectorAll("#about .skill-track")).toHaveLength(0);
     expect(container.querySelectorAll("#skills .skill-lane")).toHaveLength(1);
     expect(container.querySelectorAll("#skills .skill-track")).toHaveLength(1);
-    expect(screen.getAllByLabelText("TypeScript").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Claude Code").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Codex").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Cursor").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("VS Code").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Zapier").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("AI workflows").length).toBeGreaterThanOrEqual(1);
   });
 
   it("provides a reduced-motion alternative for the skills carousel", () => {
