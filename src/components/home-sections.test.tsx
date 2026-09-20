@@ -26,7 +26,7 @@ describe("endgame portfolio sections", () => {
 
     expect(screen.getByRole("heading", { name: /Where work slows down/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /Daily drivers. Built for the work./i })).toBeInTheDocument();
-    expect(screen.getByText(/An AI-native toolkit for designing, building, and automating/i)).toBeInTheDocument();
+    expect(screen.getByText(/AI-native tools for building and automating useful systems/i)).toBeInTheDocument();
     expect(screen.queryByText("AI Document Intelligence")).not.toBeInTheDocument();
     expect(screen.queryByText("Agentic Workflow Command Center")).not.toBeInTheDocument();
     const softpointProject = screen.getByRole("heading", { name: "Softpoint Enterprise" }).closest("article")!;
@@ -86,7 +86,12 @@ describe("endgame portfolio sections", () => {
     expect(screen.getAllByLabelText("Cursor").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByLabelText("Visual Studio Code").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByLabelText("Zapier").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Make.com").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Activepieces").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Vercel").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Docker").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByLabelText("Google Gemini").length).toBeGreaterThanOrEqual(1);
+    expect(container.querySelectorAll("#skills .skill-set")).toHaveLength(5);
     expect(container.querySelectorAll("#skills .skill-name")).toHaveLength(0);
   });
 

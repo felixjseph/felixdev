@@ -1,4 +1,12 @@
-import { siClaudecode, siCursor, siGooglegemini, siZapier } from "simple-icons";
+import {
+  siClaudecode,
+  siCursor,
+  siDocker,
+  siGooglegemini,
+  siMake,
+  siVercel,
+  siZapier,
+} from "simple-icons";
 import { skillItems, type SkillItem, type SkillLogo } from "@/content/portfolio";
 
 type SkillIcon = {
@@ -18,8 +26,17 @@ const icons: Record<SkillLogo, SkillIcon> = {
     viewBox: "0 0 100 100",
   },
   zapier: { path: siZapier.path, viewBox: "0 0 24 24" },
+  make: { path: siMake.path, viewBox: "0 0 24 24" },
+  activepieces: {
+    path: "M6.46013 5.81759C5.30809 4.10962 5.75876 1.79113 7.46672.639093 9.17469-.512944 11.4932-.0622757 12.6452 1.64569L20.4261 13.1813C21.5781 14.8893 21.1274 17.2077 19.4195 18.3598 17.7115 19.5118 15.393 19.0611 14.241 17.3532L10.8676 12.3519C10.4339 11.8054 9.55114 11.8905 9.02108 12.4205 8.58152 12.8601 8.43761 13.9846 8.31301 14.9582 8.29474 15.1009 8.27689 15.2405 8.25858 15.3741 8.19097 16.0114 7.97092 16.6418 7.58762 17.2101 6.33511 19.067 3.81375 19.5565 1.95682 18.304.0998936 17.0515-.390738 14.5304.861776 12.6734 1.51136 11.7104 2.50224 11.1151 3.56472 10.9399L3.56322 10.9384C6.63307 10.4932 7.20222 7.02864 6.64041 6.08487L6.46013 5.81759Z",
+    viewBox: "0 0 22 19",
+  },
+  vercel: { path: siVercel.path, viewBox: "0 0 24 24" },
+  docker: { path: siDocker.path, viewBox: "0 0 24 24" },
   googlegemini: { path: siGooglegemini.path, viewBox: "0 0 24 24" },
 };
+
+const duplicateSets = [1, 2, 3, 4];
 
 function SkillMark({ item }: { item: SkillItem }) {
   const icon = icons[item.logo];
@@ -41,7 +58,7 @@ export function SkillsSection() {
           Daily drivers. <span>Built for the work.</span>
         </h2>
         <p data-reveal data-reveal-delay="70">
-          An AI-native toolkit for designing, building, and automating useful systems.
+          AI-native tools for building and automating useful systems.
         </p>
       </div>
 
@@ -52,9 +69,11 @@ export function SkillsSection() {
               <ul className="skill-set">
                 {skillItems.map((item) => <SkillMark item={item} key={item.name} />)}
               </ul>
-              <ul aria-hidden="true" className="skill-set">
-                {skillItems.map((item) => <SkillMark item={item} key={`duplicate-${item.name}`} />)}
-              </ul>
+              {duplicateSets.map((set) => (
+                <ul aria-hidden="true" className="skill-set" key={`duplicate-set-${set}`}>
+                  {skillItems.map((item) => <SkillMark item={item} key={`${set}-${item.name}`} />)}
+                </ul>
+              ))}
             </div>
           </div>
         </div>

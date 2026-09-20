@@ -592,7 +592,7 @@ summary {
 .site-footer nav a { display:inline-flex; gap:.35rem; align-items:center; }
 .site-footer nav svg { width:.85rem; height:.85rem; }
 
-@keyframes marquee-left { to { transform: translateX(-50%); } }
+@keyframes marquee-left { to { transform: translateX(-20%); } }
 
 @media (max-width: 1080px) {
   .hero-shell { min-height:calc(100svh - 7rem); grid-template-columns:1fr; }
@@ -1900,10 +1900,9 @@ summary {
 }
 
 .skills-section .skill-set {
-  min-width: 100vw;
-  gap: clamp(1.5rem, 3vw, 3rem);
-  padding-inline: clamp(1rem, 2.4vw, 2rem);
-  justify-content: space-evenly;
+  --skill-gap: clamp(0.9rem, 1.8vw, 1.5rem);
+  gap: var(--skill-gap);
+  padding: 0 var(--skill-gap) 0 0;
 }
 
 .skill-mark {
@@ -1928,8 +1927,7 @@ summary {
   }
 
   .skills-section .skill-set {
-    gap: 0.7rem;
-    padding-inline: 0.55rem;
+    --skill-gap: 0.65rem;
   }
 
   .skill-mark {
