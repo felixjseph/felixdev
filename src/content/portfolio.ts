@@ -11,19 +11,20 @@ export type SkillLogo =
   | "googlegemini";
 
 export type SkillItem = {
+  href: string;
   name: string;
   logo: SkillLogo;
 };
 
 export const skillItems: SkillItem[] = [
-  { name: "Claude Code", logo: "claudecode" },
-  { name: "Codex", logo: "openai" },
-  { name: "Cursor", logo: "cursor" },
-  { name: "Visual Studio Code", logo: "vscode" },
-  { name: "Zapier", logo: "zapier" },
-  { name: "Make.com", logo: "make" },
-  { name: "Activepieces", logo: "activepieces" },
-  { name: "Vercel", logo: "vercel" },
-  { name: "Docker", logo: "docker" },
-  { name: "Google Gemini", logo: "googlegemini" },
+  { name: "Claude Code", logo: "claudecode", href: "https://claude.com/product/claude-code" },
+  { name: "Codex", logo: "openai", href: "https://openai.com/codex/" },
+  { name: "Cursor", logo: "cursor", href: "https://cursor.com/" },
+  { name: "Visual Studio Code", logo: "vscode", href: "https://code.visualstudio.com/" },
+  { name: "Zapier", logo: "zapier", href: "https://zapier.com/" },
+  { name: "Make.com", logo: "make", href: "https://www.make.com/" },
+  { name: "Activepieces", logo: "activepieces", href: "https://www.activepieces.com/" },
+  { name: "Vercel", logo: "vercel", href: "https://vercel.com/" },
+  { name: "Docker", logo: "docker", href: "https://www.docker.com/" },
+  { name: "Google Gemini", logo: "googlegemini", href: "https://gemini.google.com/" },
 ];

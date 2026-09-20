@@ -38,14 +38,24 @@ const icons: Record<SkillLogo, SkillIcon> = {
 
 const duplicateSets = [1, 2, 3, 4];
 
-function SkillMark({ item }: { item: SkillItem }) {
+function SkillMark({ duplicate = false, item }: { duplicate?: boolean; item: SkillItem }) {
   const icon = icons[item.logo];
 
   return (
-    <li aria-label={item.name} className="skill-mark">
-      <svg aria-hidden="true" className="skill-logo" viewBox={icon.viewBox}>
-        <path d={icon.path} />
-      </svg>
+    <li className="skill-mark">
+      <a
+        aria-label={item.name}
+        className="skill-link"
+        href={item.href}
+        rel="noreferrer"
+        tabIndex={duplicate ? -1 : undefined}
+        target="_blank"
+        title={item.name}
+      >
+        <svg aria-hidden="true" className="skill-logo" viewBox={icon.viewBox}>
+          <path d={icon.path} />
+        </svg>
+      </a>
     </li>
   );
 }
@@ -71,7 +81,7 @@ export function SkillsSection() {
               </ul>
               {duplicateSets.map((set) => (
                 <ul aria-hidden="true" className="skill-set" key={`duplicate-set-${set}`}>
-                  {skillItems.map((item) => <SkillMark item={item} key={`${set}-${item.name}`} />)}
+                  {skillItems.map((item) => <SkillMark duplicate item={item} key={`${set}-${item.name}`} />)}
                 </ul>
               ))}
             </div>

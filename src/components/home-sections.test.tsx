@@ -54,11 +54,14 @@ describe("endgame portfolio sections", () => {
     expect(container.querySelector(".contact-intro p")?.children).toHaveLength(2);
     expect(screen.getByText("felixjosephcastaneda@gmail.com")).toBeInTheDocument();
     expect(screen.getByText("San Fernando, Cebu, PH")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /How I can help/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /How I help. Systems that keep working./i })).toBeInTheDocument();
+    expect(screen.getByText(/Websites, AI assistants, and automations built to remove repetitive work/i)).toBeInTheDocument();
     expect(screen.getByLabelText("Five-step delivery process").children).toHaveLength(5);
     expect(screen.getByText("Discovery")).toBeInTheDocument();
     expect(screen.getByText("Launch & support")).toBeInTheDocument();
     expect(screen.getByLabelText("Services")).toBeInTheDocument();
+    expect(container.querySelectorAll(".experience-node__icon")).toHaveLength(5);
+    expect(container.querySelectorAll(".experience-node__check")).toHaveLength(5);
     expect(screen.getByRole("heading", { name: "Hi, I’m Felix." })).toBeInTheDocument();
     expect(screen.getByText(/Is there a more efficient way to do this/i)).toBeInTheDocument();
     expect(screen.getByText("Open to work")).toBeInTheDocument();
@@ -91,6 +94,8 @@ describe("endgame portfolio sections", () => {
     expect(screen.getAllByLabelText("Vercel").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByLabelText("Docker").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByLabelText("Google Gemini").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByRole("link", { name: "Claude Code" })[0]).toHaveAttribute("href", "https://claude.com/product/claude-code");
+    expect(screen.getAllByRole("link", { name: "Claude Code" })[0]).toHaveAttribute("target", "_blank");
     expect(container.querySelectorAll("#skills .skill-set")).toHaveLength(5);
     expect(container.querySelectorAll("#skills .skill-name")).toHaveLength(0);
   });

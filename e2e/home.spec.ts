@@ -7,7 +7,7 @@ test("follows the requested homepage story and opens project details", async ({ 
   const sectionIds = await page.locator("main > section").evaluateAll((sections) =>
     sections.map((section) => section.id),
   );
-  expect(sectionIds).toEqual(["hero", "about", "skills", "projects", "testimonial", "experience", "about-felix", "contact"]);
+  expect(sectionIds).toEqual(["hero", "about", "skills", "projects", "testimonial", "services", "about-felix", "contact"]);
 
   await expect(page.getByRole("heading", { name: "Hi, I’m Felix." })).toBeAttached();
   await expect(page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Hi, I’m Felix." })).toHaveCount(0);
@@ -44,6 +44,10 @@ test("keeps the skills carousel readable when reduced motion is requested", asyn
 
   await expect(page.locator("#skills .skill-lane")).toHaveCount(1);
   await expect(page.getByRole("heading", { name: /Daily drivers. Built for the work./i })).toBeVisible();
+  const primarySkillSet = page.locator("#skills .skill-set").first();
+  await expect(primarySkillSet.getByRole("link")).toHaveCount(10);
+  await expect(primarySkillSet.getByRole("link", { name: "Claude Code" })).toHaveAttribute("href", "https://claude.com/product/claude-code");
+  await expect(primarySkillSet.getByRole("link", { name: "Claude Code" })).toHaveAttribute("target", "_blank");
   const animation = await page.locator("#skills .skill-track").evaluate((element) => getComputedStyle(element).animationName);
   expect(animation).toBe("none");
 });

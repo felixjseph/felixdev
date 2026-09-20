@@ -261,11 +261,11 @@ test("mobile project decks fan open as they enter the center viewing band", asyn
   }).toBeGreaterThan(0.05);
 });
 
-test("experience timeline follows viewport progress and keeps competencies divider-free", async ({ page, isMobile }) => {
+test("services timeline follows viewport progress and keeps competencies divider-free", async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   await expect(page.locator(".site-loader")).toHaveCount(0);
-  const timeline = page.locator("#experience .experience-list");
+  const timeline = page.locator("#services .experience-list");
   await timeline.scrollIntoViewIfNeeded();
   await expect.poll(() => timeline.evaluate((element) =>
     Number.parseFloat(getComputedStyle(element).getPropertyValue("--experience-progress")) || 0,
@@ -284,7 +284,7 @@ test("experience timeline follows viewport progress and keeps competencies divid
     )).toBeGreaterThan(beforePointer + 0.04);
   }
 
-  const competencies = page.locator("#experience .experience-competencies > div");
+  const competencies = page.locator("#services .experience-competencies > div");
   await expect(competencies).toHaveCSS("border-top-width", "0px");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect.poll(() => timeline.evaluate((element) =>
