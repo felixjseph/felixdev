@@ -84,9 +84,10 @@ describe("endgame portfolio sections", () => {
     expect(screen.getAllByLabelText("Claude Code").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByLabelText("Codex").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByLabelText("Cursor").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByLabelText("VS Code").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Visual Studio Code").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByLabelText("Zapier").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByLabelText("AI workflows").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Google Gemini").length).toBeGreaterThanOrEqual(1);
+    expect(container.querySelectorAll("#skills .skill-name")).toHaveLength(0);
   });
 
   it("provides a reduced-motion alternative for the skills carousel", () => {

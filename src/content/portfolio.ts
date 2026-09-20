@@ -1,15 +1,15 @@
-export type SkillLogo = "claudecode" | "cursor" | "zapier";
+export type SkillLogo = "claudecode" | "openai" | "cursor" | "vscode" | "zapier" | "googlegemini";
 
 export type SkillItem = {
   name: string;
-  logo?: SkillLogo;
+  logo: SkillLogo;
 };
 
 export const skillItems: SkillItem[] = [
   { name: "Claude Code", logo: "claudecode" },
-  { name: "Codex" },
+  { name: "Codex", logo: "openai" },
   { name: "Cursor", logo: "cursor" },
-  { name: "VS Code" },
+  { name: "Visual Studio Code", logo: "vscode" },
   { name: "Zapier", logo: "zapier" },
-  { name: "AI workflows" },
+  { name: "Google Gemini", logo: "googlegemini" },
 ];
