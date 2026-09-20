@@ -48,7 +48,7 @@ describe("HomePage", () => {
       "skills",
       "projects",
       "testimonial",
-      "experience",
+      "services",
       "about-felix",
       "contact",
     ]);

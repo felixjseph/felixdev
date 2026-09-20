@@ -44,6 +44,22 @@ type TimelineStyle = CSSProperties & { "--experience-progress": number };
 
 const services = ["Workflow automation", "AI chatbots", "Web development"];
 
+function ProcessIcon({ index }: { index: number }) {
+  const icons = [
+    <g key="discover"><circle cx="10" cy="10" r="2.4" /><path d="M3 7V3h4m6 0h4v4M3 13v4h4m6 0h4v-4" /></g>,
+    <g key="plan"><path d="M4 3.5h12v13H4zM7 7.5h6M7 11h6M7 14.5h3" /></g>,
+    <g key="build"><path d="m6 6-4 4 4 4m8-8 4 4-4 4M11.5 4l-3 12" /></g>,
+    <g key="test"><path d="M2.5 10h3l2-4 3.5 8 2-4h4.5" /></g>,
+    <g key="launch"><path d="M10 15V4.5M6 8.5l4-4 4 4M4 17h12" /></g>,
+  ];
+
+  return (
+    <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.45" viewBox="0 0 20 20">
+      {icons[index]}
+    </svg>
+  );
+}
+
 export function ExperienceSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLOListElement>(null);
@@ -59,8 +75,14 @@ export function ExperienceSection() {
       if (!timeline) return;
       const progress = Math.max(0, Math.min(1, next));
       timeline.style.setProperty("--experience-progress", String(progress));
+      let currentIndex = 0;
       timelineItems.forEach((item, index) => {
-        item.dataset.active = String(progress >= (index + 0.12) / process.length);
+        const active = progress >= (index + 0.12) / process.length;
+        if (active) currentIndex = index;
+        item.dataset.active = String(active);
+      });
+      timelineItems.forEach((item, index) => {
+        item.dataset.current = String(index === currentIndex);
       });
     };
 
@@ -110,21 +132,28 @@ export function ExperienceSection() {
   }, []);
 
   return (
-    <section aria-labelledby="experience-heading" className="section-shell experience-section" id="experience" ref={sectionRef}>
+    <section aria-labelledby="services-heading" className="section-shell experience-section" id="services" ref={sectionRef}>
       <div className="experience-layout">
         <div className="experience-intro">
-          <p className="system-label" data-reveal="fade">How it works</p>
-          <h2 data-reveal="title" id="experience-heading">
-            How I can help. <span>From friction to a system that works.</span>
+          <p className="system-label" data-reveal="fade">What I Can Do</p>
+          <h2 data-reveal="title" id="services-heading">
+            How I help. <span>Systems that keep working.</span>
           </h2>
           <p data-reveal data-reveal-delay="70">
-            I build around the parts of your business that repeat: the workflows that consume attention, the messages that need a timely answer, and the online experiences that should keep working after you log off.
+            Websites, AI assistants, and automations built to remove repetitive work and keep your business moving.
           </p>
         </div>
         <ol aria-label="Five-step delivery process" className="experience-list" ref={timelineRef} style={{ "--experience-progress": 0 } as TimelineStyle}>
           {process.map((item, index) => (
-            <li data-active="false" key={item.stage}>
-              <span className="experience-node" aria-hidden="true" />
+            <li data-active="false" data-current="false" key={item.stage}>
+              <span className="experience-node" aria-hidden="true">
+                <span className="experience-node__icon"><ProcessIcon index={index} /></span>
+                <span className="experience-node__check">
+                  <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" viewBox="0 0 12 12">
+                    <path d="m2.5 6.2 2.1 2.1 4.9-4.8" />
+                  </svg>
+                </span>
+              </span>
               <article className="experience-entry">
                 <header data-reveal="left">
                   <p className="experience-company"><span>{String(index + 1).padStart(2, "0")} /</span> {item.stage}</p>

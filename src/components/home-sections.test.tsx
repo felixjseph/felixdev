@@ -25,8 +25,8 @@ describe("endgame portfolio sections", () => {
     );
 
     expect(screen.getByRole("heading", { name: /Where work slows down/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /A broad stack. One clear standard./i })).toBeInTheDocument();
-    expect(screen.getByText("A focused toolkit for useful, maintainable products.")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Daily drivers. Built for the work./i })).toBeInTheDocument();
+    expect(screen.getByText(/AI-native tools for building and automating useful systems/i)).toBeInTheDocument();
     expect(screen.queryByText("AI Document Intelligence")).not.toBeInTheDocument();
     expect(screen.queryByText("Agentic Workflow Command Center")).not.toBeInTheDocument();
     const softpointProject = screen.getByRole("heading", { name: "Softpoint Enterprise" }).closest("article")!;
@@ -54,13 +54,23 @@ describe("endgame portfolio sections", () => {
     expect(container.querySelector(".contact-intro p")?.children).toHaveLength(2);
     expect(screen.getByText("felixjosephcastaneda@gmail.com")).toBeInTheDocument();
     expect(screen.getByText("San Fernando, Cebu, PH")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /How I can help/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /How I help. Systems that keep working./i })).toBeInTheDocument();
+    expect(screen.getByText("What I Can Do")).toBeInTheDocument();
+    expect(screen.getByText(/Websites, AI assistants, and automations built to remove repetitive work/i)).toBeInTheDocument();
     expect(screen.getByLabelText("Five-step delivery process").children).toHaveLength(5);
     expect(screen.getByText("Discovery")).toBeInTheDocument();
     expect(screen.getByText("Launch & support")).toBeInTheDocument();
     expect(screen.getByLabelText("Services")).toBeInTheDocument();
+    expect(container.querySelectorAll(".experience-node__icon")).toHaveLength(5);
+    expect(container.querySelectorAll(".experience-node__check")).toHaveLength(5);
     expect(screen.getByRole("heading", { name: "Hi, I’m Felix." })).toBeInTheDocument();
     expect(screen.getByText(/Is there a more efficient way to do this/i)).toBeInTheDocument();
+    const beliefs = screen.getByLabelText("What Felix builds and why");
+    expect(within(beliefs).getAllByRole("article")).toHaveLength(3);
+    expect(within(beliefs).getByText(/automate repetitive work so teams can spend more energy growing/i)).toBeInTheDocument();
+    expect(within(beliefs).getByText(/helpful AI chatbots that answer faster/i)).toBeInTheDocument();
+    expect(within(beliefs).getByText(/websites that keep your business visible/i)).toBeInTheDocument();
+    expect(beliefs.querySelectorAll("[class*='beliefIcon']")).toHaveLength(3);
     expect(screen.getByText("Open to work")).toBeInTheDocument();
     expect(screen.getByRole("img", { name: /Felix Joseph Castañeda standing beside/i })).toHaveAttribute("src", expect.stringContaining("felix-portrait.jpg"));
     expect(container.innerHTML.toLowerCase()).not.toContain("github");
@@ -75,13 +85,26 @@ describe("endgame portfolio sections", () => {
       </>,
     );
 
-    expect(screen.getByRole("heading", { name: /A broad stack. One clear standard./i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Daily drivers. Built for the work./i })).toBeInTheDocument();
     expect(screen.queryByText(/Technology I work with/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/I design useful software and AI-assisted workflows/i)).not.toBeInTheDocument();
     expect(container.querySelectorAll("#about .skill-track")).toHaveLength(0);
     expect(container.querySelectorAll("#skills .skill-lane")).toHaveLength(1);
     expect(container.querySelectorAll("#skills .skill-track")).toHaveLength(1);
-    expect(screen.getAllByLabelText("TypeScript").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Claude Code").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Codex").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Cursor").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Visual Studio Code").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Zapier").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Make.com").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Activepieces").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Vercel").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Docker").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByLabelText("Google Gemini").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByRole("link", { name: "Claude Code" })[0]).toHaveAttribute("href", "https://claude.com/product/claude-code");
+    expect(screen.getAllByRole("link", { name: "Claude Code" })[0]).toHaveAttribute("target", "_blank");
+    expect(container.querySelectorAll("#skills .skill-set")).toHaveLength(5);
+    expect(container.querySelectorAll("#skills .skill-name")).toHaveLength(0);
   });
 
   it("provides a reduced-motion alternative for the skills carousel", () => {

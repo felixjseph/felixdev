@@ -10,7 +10,7 @@ const navigationLinks = [
   { anchor: "about", label: "About" },
   { anchor: "skills", label: "Skills" },
   { anchor: "projects", label: "Work" },
-  { anchor: "experience", label: "Experience" },
+  { anchor: "services", label: "Services" },
   { anchor: "contact", label: "Contact" },
 ] as const;
 
@@ -70,7 +70,7 @@ export function SiteHeader({ linkToHomepage = false }: SiteHeaderProps) {
   useEffect(() => {
     if (!("IntersectionObserver" in window)) return;
 
-    const sections = ["about", "skills", "projects", "experience", "contact"]
+    const sections = ["about", "skills", "projects", "services", "contact"]
       .map((anchor) => document.getElementById(anchor))
       .filter((section): section is HTMLElement => Boolean(section));
 

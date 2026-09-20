@@ -1,49 +1,30 @@
 export type SkillLogo =
-  | "typescript"
-  | "javascript"
-  | "kotlin"
-  | "python"
-  | "c"
-  | "php"
-  | "html5"
-  | "css"
-  | "nextdotjs"
-  | "react"
-  | "springboot"
-  | "django"
-  | "tailwindcss"
-  | "android"
-  | "supabase"
+  | "claudecode"
+  | "openai"
+  | "cursor"
+  | "vscode"
+  | "zapier"
+  | "make"
+  | "activepieces"
+  | "vercel"
   | "docker"
-  | "git"
-  | "googlegemini"
-  | "anthropic"
-  | "zapier";
+  | "googlegemini";
 
 export type SkillItem = {
+  href: string;
   name: string;
   logo: SkillLogo;
 };
 
 export const skillItems: SkillItem[] = [
-  { name: "TypeScript", logo: "typescript" },
-  { name: "JavaScript", logo: "javascript" },
-  { name: "Kotlin", logo: "kotlin" },
-  { name: "Python", logo: "python" },
-  { name: "C", logo: "c" },
-  { name: "PHP", logo: "php" },
-  { name: "HTML5", logo: "html5" },
-  { name: "CSS3", logo: "css" },
-  { name: "Next.js", logo: "nextdotjs" },
-  { name: "React", logo: "react" },
-  { name: "Spring Boot", logo: "springboot" },
-  { name: "Django", logo: "django" },
-  { name: "Tailwind CSS", logo: "tailwindcss" },
-  { name: "Android", logo: "android" },
-  { name: "Supabase", logo: "supabase" },
-  { name: "Docker", logo: "docker" },
-  { name: "Git", logo: "git" },
-  { name: "Google Gemini", logo: "googlegemini" },
-  { name: "Anthropic", logo: "anthropic" },
-  { name: "Zapier", logo: "zapier" },
+  { name: "Claude Code", logo: "claudecode", href: "https://claude.com/product/claude-code" },
+  { name: "Codex", logo: "openai", href: "https://openai.com/codex/" },
+  { name: "Cursor", logo: "cursor", href: "https://cursor.com/" },
+  { name: "Visual Studio Code", logo: "vscode", href: "https://code.visualstudio.com/" },
+  { name: "Zapier", logo: "zapier", href: "https://zapier.com/" },
+  { name: "Make.com", logo: "make", href: "https://www.make.com/" },
+  { name: "Activepieces", logo: "activepieces", href: "https://www.activepieces.com/" },
+  { name: "Vercel", logo: "vercel", href: "https://vercel.com/" },
+  { name: "Docker", logo: "docker", href: "https://www.docker.com/" },
+  { name: "Google Gemini", logo: "googlegemini", href: "https://gemini.google.com/" },
 ];

@@ -7,7 +7,7 @@ test("reveals section titles and copy once and keeps focused controls readable",
 
   for (const selector of [
     "#about-heading", "#skills-heading", "#projects-heading",
-    "#projects article p", "#testimonial-heading", "#experience-heading", "#about-felix-heading", "#contact-heading",
+    "#projects article p", "#testimonial-heading", "#services-heading", "#about-felix-heading", "#contact-heading",
   ]) {
     const element = page.locator(selector).first();
     const reveal = element.locator("xpath=ancestor-or-self::*[@data-reveal][1]");
@@ -32,7 +32,7 @@ test("honors motion preference changes without hiding any section", async ({ pag
   await page.goto("/");
   await expect(page.locator(".site-loader")).toHaveCount(0);
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.locator("#experience-heading").scrollIntoViewIfNeeded();
+  await page.locator("#services-heading").scrollIntoViewIfNeeded();
   await expect(page.locator(".site-nav")).toHaveCSS("animation-name", "none");
   await expect.poll(() => page.locator("[data-reveal]").evaluateAll((nodes) =>
     nodes.every((node) => node.getAnimations().length === 0 && getComputedStyle(node).opacity === "1"),
@@ -62,7 +62,7 @@ test("starts reveals at the first visible sliver without requiring more scrollin
   await expect(page.locator(".site-loader")).toHaveCount(0);
   for (const selector of [
     "#skills-heading", "#projects-heading", "#projects article > [data-reveal]",
-    "#testimonial-heading", "#experience-heading", "#about-felix-heading", "#contact-heading",
+    "#testimonial-heading", "#services-heading", "#about-felix-heading", "#contact-heading",
   ]) {
     const target = page.locator(selector).first();
     await expect(target).not.toHaveAttribute("data-revealed", "true");
