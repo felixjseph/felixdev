@@ -135,7 +135,7 @@ export function ExperienceSection() {
     <section aria-labelledby="services-heading" className="section-shell experience-section" id="services" ref={sectionRef}>
       <div className="experience-layout">
         <div className="experience-intro">
-          <p className="system-label" data-reveal="fade">Services / Process</p>
+          <p className="system-label" data-reveal="fade">What I Can Do</p>
           <h2 data-reveal="title" id="services-heading">
             How I help. <span>Systems that keep working.</span>
           </h2>

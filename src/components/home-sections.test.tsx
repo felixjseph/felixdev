@@ -55,6 +55,7 @@ describe("endgame portfolio sections", () => {
     expect(screen.getByText("felixjosephcastaneda@gmail.com")).toBeInTheDocument();
     expect(screen.getByText("San Fernando, Cebu, PH")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /How I help. Systems that keep working./i })).toBeInTheDocument();
+    expect(screen.getByText("What I Can Do")).toBeInTheDocument();
     expect(screen.getByText(/Websites, AI assistants, and automations built to remove repetitive work/i)).toBeInTheDocument();
     expect(screen.getByLabelText("Five-step delivery process").children).toHaveLength(5);
     expect(screen.getByText("Discovery")).toBeInTheDocument();
@@ -64,6 +65,12 @@ describe("endgame portfolio sections", () => {
     expect(container.querySelectorAll(".experience-node__check")).toHaveLength(5);
     expect(screen.getByRole("heading", { name: "Hi, I’m Felix." })).toBeInTheDocument();
     expect(screen.getByText(/Is there a more efficient way to do this/i)).toBeInTheDocument();
+    const beliefs = screen.getByLabelText("What Felix builds and why");
+    expect(within(beliefs).getAllByRole("article")).toHaveLength(3);
+    expect(within(beliefs).getByText(/automate repetitive work so teams can spend more energy growing/i)).toBeInTheDocument();
+    expect(within(beliefs).getByText(/helpful AI chatbots that answer faster/i)).toBeInTheDocument();
+    expect(within(beliefs).getByText(/websites that keep your business visible/i)).toBeInTheDocument();
+    expect(beliefs.querySelectorAll("[class*='beliefIcon']")).toHaveLength(3);
     expect(screen.getByText("Open to work")).toBeInTheDocument();
     expect(screen.getByRole("img", { name: /Felix Joseph Castañeda standing beside/i })).toHaveAttribute("src", expect.stringContaining("felix-portrait.jpg"));
     expect(container.innerHTML.toLowerCase()).not.toContain("github");
