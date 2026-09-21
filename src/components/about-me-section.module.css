@@ -254,8 +254,8 @@
 .portraitStage {
   --portrait-x: 50%;
   --portrait-y: 50%;
-  --portrait-reveal-half-x: clamp(3.4rem, 4.5vw, 4.15rem);
-  --portrait-reveal-half-y: clamp(2.45rem, 3.3vw, 3rem);
+  --portrait-reveal-half-x: clamp(3.9rem, 5.2vw, 4.8rem);
+  --portrait-reveal-half-y: clamp(2.8rem, 3.8vw, 3.5rem);
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
@@ -525,8 +525,8 @@
   }
 
   .portraitStage {
-    --portrait-reveal-half-x: clamp(3rem, 17vw, 3.7rem);
-    --portrait-reveal-half-y: clamp(2.2rem, 13vw, 2.7rem);
+    --portrait-reveal-half-x: clamp(3.4rem, 19vw, 4.25rem);
+    --portrait-reveal-half-y: clamp(2.5rem, 14.5vw, 3.1rem);
     border-radius: 0.34rem;
   }
 }
