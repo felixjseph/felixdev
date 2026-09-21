@@ -37,8 +37,8 @@ export function FelixPortrait() {
     const position = positionRef.current;
     const deltaX = position.targetX - position.currentX;
     const deltaY = position.targetY - position.currentY;
-    position.currentX += deltaX * 0.24;
-    position.currentY += deltaY * 0.24;
+    position.currentX += deltaX * 0.18;
+    position.currentY += deltaY * 0.18;
     writePosition(position.currentX, position.currentY);
 
     if (Math.abs(deltaX) + Math.abs(deltaY) > 0.12) {

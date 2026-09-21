@@ -88,9 +88,13 @@ test("portrait color reveal uses a compact viewfinder across pointer types", asy
   await page.goto("/");
   await expect(page.locator(".site-loader")).toBeHidden();
   await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
+  const sectionShell = page.locator("#about-felix .section-shell");
   const frame = page.locator("[data-portrait-frame]");
   await frame.scrollIntoViewIfNeeded();
   const minimumEdgeSpace = isMobile ? 20 : 28;
+  const shellBounds = await sectionShell.boundingBox();
+  const shellViewport = page.viewportSize()!;
+  expect(Math.min(shellBounds!.x, shellViewport.width - shellBounds!.x - shellBounds!.width)).toBeGreaterThanOrEqual(minimumEdgeSpace);
   await expect.poll(async () => {
     const frameBounds = await frame.boundingBox();
     const viewport = page.viewportSize()!;
@@ -112,7 +116,8 @@ test("portrait color reveal uses a compact viewfinder across pointer types", asy
   await frame.hover({ position: { x: 180, y: 190 } });
   await expect(frame).toHaveAttribute("data-color-active", "true");
   const colorLayer = frame.locator("img[aria-hidden='true']");
-  await expect.poll(() => colorLayer.evaluate((element) => getComputedStyle(element).clipPath)).toMatch(/^inset\(/);
+  await expect.poll(() => colorLayer.evaluate((element) => getComputedStyle(element).maskImage)).toMatch(/^radial-gradient\(/);
+  await expect(colorLayer).toHaveCSS("opacity", "0.74");
   const cursorShape = await frame.locator("[data-portrait-cursor]").evaluate((element) => ({
     horizontal: [getComputedStyle(element, "::before").width, getComputedStyle(element, "::before").height],
     vertical: [getComputedStyle(element, "::after").width, getComputedStyle(element, "::after").height],
