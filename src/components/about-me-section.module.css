@@ -24,6 +24,7 @@
 .shell {
   position: relative;
   display: grid;
+  width: min(calc(100% - clamp(2.5rem, 5vw, 4.5rem)), 86rem);
   grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 0.72fr);
   gap: clamp(3rem, 6vw, 6.5rem);
   align-items: start;
@@ -235,27 +236,32 @@
 .portrait {
   position: sticky;
   top: 6.5rem;
+  width: min(100%, 26rem);
+  justify-self: center;
   margin: 0;
 }
 
 .portraitFrame {
-  --portrait-x: 50%;
-  --portrait-y: 50%;
-  padding: clamp(0.45rem, 0.75vw, 0.72rem);
+  padding: clamp(0.28rem, 0.45vw, 0.42rem);
   border: 1px solid var(--color-line);
-  border-radius: 1.45rem;
+  border-radius: 0.72rem;
   background: color-mix(in srgb, var(--color-surface) 78%, transparent);
   box-shadow:
-    0 2.5rem 5rem color-mix(in srgb, #000 16%, transparent),
+    0 2rem 4.5rem color-mix(in srgb, #000 14%, transparent),
     inset 0 1px 0 color-mix(in srgb, #fff 42%, transparent);
 }
 
 .portraitStage {
+  --portrait-x: 50%;
+  --portrait-y: 50%;
+  --portrait-reveal-half-x: clamp(3.9rem, 5.2vw, 4.8rem);
+  --portrait-reveal-half-y: clamp(2.8rem, 3.8vw, 3.5rem);
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  border-radius: 1rem;
+  border-radius: 0.42rem;
   background: var(--color-surface-raised);
+  touch-action: pan-y;
 }
 
 .portraitImage {
@@ -266,18 +272,37 @@
 }
 
 .portraitMonochrome {
+  z-index: 0;
   filter: grayscale(1) contrast(1.04) brightness(0.94);
 }
 
 .portraitColor {
-  clip-path: circle(0 at var(--portrait-x) var(--portrait-y));
-  transition: clip-path 420ms cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: clip-path;
+  z-index: 1;
+  -webkit-mask-image: radial-gradient(
+    ellipse var(--portrait-reveal-half-x) var(--portrait-reveal-half-y) at var(--portrait-x) var(--portrait-y),
+    #000 0%,
+    rgba(0, 0, 0, 0.92) 32%,
+    rgba(0, 0, 0, 0.58) 58%,
+    rgba(0, 0, 0, 0.18) 82%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse var(--portrait-reveal-half-x) var(--portrait-reveal-half-y) at var(--portrait-x) var(--portrait-y),
+    #000 0%,
+    rgba(0, 0, 0, 0.92) 32%,
+    rgba(0, 0, 0, 0.58) 58%,
+    rgba(0, 0, 0, 0.18) 82%,
+    transparent 100%
+  );
+  filter: saturate(1) contrast(1.015);
+  opacity: 0;
+  transition: opacity 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: mask-image, opacity;
 }
 
-.portraitFrame[data-color-active="true"] .portraitColor {
-  clip-path: circle(clamp(5.75rem, 12vw, 9.5rem) at var(--portrait-x) var(--portrait-y));
-  transition-duration: 160ms;
+.portraitStage[data-color-active="true"] .portraitColor {
+  opacity: 1;
+  transition-duration: 280ms;
 }
 
 .revealCursor {
@@ -285,34 +310,36 @@
   z-index: 3;
   top: var(--portrait-y);
   left: var(--portrait-x);
-  width: 1.35rem;
-  height: 1.35rem;
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.28),
-    0 0 1.3rem rgba(101, 231, 244, 0.42);
+  width: 1rem;
+  height: 1rem;
+  color: #fff;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.9));
+  mix-blend-mode: difference;
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.72);
-  transition: opacity 160ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate(-50%, -50%) scale(0.58) rotate(-12deg);
+  transition: opacity 150ms ease, transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.revealCursor::before,
 .revealCursor::after {
   position: absolute;
   inset: 50% auto auto 50%;
-  width: 0.24rem;
-  height: 0.24rem;
-  border-radius: 50%;
-  background: #65e7f4;
-  box-shadow: 0 0 0.65rem rgba(101, 231, 244, 0.9);
+  width: 100%;
+  height: 1px;
+  background: currentColor;
   content: "";
   transform: translate(-50%, -50%);
 }
 
-.portraitFrame[data-color-active="true"] .revealCursor {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+.revealCursor::after {
+  width: 1px;
+  height: 100%;
+}
+
+.portraitStage[data-color-active="true"] .revealCursor {
+  opacity: 0.74;
+  transform: translate(-50%, -50%) scale(1) rotate(0);
 }
 
 .portraitMeta {
@@ -327,7 +354,7 @@
   justify-content: space-between;
   padding: 0.85rem 0.95rem;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 0.75rem;
+  border-radius: 0.38rem;
   background: rgba(7, 8, 9, 0.7);
   color: #f7f6f1;
   backdrop-filter: blur(14px) saturate(125%);
@@ -364,10 +391,14 @@
   text-transform: uppercase;
 }
 
-.portraitHint > span {
+.portraitHint > span:first-child {
   width: 1.6rem;
   height: 1px;
   background: var(--color-line);
+}
+
+.portraitHintTouch {
+  display: none;
 }
 
 @keyframes availability-pulse {
@@ -409,7 +440,7 @@
   .portrait {
     position: relative;
     top: auto;
-    width: min(100%, 32rem);
+    width: min(calc(100% - 1.5rem), 26rem);
     justify-self: center;
   }
 }
@@ -490,17 +521,30 @@
   }
 
   .portraitFrame {
-    border-radius: 1.15rem;
+    border-radius: 0.62rem;
   }
 
   .portraitStage {
-    border-radius: 0.78rem;
+    --portrait-reveal-half-x: clamp(3.4rem, 19vw, 4.25rem);
+    --portrait-reveal-half-y: clamp(2.5rem, 14.5vw, 3.1rem);
+    border-radius: 0.34rem;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .portraitStage {
+    cursor: none;
   }
 }
 
 @media (hover: none), (pointer: coarse) {
-  .portraitHint {
+  .revealCursor,
+  .portraitHintDesktop {
     display: none;
+  }
+
+  .portraitHintTouch {
+    display: inline;
   }
 }
 

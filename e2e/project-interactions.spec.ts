@@ -83,6 +83,51 @@ test("contact remains direct and footer controls share one visual size", async (
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(150);
 });
 
+test("portrait color reveal uses a compact viewfinder across pointer types", async ({ page, isMobile }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  await expect(page.locator(".site-loader")).toBeHidden();
+  await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
+  const sectionShell = page.locator("#about-felix .section-shell");
+  const frame = page.locator("[data-portrait-frame]");
+  await frame.scrollIntoViewIfNeeded();
+  const minimumEdgeSpace = isMobile ? 20 : 28;
+  const shellBounds = await sectionShell.boundingBox();
+  const shellViewport = page.viewportSize()!;
+  expect(Math.min(shellBounds!.x, shellViewport.width - shellBounds!.x - shellBounds!.width)).toBeGreaterThanOrEqual(minimumEdgeSpace);
+  await expect.poll(async () => {
+    const frameBounds = await frame.boundingBox();
+    const viewport = page.viewportSize()!;
+    if (!frameBounds) return 0;
+    return Math.min(frameBounds.x, viewport.width - frameBounds.x - frameBounds.width);
+  }).toBeGreaterThanOrEqual(minimumEdgeSpace);
+
+  if (isMobile) {
+    await expect(page.getByText("Tap or drag to reveal color")).toBeVisible();
+    await frame.tap({ position: { x: 150, y: 180 } });
+    await expect(frame).toHaveAttribute("data-color-active", "true");
+    await expect(frame.locator("[data-portrait-cursor]")).toHaveCSS("display", "none");
+    await expect(frame).not.toHaveAttribute("data-color-active", "true", { timeout: 2500 });
+    return;
+  }
+
+  await expect(page.getByText("Move the + to reveal color")).toBeVisible();
+  await expect(frame).toHaveCSS("cursor", "none");
+  await frame.hover({ position: { x: 180, y: 190 } });
+  await expect(frame).toHaveAttribute("data-color-active", "true");
+  const colorLayer = frame.locator("img[aria-hidden='true']");
+  await expect.poll(() => colorLayer.evaluate((element) => getComputedStyle(element).maskImage)).toMatch(/^radial-gradient\(/);
+  await expect(colorLayer).toHaveCSS("opacity", "1");
+  const cursorShape = await frame.locator("[data-portrait-cursor]").evaluate((element) => ({
+    horizontal: [getComputedStyle(element, "::before").width, getComputedStyle(element, "::before").height],
+    vertical: [getComputedStyle(element, "::after").width, getComputedStyle(element, "::after").height],
+  }));
+  expect(cursorShape.horizontal).toEqual(["16px", "1px"]);
+  expect(cursorShape.vertical).toEqual(["1px", "16px"]);
+  await page.mouse.move(0, 0);
+  await expect(frame).not.toHaveAttribute("data-color-active", "true");
+});
+
 test("the first viewport contains the complete hero and no following section", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
