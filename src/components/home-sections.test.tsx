@@ -73,6 +73,10 @@ describe("endgame portfolio sections", () => {
     expect(beliefs.querySelectorAll("[class*='beliefIcon']")).toHaveLength(3);
     expect(screen.getByText("Open to work")).toBeInTheDocument();
     expect(screen.getByRole("img", { name: /Felix Joseph Castañeda standing beside/i })).toHaveAttribute("src", expect.stringContaining("felix-portrait.jpg"));
+    expect(container.querySelector("[data-portrait-frame]")).toBeInTheDocument();
+    expect(container.querySelector("[data-portrait-cursor]")).toBeInTheDocument();
+    expect(screen.getByText("Move the + to reveal color")).toBeInTheDocument();
+    expect(screen.getByText("Tap or drag to reveal color")).toBeInTheDocument();
     expect(container.innerHTML.toLowerCase()).not.toContain("github");
     expect(container.innerHTML.toLowerCase()).not.toContain("linkedin");
   });
