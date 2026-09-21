@@ -117,7 +117,7 @@ test("portrait color reveal uses a compact viewfinder across pointer types", asy
   await expect(frame).toHaveAttribute("data-color-active", "true");
   const colorLayer = frame.locator("img[aria-hidden='true']");
   await expect.poll(() => colorLayer.evaluate((element) => getComputedStyle(element).maskImage)).toMatch(/^radial-gradient\(/);
-  await expect(colorLayer).toHaveCSS("opacity", "0.84");
+  await expect(colorLayer).toHaveCSS("opacity", "0.92");
   const cursorShape = await frame.locator("[data-portrait-cursor]").evaluate((element) => ({
     horizontal: [getComputedStyle(element, "::before").width, getComputedStyle(element, "::before").height],
     vertical: [getComputedStyle(element, "::after").width, getComputedStyle(element, "::after").height],
