@@ -489,7 +489,7 @@ summary {
 }
 
 .skill-lane:hover .skill-track,
-.skill-lane:focus-within .skill-track {
+.skill-lane:has(.skill-link:focus-visible) .skill-track {
   animation-play-state: paused;
 }
 
@@ -1384,12 +1384,12 @@ summary {
 }
 
 .skill-lane__viewport:hover .skill-mark,
-.skill-lane__viewport:focus-within .skill-mark {
+.skill-lane__viewport:has(.skill-link:focus-visible) .skill-mark {
   opacity: 0.32;
 }
 
 .skill-lane__viewport .skill-mark:hover,
-.skill-lane__viewport .skill-mark:focus-within {
+.skill-lane__viewport .skill-mark:has(.skill-link:focus-visible) {
   background: var(--color-surface-raised);
   opacity: 1;
   transform: translateY(-0.3rem) scale(1.08);
@@ -1689,12 +1689,12 @@ summary {
 }
 
 .skill-lane__viewport:hover .skill-mark,
-.skill-lane__viewport:focus-within .skill-mark {
+.skill-lane__viewport:has(.skill-link:focus-visible) .skill-mark {
   opacity: 0.3;
 }
 
 .skill-lane__viewport .skill-mark:hover,
-.skill-lane__viewport .skill-mark:focus-within {
+.skill-lane__viewport .skill-mark:has(.skill-link:focus-visible) {
   background: var(--color-text);
   color: var(--color-bg);
   opacity: 1;
