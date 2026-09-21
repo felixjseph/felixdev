@@ -235,8 +235,8 @@
 .portrait {
   position: sticky;
   top: 6.5rem;
-  width: min(100%, 27rem);
-  justify-self: end;
+  width: min(100%, 26rem);
+  justify-self: center;
   margin: 0;
 }
 
@@ -432,7 +432,7 @@
   .portrait {
     position: relative;
     top: auto;
-    width: min(100%, 26rem);
+    width: min(calc(100% - 1.5rem), 26rem);
     justify-self: center;
   }
 }

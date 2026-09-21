@@ -90,6 +90,13 @@ test("portrait color reveal uses a compact viewfinder across pointer types", asy
   await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
   const frame = page.locator("[data-portrait-frame]");
   await frame.scrollIntoViewIfNeeded();
+  const minimumEdgeSpace = isMobile ? 20 : 28;
+  await expect.poll(async () => {
+    const frameBounds = await frame.boundingBox();
+    const viewport = page.viewportSize()!;
+    if (!frameBounds) return 0;
+    return Math.min(frameBounds.x, viewport.width - frameBounds.x - frameBounds.width);
+  }).toBeGreaterThanOrEqual(minimumEdgeSpace);
 
   if (isMobile) {
     await expect(page.getByText("Tap or drag to reveal color")).toBeVisible();
