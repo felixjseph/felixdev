@@ -301,7 +301,7 @@
 }
 
 .portraitStage[data-color-active="true"] .portraitColor {
-  opacity: 0.92;
+  opacity: 1;
   transition-duration: 280ms;
 }
 
