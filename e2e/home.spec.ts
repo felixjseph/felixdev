@@ -52,6 +52,52 @@ test("keeps the skills carousel readable when reduced motion is requested", asyn
   expect(animation).toBe("none");
 });
 
+test("resumes the skills carousel after a pointer click while preserving keyboard pause", async ({ page, isMobile }) => {
+  test.skip(Boolean(isMobile), "Fine-pointer hover behavior is desktop-specific.");
+  await page.goto("/");
+  await page.locator(".site-loader").waitFor({ state: "detached", timeout: 10_000 });
+
+  const track = page.locator("#skills .skill-track");
+  await page.locator("#skills").evaluate((section) => {
+    section.scrollIntoView({ behavior: "instant", block: "center" });
+  });
+  const primaryLinks = page.locator("#skills .skill-set").first().locator(".skill-link");
+  const visibleLinkIndex = await primaryLinks.evaluateAll((links) => {
+    const viewportCenter = window.innerWidth / 2;
+    let closestIndex = -1;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    links.forEach((link, index) => {
+      const rect = link.getBoundingClientRect();
+      if (rect.right <= 0 || rect.left >= window.innerWidth) return;
+      const distance = Math.abs(rect.left + rect.width / 2 - viewportCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    return closestIndex;
+  });
+  expect(visibleLinkIndex).toBeGreaterThanOrEqual(0);
+  const pointerLink = primaryLinks.nth(visibleLinkIndex);
+  await pointerLink.evaluate((link) => {
+    link.addEventListener("click", (event) => event.preventDefault(), { once: true });
+  });
+  const linkBox = await pointerLink.boundingBox();
+  expect(linkBox).not.toBeNull();
+  await page.mouse.move(linkBox!.x + linkBox!.width / 2, linkBox!.y + linkBox!.height / 2);
+  await expect.poll(() => track.evaluate((element) => getComputedStyle(element).animationPlayState)).toBe("paused");
+  await page.mouse.down();
+  await page.mouse.up();
+  await page.mouse.move(0, 0);
+  await expect(pointerLink).toBeFocused();
+  await expect.poll(() => track.evaluate((element) => getComputedStyle(element).animationPlayState)).toBe("running");
+
+  await page.keyboard.press("Tab");
+  await expect.poll(() => track.evaluate((element) => getComputedStyle(element).animationPlayState)).toBe("paused");
+});
+
 test("keeps the clicked navigation target active while smooth scrolling", async ({ page, isMobile }) => {
   await page.goto("/");
   const primary = page.getByRole("navigation", { name: "Primary" });
